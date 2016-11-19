@@ -8,7 +8,7 @@ public abstract class Animal {
 
     private Integer age;
     private Integer hunger;
-
+    private Byte defaultMovement;
     private Double mortality;
 
     protected Pregnant pregnant;
@@ -81,4 +81,8 @@ public abstract class Animal {
     public Gender getGender() {
         return gender;
     }
+
+    public Byte getMovement() {return defaultMovement;}
+
+    public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
 }
