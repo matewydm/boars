@@ -36,14 +36,13 @@ public abstract class Animal {
         hunger -=val;
     }
 
-    public abstract Set<Animal> reproduce();
+    public abstract Set<Animal> born();
 
     public abstract Boolean isReadyForReproduce();
 
-    public void impregnate(Pregnant pregnant){
-        if(this.gender.equals(Gender.FEMALE) && !isPregnant())
-            this.pregnant = pregnant;
-        else throw new IllegalArgumentException("Animal cannot be impregnate second time");
+    public void impregnate(){
+        if(this.gender.equals(Gender.MALE) || isPregnant())
+             throw new IllegalArgumentException("Animal cannot be impregnate second time");
     }
 
     public Boolean isPregnant(){
