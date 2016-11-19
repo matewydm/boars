@@ -1,5 +1,7 @@
 package pl.edu.agh.miss.model.automaton.life;
 
+import pl.edu.agh.miss.model.automaton.Automaton;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class Prey extends Animal implements Foodable {
 
     public Prey(Gender gender) {
         super(gender);
+        setDefaultMovement(Automaton.getPreyDefaultMovement());
     }
 
     @Override
