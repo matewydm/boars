@@ -7,6 +7,7 @@ public class Pregnant {
     private Integer animalsNumber;
 
     public Pregnant(Integer animalsNumber) {
+        pregnantDay =0;
         this.animalsNumber = animalsNumber;
     }
 
