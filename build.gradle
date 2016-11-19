@@ -2,3 +2,12 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 mainClassName = "pl.edu.agh.miss.main.App"
+
+
+
+dependencies{
+    testCompile 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
+}

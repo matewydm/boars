@@ -73,6 +73,8 @@ local.properties
 .idea/uiDesigner.xml
 
 # Gradle:
+.idea
+.idea/**
 .idea/gradle.xml
 .idea/libraries
 
