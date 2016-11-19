@@ -10,7 +10,7 @@ public class Predator extends Animal {
     }
 
     @Override
-    public Set<Animal> reproduce() {
+    public Set<Animal> born() {
         return null;
     }
 
