@@ -1,7 +1,16 @@
 package pl.edu.agh.miss.model.automaton.life;
 
-/**
- * Created by lordvader on 19.11.16.
- */
+
+import java.util.Set;
+
 public class Predator extends Animal {
+
+    public Predator(Gender gender) {
+        super(gender);
+    }
+
+    @Override
+    public Set<Animal> reproduce() {
+        return null;
+    }
 }

@@ -2,9 +2,7 @@ package pl.edu.agh.miss.model.automaton.life;
 
 import java.util.Set;
 
-/**
- * Created by lordvader on 19.11.16.
- */
+
 public abstract class Animal {
 
     private Integer age;
