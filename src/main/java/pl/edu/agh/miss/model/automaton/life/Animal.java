@@ -8,9 +8,8 @@ public abstract class Animal {
 
     private Integer age;
     private Integer hunger;
+
     private Double mortality;
-
-
 
     protected Pregnant pregnant;
     private final Gender gender;
