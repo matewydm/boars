@@ -7,12 +7,14 @@ import java.util.Random;
 
 public class PreyUtils {
     public static final Random randomGenerator = new Random();
+    public static final byte PREGNANCY_LENGTH = 50;
+    public static final byte CUTOFF = 10;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 
     public static Boolean isReadyForReproduce(final Pregnant pregnant){
-        if (pregnant.getPregnantDay() >50) return true;
-        else if(pregnant.getPregnantDay() > 40) return randomGenerator.nextBoolean();
+        if (pregnant.getPregnantDay() >PREGNANCY_LENGTH) return true;
+        else if(pregnant.getPregnantDay() > PREGNANCY_LENGTH - CUTOFF) return randomGenerator.nextBoolean();
             else return false;
     }
 

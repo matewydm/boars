@@ -10,11 +10,11 @@ public class Position {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public int getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public int getLongitude() {
         return longitude;
     }
 
@@ -39,5 +39,13 @@ public class Position {
         temp = Double.doubleToLongBits(longitude);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }
