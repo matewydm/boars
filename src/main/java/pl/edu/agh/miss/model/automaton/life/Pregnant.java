@@ -4,15 +4,22 @@ import java.util.Set;
 
 public class Pregnant {
     private Integer pregnantDay;
-    private Set<Animal> newAnimal;
+    private Integer animalsNumber;
 
-    public Pregnant(Set<Animal> animals) {
-        this.newAnimal = animals;
+    public Pregnant(Integer animalsNumber) {
+        this.animalsNumber = animalsNumber;
     }
+
 
     public void incrementDays() {
         pregnantDay++;
     }
 
+    public Integer getPregnantDay() {
+        return pregnantDay;
+    }
 
+    public Integer getAnimalsNumber() {
+        return animalsNumber;
+    }
 }

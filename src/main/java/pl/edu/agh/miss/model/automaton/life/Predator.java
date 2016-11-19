@@ -13,4 +13,9 @@ public class Predator extends Animal {
     public Set<Animal> reproduce() {
         return null;
     }
+
+    @Override
+    public Boolean isReadyForReproduce() {
+        return null;
+    }
 }
