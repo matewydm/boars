@@ -1,4 +1,4 @@
 package pl.edu.agh.miss.model.automaton.strategy;
 
-public class PreyStrategy {
+public class PredatorStrategy {
 }
