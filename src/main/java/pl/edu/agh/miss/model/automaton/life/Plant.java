@@ -4,12 +4,15 @@ package pl.edu.agh.miss.model.automaton.life;
 public class Plant implements Foodable {
 
     private static final Integer kcal = 20;
-    private Integer value;
+    private Integer value = 100;
 
     @Override
-    // nie powinniśmy zmniejszyć value przed zwrotem kcal? -- kwaśnik
     public Integer eat() {
         if (value > 0) {
+            if (value < kcal)
+                value = 0;
+            else
+                value -= kcal;
             return kcal;
         }
         else return 0;

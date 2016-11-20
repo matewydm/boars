@@ -12,8 +12,4 @@ public class PredatorMoves extends AnimalMoves<Predator> {
         return null; // TODO implement predatorMoves
     }
 
-    @Override
-    public Set<Position> positionsInRadius(Position position, Byte radius) {
-        return null;
-    }
 }

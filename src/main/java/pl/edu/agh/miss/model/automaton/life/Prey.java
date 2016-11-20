@@ -1,5 +1,7 @@
 package pl.edu.agh.miss.model.automaton.life;
 
+import pl.edu.agh.miss.model.automaton.AnimalMoves;
+import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
 import pl.edu.agh.miss.model.automaton.strategy.PredatorStrategy;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 
 public class Prey extends Animal implements Foodable {
+    private static final AnimalStrategy animalStrategy = new PreyStrategy();
+    private static final AnimalMoves animalMoves = new PreyMoves();
 
     public final static Integer HUNGER_CUTOFF = 40;
     public final static Integer HUNGER_CRITIC = 80;
@@ -19,8 +23,6 @@ public class Prey extends Animal implements Foodable {
     public Prey(Gender gender) {
         super(gender);
         setDefaultMovement(Automaton.getPreyDefaultMovement());
-        setAnimalMoves(new PreyMoves());
-        setAnimalStrategy(new PreyStrategy());
     }
 
     @Override
@@ -54,7 +56,11 @@ public class Prey extends Animal implements Foodable {
      return PreyUtils.isReadyForReproduce(pregnant);
     }
 
+    public static AnimalStrategy getAnimalStrategy() {
+        return animalStrategy;
+    }
 
-
-
+    public static AnimalMoves getAnimalMoves() {
+        return animalMoves;
+    }
 }

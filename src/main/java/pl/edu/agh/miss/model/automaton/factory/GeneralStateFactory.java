@@ -10,9 +10,7 @@ import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -34,29 +32,29 @@ public class GeneralStateFactory implements StateFactory {
     @Override
     public State addNewState() {
 
-        Set<Prey> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction.getCompaction()))
-                                .stream().map(e -> (Prey) e).collect(Collectors.toSet());
+        List<Prey> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction.getCompaction()))
+                                .stream().map(e -> (Prey) e).collect(Collectors.toList());
 
-        Set<Predator> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
-                                .stream().map(e -> (Predator) e).collect(Collectors.toSet());
+        List<Predator> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
+                                .stream().map(e -> (Predator) e).collect(Collectors.toList());
 
-        Set<Plant> plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
+        List<Plant> plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
 
         return new State(preys,predators,plants);
     }
 
-    private Set<Animal> generateAnimals(AnimalFactory animalFactory, Integer animalAmount){
-        Set<Animal> animalSet = new HashSet<>();
+    private List<Animal> generateAnimals(AnimalFactory animalFactory, Integer animalAmount){
+        List<Animal> animalList = new LinkedList<>();
         for (int i = 0; i < animalAmount; i++)
-            animalSet.add(animalFactory.addAnimal());
-        return animalSet;
+            animalList.add(animalFactory.addAnimal());
+        return animalList;
     }
 
-    private Set<Plant> generatePlants(Integer plantAmount){
-        Set<Plant> plantSet = new HashSet<>();
+    private List<Plant> generatePlants(Integer plantAmount){
+        List<Plant> plantList = new LinkedList<>();
         for (int i = 0; i < plantAmount; i++)
-            plantSet.add(new Plant());
-        return plantSet;
+            plantList.add(new Plant());
+        return plantList;
     }
 
     private Integer generatePredatorAmount(Integer compaction){

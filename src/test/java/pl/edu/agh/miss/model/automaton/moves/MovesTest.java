@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.model.automaton.moves;
 
+import javafx.geometry.Pos;
 import org.junit.Assert;
 import org.junit.Test;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
@@ -8,11 +9,13 @@ import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.State;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Gender;
+import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MovesTest {
     @Test
@@ -37,7 +40,7 @@ public class MovesTest {
     public void preyPositionsDefaultMovement() throws Exception {
         Animal prey = new Prey(Gender.FEMALE);
         Position position = new Position(0,0);
-        Set<Position> positions = prey.getAnimalMoves().calculate(position,prey);
+        Set<Position> positions = Prey.getAnimalMoves().calculate(position,prey);
         Set<Position> correctValues = new HashSet<>();
 
         for(int i = 0; i <= prey.getMovement(); i++) {
@@ -48,5 +51,22 @@ public class MovesTest {
 
         assertEquals("Check whether default positions are correct",positions,correctValues);
 
+    }
+
+    @Test
+    public void checkNumberOfPositions() throws Exception {
+        Animal prey = new Prey(Gender.FEMALE);
+        Set<Position> positions = Prey.getAnimalMoves().calculate(new Position(0,0),prey);
+        assertTrue(positions.size()==16);
+    }
+
+    @Test
+    public void checkNumberWithRadius() throws Exception {
+        Animal prey = new Prey(Gender.MALE);
+        Set<Position> positions = Prey.getAnimalMoves().positionsInRadius(new Position(0,0),(byte)1);
+        assertTrue(positions.size()==4);
+
+        Set<Position> positions1 = Prey.getAnimalMoves().positionsInRadius(new Position(0,0),(byte)3);
+        Set<Position> positions2 = Prey.getAnimalMoves().calculate(new Position(0,0),prey);
     }
 }

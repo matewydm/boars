@@ -53,7 +53,7 @@ public class PreyStrategy implements AnimalStrategy<Prey> {
         }
         else {
             byte radius = 1;
-            Set<Position> newPosition = prey.getAnimalMoves().positionsInRadius(position,radius);
+            Set<Position> newPosition = Prey.getAnimalMoves().positionsInRadius(position,radius);
             Iterator<Position> it = newPosition.iterator();
             Position chosenPosition = null;
             while(it.hasNext()) {

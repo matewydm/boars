@@ -13,8 +13,6 @@ public abstract class Animal {
     private Integer hunger;
     private Byte defaultMovement;
     private Double mortality;
-    private AnimalStrategy animalStrategy;
-    private AnimalMoves animalMoves;
 
 
     protected Pregnant pregnant;
@@ -91,10 +89,4 @@ public abstract class Animal {
 
     public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
 
-    protected void setAnimalStrategy(AnimalStrategy animalStrategy) { this.animalStrategy = animalStrategy; }
-    protected void setAnimalMoves(AnimalMoves animalMoves) { this.animalMoves = animalMoves; }
-
-    public AnimalStrategy getAnimalStrategy() { return animalStrategy; }
-
-    public AnimalMoves getAnimalMoves() { return animalMoves; }
 }

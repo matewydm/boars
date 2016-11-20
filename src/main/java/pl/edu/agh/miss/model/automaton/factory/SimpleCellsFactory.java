@@ -28,7 +28,7 @@ public class SimpleCellsFactory implements CellsFactory {
         Map<Position,State> cellMap = new HashMap<>();
         for (int i = 0; i < dimension.getWidth(); i++)
             for (int j = 0; j < dimension.getHeight(); j++) {
-                System.out.println(i + " " + j);
+                //System.out.println(i + " " + j);
                 cellMap.put(new Position(i, j), stateFactory.addNewState());
             }
         return cellMap;
