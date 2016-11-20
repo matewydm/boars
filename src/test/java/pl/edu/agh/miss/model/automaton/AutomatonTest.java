@@ -5,12 +5,9 @@ import org.junit.Test;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Gender;
 import pl.edu.agh.miss.model.automaton.life.Prey;
-import pl.edu.agh.miss.model.automaton.life.PreyUtils;
 import pl.edu.agh.miss.model.automaton.strategy.PreyStrategy;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -22,20 +19,20 @@ public class AutomatonTest {
     }
     @Test
     public void cellContains() throws Exception {
-        Set<Cell> cells = new HashSet<>();
-        cells.add(new Cell(new Position(1,2),new State(null,null,null)));
-        Cell cell = new Cell(new Position(1,2),new State(null,null,null));
-        Assert.assertTrue("Contains given position",cells.contains(cell));
+        Map<Position,State> cells = new HashMap<>();
+        cells.put(new Position(1,2),new State(null,null,null));
+        Assert.assertTrue("Contains given position",cells.containsKey(new Position(1,2)));
+        Assert.assertTrue("Contains given position",cells.containsValue(new State(null,null,null)));
     }
 
     @Test
     public void cellNotContained() throws Exception {
-        Set<Cell> cells = new HashSet<>();
+        Map<Position,State> cells = new HashMap<>();
         Set<Prey> preys = new HashSet<>();
         preys.add(new Prey(Gender.FEMALE));
-        cells.add(new Cell(new Position(1,2),new State(preys,null,null)));
-        Cell cell = new Cell(new Position(1,2),new State(null,null,null));
-        Assert.assertFalse("Given position not contained",cells.contains(cell));
+        cells.put(new Position(1,2),new State(preys,null,null));
+        State state = new State(null,null,null);
+        Assert.assertNotEquals(state,cells.get(new Position(1,2)));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.model.automaton.factory;
 
+import pl.edu.agh.miss.model.automaton.Compaction;
 import pl.edu.agh.miss.model.automaton.State;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Plant;
@@ -14,19 +15,25 @@ import java.util.stream.Collectors;
 /**
  * Created by mucha on 19.11.16.
  */
-public class GeneralStateFactory extends StateFactory {
+public class GeneralStateFactory implements StateFactory {
 
     public static final Random randomGenerator = new Random();
 
     private final static Integer RATIO = 30;
 
-    @Override
-    protected State stateFactoryMethod(Integer compaction) {
+    private Compaction compaction;
 
-        Set<Prey> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction))
+    public GeneralStateFactory(Compaction compaction) {
+        this.compaction = compaction;
+    }
+
+    @Override
+    public State addNewState() {
+
+        Set<Prey> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Prey) e).collect(Collectors.toSet());
 
-        Set<Predator> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction))
+        Set<Predator> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Predator) e).collect(Collectors.toSet());
 
         Set<Plant> plants = generatePlants(new OridnaryPlantFactory(),generatePlantAmount());
