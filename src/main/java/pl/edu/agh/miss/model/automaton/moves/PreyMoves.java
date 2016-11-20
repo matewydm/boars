@@ -1,18 +1,17 @@
-package pl.edu.agh.miss.model.automaton.strategy;
+package pl.edu.agh.miss.model.automaton.moves;
 
 import pl.edu.agh.miss.model.automaton.Automaton;
-import pl.edu.agh.miss.model.automaton.NeighbourhoodStrategy;
+import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
+import pl.edu.agh.miss.model.automaton.life.Prey;
 import pl.edu.agh.miss.model.automaton.life.PreyUtils;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class PreyStrategy implements NeighbourhoodStrategy{
-    private final static Integer HUNGER_CUTOFF = 40;
+public class PreyMoves extends AnimalMoves<Prey> {
 
     private final static Float PREGNANCY_CRIPPLENESS_COEF = 0.6f;
     private final static Float SUSPICIOUSNESS_COEF = 0.7f;
@@ -24,19 +23,15 @@ public class PreyStrategy implements NeighbourhoodStrategy{
 
 
     @Override
-    public Set<Position> calculate(Position position, Animal animal) {
-        Set<Position> positions = new HashSet<>();
+    public Set<Position> calculate(Position position, Prey animal) {
+
 
         byte movement = evaluateMovement(animal);
 
         assert (movement > 0) : "movement less than 0"; // rare occurence
 
-        for(int i = -movement; i <= movement; i++)
-            for(int j = -movement; j <= movement; j++)
-                positions.add(new Position(position.getLatitude()+i,position.getLongitude()+j));
+        Set<Position> positions = positionsInRadius(position,movement);
 
-        positions = positions.stream().filter(e -> (e.getLatitude() >= 0 && e.getLongitude() >= 0 &&
-            e.getLatitude() < Automaton.getSize() && e.getLongitude() < Automaton.getSize())).collect(Collectors.toSet());
         return positions;
     }
 
@@ -78,17 +73,18 @@ public class PreyStrategy implements NeighbourhoodStrategy{
         float penalty = 0;
 
         if (animal.getHunger() > 0) {
-            if (animal.getHunger() < HUNGER_CUTOFF)
+            if (animal.getHunger() < Prey.HUNGER_CUTOFF)
                 penalty += HUNGER_WEAKNESS_COEF;
             else {
                 penalty -= MOTIVATION_SEARCHFOOD_COEF;
             }
         }
 
-        if (animal.getHunger() < -HUNGER_CUTOFF)
+        if (animal.getHunger() < -Prey.HUNGER_CUTOFF)
             penalty -= MOTIVATION_STUFFED_COEF;
 
         return penalty;
     }
+
 
 }

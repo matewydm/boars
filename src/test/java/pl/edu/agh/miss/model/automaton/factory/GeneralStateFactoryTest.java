@@ -7,6 +7,7 @@ import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
@@ -27,7 +28,7 @@ public class GeneralStateFactoryTest {
     public void checkStatePrey() throws Exception {
         StateFactory stateFactory = new GeneralStateFactory(new Compaction(100));
         State generalState = stateFactory.addNewState();
-        Set<Prey> preySet = generalState.getPreys();
-        assertTrue(!preySet.isEmpty());
+        List<Prey> preyList = generalState.getPreys();
+        assertTrue(!preyList.isEmpty());
     }
 }

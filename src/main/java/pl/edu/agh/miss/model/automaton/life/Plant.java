@@ -7,9 +7,11 @@ public class Plant implements Foodable {
     private Integer value;
 
     @Override
+    // nie powinniśmy zmniejszyć value przed zwrotem kcal? -- kwaśnik
     public Integer eat() {
-        if (value > 0)
+        if (value > 0) {
             return kcal;
+        }
         else return 0;
     }
 

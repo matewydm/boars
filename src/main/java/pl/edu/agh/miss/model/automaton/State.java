@@ -5,40 +5,39 @@ import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
+import java.util.List;
 import java.util.Set;
 
 public class State {
-    private Set<Prey> preys;
-    private Set<Predator> predators;
-    private Set<Plant> plants;
+    private List<Prey> preys;
+    private List<Predator> predators;
+    private List<Plant> plants;
 
-    public State(Set<Prey> preys, Set<Predator> predators, Set<Plant> plants) {
+    public State(List<Prey> preys, List<Predator> predators, List<Plant> plants) {
         this.preys = preys;
         this.predators = predators;
         this.plants = plants;
     }
 
-    public Set<Prey> getPreys() {
+    public List<Prey> getPreys() {
         return preys;
     }
 
-    public void setPreys(Set<Prey> preys) {
+    public void setPreys(List<Prey> preys) {
         this.preys = preys;
     }
 
-    public Set<Predator> getPredators() {
+    public List<Predator> getPredators() {
         return predators;
     }
 
-    public void setPredators(Set<Predator> predators) {
+    public void setPredators(List<Predator> predators) {
         this.predators = predators;
     }
 
-    public Set<Plant> getPlants() {
-        return plants;
-    }
+    public List<Plant> getPlants() { return plants; }
 
-    public void setPlants(Set<Plant> plants) {
+    public void setPlants(List<Plant> plants) {
         this.plants = plants;
     }
 

@@ -10,7 +10,6 @@ public class Automaton {
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 3;
 
     private Map<Position,State> cells;
-    private NeighbourhoodStrategy neighbourhoodStrategy;
 
     public Automaton nextState(){
         Automaton automaton= getInstance();

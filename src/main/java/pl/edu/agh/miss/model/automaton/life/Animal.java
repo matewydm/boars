@@ -1,6 +1,9 @@
 package pl.edu.agh.miss.model.automaton.life;
 
 
+import pl.edu.agh.miss.model.automaton.AnimalMoves;
+import pl.edu.agh.miss.model.automaton.AnimalStrategy;
+
 import java.util.Set;
 
 
@@ -10,6 +13,9 @@ public abstract class Animal {
     private Integer hunger;
     private Byte defaultMovement;
     private Double mortality;
+    private AnimalStrategy animalStrategy;
+    private AnimalMoves animalMoves;
+
 
     protected Pregnant pregnant;
     private final Gender gender;
@@ -84,4 +90,11 @@ public abstract class Animal {
     public Byte getMovement() {return defaultMovement;}
 
     public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
+
+    protected void setAnimalStrategy(AnimalStrategy animalStrategy) { this.animalStrategy = animalStrategy; }
+    protected void setAnimalMoves(AnimalMoves animalMoves) { this.animalMoves = animalMoves; }
+
+    public AnimalStrategy getAnimalStrategy() { return animalStrategy; }
+
+    public AnimalMoves getAnimalMoves() { return animalMoves; }
 }
