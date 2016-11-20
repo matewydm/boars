@@ -2,6 +2,9 @@ package pl.edu.agh.miss.model.automaton.factory;
 
 import pl.edu.agh.miss.model.automaton.Compaction;
 import pl.edu.agh.miss.model.automaton.State;
+import pl.edu.agh.miss.model.automaton.factory.Animal.AnimalFactory;
+import pl.edu.agh.miss.model.automaton.factory.Animal.PredatorFactory;
+import pl.edu.agh.miss.model.automaton.factory.Animal.PreyFactory;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Predator;
@@ -17,13 +20,14 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    public static final Random randomGenerator = new Random();
+    private final static Integer PLANT_RATIO = 100;
+    private final static Integer PREDATOR_RATIO = 30;
 
-    private final static Integer RATIO = 30;
-
+    private Random randomGenerator;
     private Compaction compaction;
 
     public GeneralStateFactory(Compaction compaction) {
+        this.randomGenerator = new Random();
         this.compaction = compaction;
     }
 
@@ -36,7 +40,7 @@ public class GeneralStateFactory implements StateFactory {
         Set<Predator> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Predator) e).collect(Collectors.toSet());
 
-        Set<Plant> plants = generatePlants(new OridnaryPlantFactory(),generatePlantAmount());
+        Set<Plant> plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
 
         return new State(preys,predators,plants);
     }
@@ -48,22 +52,22 @@ public class GeneralStateFactory implements StateFactory {
         return animalSet;
     }
 
-    private Set<Plant> generatePlants(PlantFactory plantFactory, Integer plantAmount){
+    private Set<Plant> generatePlants(Integer plantAmount){
         Set<Plant> plantSet = new HashSet<>();
         for (int i = 0; i < plantAmount; i++)
-            plantSet.add(plantFactory.addPlant());
+            plantSet.add(new Plant());
         return plantSet;
     }
 
     private Integer generatePredatorAmount(Integer compaction){
-        return randomGenerator.nextInt(compaction/RATIO);
+        return randomGenerator.nextInt(compaction/PREDATOR_RATIO);
     }
 
     private Integer generatePreyAmount(Integer compaction){
         return randomGenerator.nextInt(compaction);
     }
 
-    private Integer generatePlantAmount(){
-        return randomGenerator.nextInt();
+    private Integer generatePlantAmount(Integer compaction){
+        return randomGenerator.nextInt(compaction*PLANT_RATIO);
     }
 }

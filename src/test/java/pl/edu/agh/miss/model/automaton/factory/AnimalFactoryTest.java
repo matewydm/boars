@@ -1,7 +1,9 @@
 package pl.edu.agh.miss.model.automaton.factory;
 
-import org.junit.Assert;
 import org.junit.Test;
+import pl.edu.agh.miss.model.automaton.factory.Animal.AnimalFactory;
+import pl.edu.agh.miss.model.automaton.factory.Animal.PredatorFactory;
+import pl.edu.agh.miss.model.automaton.factory.Animal.PreyFactory;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
