@@ -10,7 +10,7 @@ import pl.edu.agh.miss.model.automaton.life.Predator;
 public class PredatorFactory extends AnimalFactory {
 
     @Override
-    protected Animal animalFactoryMethod(Gender gender) {
-        return new Predator(gender);
+    protected Animal animalFactoryMethod() {
+        return new Predator(Gender.randomGender());
     }
 }
