@@ -26,9 +26,11 @@ public class SimpleCellsFactory implements CellsFactory {
     @Override
     public Map<Position,State> cellsFactoryMethod() {
         Map<Position,State> cellMap = new HashMap<>();
-        for (int i = 0; i < dimension.getHeight(); i++)
-            for (int j = 0; j < dimension.getWidth(); j++)
-                cellMap.put(new Position(i,j),stateFactory.addNewState());
+        for (int i = 0; i < dimension.getWidth(); i++)
+            for (int j = 0; j < dimension.getHeight(); j++) {
+                System.out.println(i + " " + j);
+                cellMap.put(new Position(i, j), stateFactory.addNewState());
+            }
         return cellMap;
     }
 }
