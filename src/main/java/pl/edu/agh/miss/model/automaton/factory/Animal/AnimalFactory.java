@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public abstract class AnimalFactory {
 
-    public Animal addAnimal() {
+    public Animal generateAnimal() {
         return animalFactoryMethod();
     }
 

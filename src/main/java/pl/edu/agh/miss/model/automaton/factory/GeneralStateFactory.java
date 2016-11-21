@@ -46,7 +46,7 @@ public class GeneralStateFactory implements StateFactory {
     private List<Animal> generateAnimals(AnimalFactory animalFactory, Integer animalAmount){
         List<Animal> animalList = new LinkedList<>();
         for (int i = 0; i < animalAmount; i++)
-            animalList.add(animalFactory.addAnimal());
+            animalList.add(animalFactory.generateAnimal());
         return animalList;
     }
 

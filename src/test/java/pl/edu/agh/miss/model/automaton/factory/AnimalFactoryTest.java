@@ -18,14 +18,14 @@ public class AnimalFactoryTest {
     @Test
     public void generatePredator() throws Exception {
         AnimalFactory animalFactory = new PredatorFactory();
-        Animal predator = animalFactory.addAnimal();
+        Animal predator = animalFactory.generateAnimal();
         assertTrue(predator instanceof Predator);
     }
 
     @Test
     public void generatePrey() throws Exception {
         AnimalFactory animalFactory = new PreyFactory();
-        Animal prey = animalFactory.addAnimal();
+        Animal prey = animalFactory.generateAnimal();
         assertTrue(prey instanceof Prey);
     }
 
