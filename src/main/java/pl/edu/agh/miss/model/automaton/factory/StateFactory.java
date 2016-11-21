@@ -8,6 +8,6 @@ import pl.edu.agh.miss.model.automaton.State;
  */
 public interface StateFactory {
 
-    State addNewState();
+    State generateState();
 
 }

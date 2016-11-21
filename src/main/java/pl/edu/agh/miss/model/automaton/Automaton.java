@@ -1,8 +1,14 @@
 package pl.edu.agh.miss.model.automaton;
 
 
+import pl.edu.agh.miss.model.automaton.life.Prey;
+import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Automaton {
     private final static int SIZE = 10;
@@ -11,8 +17,18 @@ public class Automaton {
 
     private Map<Position,State> cells;
 
+    private PreyMoves preyMoves;
+
+    public Automaton () {
+        cells = new HashMap<>();
+        preyMoves = new PreyMoves();
+    }
+
     public Automaton nextState(){
-        Automaton automaton= getInstance();
+        Automaton automaton = getInstance();
+        // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
+        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Prey::setActionStrategy));
+        //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
         return automaton;
     }
 

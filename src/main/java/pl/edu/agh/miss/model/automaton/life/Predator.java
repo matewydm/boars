@@ -5,8 +5,8 @@ import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
-import pl.edu.agh.miss.model.automaton.strategy.PredatorStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.PreyStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.animal.PredatorStrategy;
 
 import java.util.Set;
 
@@ -28,6 +28,12 @@ public class Predator extends Animal {
     @Override
     public Boolean isReadyForReproduce() {
         return null;
+    }
+
+    @Override
+    public void setActionStrategy() {
+        //TODO
+        this.actionStrategy = new EatStrategy();
     }
 
     public static AnimalStrategy getAnimalStrategy() {

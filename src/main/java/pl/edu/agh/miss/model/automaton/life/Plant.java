@@ -7,7 +7,7 @@ public class Plant implements Foodable {
     private Integer value = 100;
 
     @Override
-    public Integer eat() {
+    public Integer beEaten() {
         if (value > 0) {
             if (value < kcal)
                 value = 0;

@@ -1,6 +1,5 @@
 package pl.edu.agh.miss.model.automaton.moves;
 
-import javafx.geometry.Pos;
 import org.junit.Assert;
 import org.junit.Test;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;

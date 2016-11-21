@@ -10,6 +10,7 @@ import pl.edu.agh.miss.model.automaton.factory.GeneralStateFactory;
 import pl.edu.agh.miss.model.automaton.factory.SimpleCellsFactory;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Prey;
+import pl.edu.agh.miss.model.automaton.strategy.animal.PreyStrategy;
 
 import java.awt.*;
 import java.util.Map;

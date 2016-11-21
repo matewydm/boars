@@ -30,7 +30,7 @@ public class GeneralStateFactory implements StateFactory {
     }
 
     @Override
-    public State addNewState() {
+    public State generateState() {
 
         List<Prey> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Prey) e).collect(Collectors.toList());

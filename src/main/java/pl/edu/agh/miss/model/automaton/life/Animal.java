@@ -1,17 +1,21 @@
 package pl.edu.agh.miss.model.automaton.life;
 
 
-import pl.edu.agh.miss.model.automaton.AnimalMoves;
-import pl.edu.agh.miss.model.automaton.AnimalStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
 
 import java.util.Set;
 
 
 public abstract class Animal {
 
+    protected ActionStrategy actionStrategy;
+
     private Integer age;
+    // -100 : 100
     private Integer hunger;
+    // 0 : 3
     private Byte defaultMovement;
+    // 0 - 100
     private Double mortality;
 
 
@@ -44,6 +48,8 @@ public abstract class Animal {
 
     public abstract Boolean isReadyForReproduce();
 
+    public abstract void setActionStrategy();
+
     public void impregnate(){
         if(this.gender.equals(Gender.MALE) || isPregnant())
              throw new IllegalArgumentException("Animal cannot be impregnate second time");
@@ -54,7 +60,7 @@ public abstract class Animal {
     }
 
     public void eat(Foodable food){
-        decrementHunger(food.eat());
+        decrementHunger(food.beEaten());
     }
 
 

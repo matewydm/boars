@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.model.automaton.strategy;
+package pl.edu.agh.miss.model.automaton.strategy.animal;
 
 import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Position;

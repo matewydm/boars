@@ -1,10 +1,8 @@
-package pl.edu.agh.miss.model.automaton.strategy;
+package pl.edu.agh.miss.model.automaton.strategy.animal;
 
-import javafx.geometry.Pos;
 import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.State;
-import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 import static pl.edu.agh.miss.model.automaton.life.PreyUtils.randomGenerator;
 
@@ -38,11 +36,11 @@ public class PreyStrategy implements AnimalStrategy<Prey> {
     }
 
     private void desperateToEat(Position position, Prey prey, Map<Position,State> map) {
-        // stay where you are and eat no matter what or change position maximum by one in radius
+        // stay where you are and beEaten no matter what or change position maximum by one in radius
         State currentCell = map.get(position);
         Boolean plantsOnPosition = currentCell.getPlants().size() > 0;
         if (plantsOnPosition) {
-            // eat a few plants because you're hungry to death
+            // beEaten a few plants because you're hungry to death
             int genNumber = randomGenerator.nextInt(2)+1; // 1..2
             int size =currentCell.getPlants().size();
             int genIndex = 0;

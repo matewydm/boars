@@ -4,8 +4,8 @@ import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
-import pl.edu.agh.miss.model.automaton.strategy.PredatorStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.PreyStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.animal.PreyStrategy;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class Prey extends Animal implements Foodable {
     }
 
     @Override
-    public Integer eat() {
+    public Integer beEaten() {
         die();
         return KCAL;
     }
@@ -54,6 +54,12 @@ public class Prey extends Animal implements Foodable {
     @Override
     public Boolean isReadyForReproduce() {
      return PreyUtils.isReadyForReproduce(pregnant);
+    }
+
+    @Override
+    public void setActionStrategy() {
+        //TODO
+        this.actionStrategy = new EatStrategy();
     }
 
     public static AnimalStrategy getAnimalStrategy() {
