@@ -2,6 +2,7 @@ package pl.edu.agh.miss.model.automaton.strategy.action;
 
 import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
+import pl.edu.agh.miss.model.automaton.life.Animal;
 
 import java.util.List;
 import java.util.Set;
@@ -11,5 +12,5 @@ import java.util.Set;
  */
 public interface ActionStrategy {
 
-    Position performAction(Set<Cell> cells, Position position);
+    Position performAction(Set<Cell> cells, Position position, Animal animal);
 }

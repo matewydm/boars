@@ -1,6 +1,8 @@
 package pl.edu.agh.miss.model.automaton.life;
 
 
+import pl.edu.agh.miss.model.automaton.Cell;
+import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
 
 import java.util.Set;
@@ -97,5 +99,9 @@ public abstract class Animal {
     public Byte getMovement() {return defaultMovement;}
 
     public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
+
+    public Position performAction(Set<Cell> cells, Position position) {
+        return getActionStrategy().performAction(cells,position,this);
+    }
 
 }

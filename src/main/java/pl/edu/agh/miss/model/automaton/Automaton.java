@@ -31,7 +31,7 @@ public class Automaton {
             for (Prey prey : cells.get(position).getPreys()){
                 Set<Position> positionSet = preyMoves.calculate(position,prey);
                 Set<Cell> cellSet = getCellsArea(positionSet);
-                Position newPosition = prey.getActionStrategy().performAction(cellSet,position);
+                Position newPosition = prey.performAction(cellSet,position);
                 //TODO kurwa napisac mape kaldus leszczu i poprawe tego chujowego fora na jakis ladny strumien
                 newMap.get(newPosition).getPreys().add(prey);
                 newMap.get(position).getPlants().addAll(cells.get(position).getPlants());
