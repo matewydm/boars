@@ -31,6 +31,9 @@ public abstract class Animal {
         mortality = 0.0;
     }
 
+    public ActionStrategy getActionStrategy(){
+        return actionStrategy;
+    }
 
     public void incrementAge(){
         age++;

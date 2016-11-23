@@ -4,10 +4,7 @@ package pl.edu.agh.miss.model.automaton;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Automaton {
@@ -29,6 +26,17 @@ public class Automaton {
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
         cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Prey::setActionStrategy));
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
+        Map<Position,State> newMap = automaton.getCells();
+        for (Position position : cells.keySet()){
+            for (Prey prey : cells.get(position).getPreys()){
+                Set<Position> positionSet = preyMoves.calculate(position,prey);
+                Set<Cell> cellSet = getCellsArea(positionSet);
+                Position newPosition = prey.getActionStrategy().performAction(cellSet,position);
+                //TODO kurwa napisac mape kaldus leszczu i poprawe tego chujowego fora na jakis ladny strumien
+                newMap.get(newPosition).getPreys().add(prey);
+                newMap.get(position).getPlants().addAll(cells.get(position).getPlants());
+            }
+        }
         return automaton;
     }
 
@@ -41,4 +49,18 @@ public class Automaton {
     }
     public static byte getPreyDefaultMovement() { return PREY_DEFAULT_MOVEMENT; }
     public static byte getPredatorDefaultMovement() { return PREDATOR_DEFAULT_MOVEMENT; }
+    public Map<Position, State> getCells() {
+        return cells;
+    }
+
+    private Set<Cell> getCellsArea(Set<Position> positionSet){
+        Set<Cell> cellSet = new HashSet<>();
+        for(Position position:  positionSet) {
+            if (cells.containsKey(position)) {
+                State state = cells.get(position); // whoops
+                cellSet.add(new Cell(position,state));
+            }
+        }
+        return cellSet;
+    }
 }
