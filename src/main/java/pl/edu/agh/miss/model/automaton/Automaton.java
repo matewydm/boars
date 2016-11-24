@@ -1,6 +1,7 @@
 package pl.edu.agh.miss.model.automaton;
 
 
+import pl.edu.agh.miss.model.automaton.factory.CellsFactory;
 import pl.edu.agh.miss.model.automaton.life.LifeStatus;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Prey;
@@ -18,11 +19,20 @@ public class Automaton {
 
     private PreyMoves preyMoves;
 
-    public Automaton () {
+     private Automaton()  {
         cells = new HashMap<>();
         preyMoves = new PreyMoves();
     }
+    public Automaton(CellsFactory factory){
+        this.cells = factory.cellsFactoryMethod();
+        preyMoves = new PreyMoves();
 
+    }
+    public Integer getPreyNumber(){
+
+        List<Prey> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPreys().stream()).collect(Collectors.toList());
+        return a.size();
+    }
     public Automaton nextState(){
         Automaton automaton = getInstance();
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
@@ -124,5 +134,13 @@ public class Automaton {
 
     public void setCells(Map<Position, State> cells) {
         this.cells = cells;
+    }
+
+    public List<Prey> getPreys(Position position) {
+       return getCells().get(position).getPreys();
+    }
+
+    public List<Plant> getPlants(Position position) {
+        return getCells().get(position).getPlants();
     }
 }

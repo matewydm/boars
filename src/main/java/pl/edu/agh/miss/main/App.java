@@ -4,6 +4,7 @@ package pl.edu.agh.miss.main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -39,19 +40,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                iterateAutomaton();
-            }
-        }), new KeyFrame(Duration.millis(SPEED)));
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, this::iterateAutomaton), new KeyFrame(Duration.millis(SPEED)));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
 
-        automaton = new Automaton();
+
         CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(100)));
-        Map<Position,State> cellMap = cellsFactory.cellsFactoryMethod();
-        automaton.setCells(cellMap);
+        automaton = new Automaton(cellsFactory);
 
         Pane root = new Pane();
         Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
@@ -73,9 +68,10 @@ public class App extends Application {
         timeline.play();
     }
 
-    private void iterateAutomaton() {
+    private void iterateAutomaton(ActionEvent event) {
         System.out.println("Iteration: " + (++counter));
         automaton = automaton.nextState();
+        System.out.println(automaton.getPreyNumber());
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
                 StackPane pane = boardMap.get(new Position(x*CELL_SIZE,y*CELL_SIZE));
@@ -85,8 +81,10 @@ public class App extends Application {
                 boolean isPreys = !automaton.getCells().get(new Position(x,y)).getPreys().isEmpty();
 
                 if (x == 0 && y == 0) {
-                    java.util.List<Prey> preys = automaton.getCells().get(new Position(x,y)).getPreys();
-                    java.util.List<Plant> plants = automaton.getCells().get(new Position(x,y)).getPlants();
+                    java.util.List<Prey> preys = automaton.getPreys(new Position(x,y));
+
+                    java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
+
                     int plantMass = 0;
                     for(int i = 0 ; i < plants.size(); i++)
                         plantMass += plants.get(i).getValue();

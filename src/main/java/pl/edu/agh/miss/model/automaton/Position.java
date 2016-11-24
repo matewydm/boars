@@ -2,8 +2,8 @@ package pl.edu.agh.miss.model.automaton;
 
 
 public class Position {
-    int latitude;
-    int longitude;
+    private int latitude;
+    private int longitude;
 
     public Position(int latitude, int longitude) {
         this.latitude = latitude;

@@ -3,7 +3,7 @@ package pl.edu.agh.miss.model.automaton.life;
 
 public class Plant implements Foodable {
 
-    private static final Integer kcal = 20;
+    private static final Integer kcal = 40;
     private Integer value = 40;
 
     @Override
