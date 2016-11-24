@@ -4,7 +4,7 @@ package pl.edu.agh.miss.model.automaton.life;
 public class Plant implements Foodable {
 
     private static final Integer kcal = 20;
-    private Integer value = 100;
+    private Integer value = 40;
 
     @Override
     public Integer beEaten() {
@@ -24,4 +24,7 @@ public class Plant implements Foodable {
 
     }
 
+    public Integer getValue() {
+        return value;
+    }
 }

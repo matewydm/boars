@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;}
+
+.plant-cell {
+    -fx-background-color: green;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.prey-cell {
+    -fx-background-color: sandybrown;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.prey_plant-cell {
+    -fx-background-color: rosybrown;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}

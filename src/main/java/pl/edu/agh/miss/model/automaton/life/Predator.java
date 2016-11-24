@@ -43,4 +43,9 @@ public class Predator extends Animal {
     public static AnimalMoves getAnimalMoves() {
         return animalMoves;
     }
+
+    @Override
+    public void updateMortality() {
+        // TODO
+    }
 }
