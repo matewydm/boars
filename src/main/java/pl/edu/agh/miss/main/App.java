@@ -30,6 +30,7 @@ public class App extends Application {
 
     private static final int CELL_SIZE = 50;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
+    private static final int SPEED = 1000; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -43,7 +44,7 @@ public class App extends Application {
             public void handle(Event event) {
                 iterateAutomaton();
             }
-        }), new KeyFrame(Duration.millis(1000)));
+        }), new KeyFrame(Duration.millis(SPEED)));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
 

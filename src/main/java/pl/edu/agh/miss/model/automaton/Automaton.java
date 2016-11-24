@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 3;
+    private final static int SIZE = 20;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 3;
 
