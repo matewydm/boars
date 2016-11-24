@@ -12,13 +12,15 @@ public abstract class Animal {
 
     protected ActionStrategy actionStrategy;
 
-    private Integer age;
+    protected Integer age;
     // -100 : 100
-    private Integer hunger;
+    protected Integer hunger;
     // 0 : 3
-    private Byte defaultMovement;
+    protected Byte defaultMovement;
     // 0 - 100
-    private Double mortality;
+    protected Double mortality;
+    // 0 - 10
+    protected Integer sexualDesire;
 
 
     protected Pregnant pregnant;
@@ -31,6 +33,7 @@ public abstract class Animal {
         this.age =0;
         hunger = 0;
         mortality = 0.0;
+        sexualDesire = 0;
     }
 
     public ActionStrategy getActionStrategy(){
@@ -101,7 +104,7 @@ public abstract class Animal {
     public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
 
     public Position performAction(Set<Cell> cells, Position position) {
-        return getActionStrategy().performAction(cells,position,this);
+        return actionStrategy.performAction(cells,position,this);
     }
 
 }

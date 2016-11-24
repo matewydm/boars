@@ -26,6 +26,8 @@ public class Automaton {
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
         cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Prey::setActionStrategy));
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
+
+        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(r - > preyMoves.calculate(e,r)));
         Map<Position,State> newMap = automaton.getCells();
         for (Position position : cells.keySet()){
             for (Prey prey : cells.get(position).getPreys()){
