@@ -4,7 +4,6 @@ import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 
-import java.util.List;
 import java.util.Set;
 
 import static pl.edu.agh.miss.model.automaton.life.PreyUtils.randomGenerator;
@@ -17,20 +16,23 @@ public class EatStrategy implements ActionStrategy{
     public Position performAction(Set<Cell> cells, Position position, Animal animal) {
         Position newPosition = position;
 
-        Position foodPosition = searchFood(cells);
-
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
-        if (foodPosition.equals(position))
+        Position foodPosition = searchFood(cells);
+
+        if (!currentCell.getState().getPlants().isEmpty()) {
             eatOnCurrentPosition(currentCell,animal);
-        else {
-            newPosition = foodPosition;
         }
+        else {
+            newPosition = searchFood(cells);
+        }
+
         return newPosition;
     }
 
     private Position searchFood(Set<Cell> cells) {
         Position foodPosition = null;
+
 
         int maxQuantity = 0;
         int currentSize;

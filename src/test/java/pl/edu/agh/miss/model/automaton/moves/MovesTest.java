@@ -65,7 +65,7 @@ public class MovesTest {
         Set<Position> positions = Prey.getAnimalMoves().positionsInRadius(new Position(0,0),(byte)1);
         assertTrue(positions.size()==4);
 
-        Set<Position> positions1 = Prey.getAnimalMoves().positionsInRadius(new Position(0,0),(byte)3);
+
         Set<Position> positions2 = Prey.getAnimalMoves().calculate(new Position(0,0),prey);
     }
 }

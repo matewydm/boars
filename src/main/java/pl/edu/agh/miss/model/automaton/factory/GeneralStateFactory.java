@@ -18,14 +18,15 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Integer PLANT_RATIO = 100;
-    private final static Integer PREDATOR_RATIO = 30;
+    private final static Double PREY_RATIO = 0.1;
+    private final static Double PLANT_RATIO = 0.2;
+    private final static Double PREDATOR_RATIO = 0.05;
 
     private Random randomGenerator;
     private Compaction compaction;
 
     public GeneralStateFactory(Compaction compaction) {
-        this.randomGenerator = new Random();
+        this.randomGenerator = new Random(47);
         this.compaction = compaction;
     }
 
@@ -58,14 +59,14 @@ public class GeneralStateFactory implements StateFactory {
     }
 
     private Integer generatePredatorAmount(Integer compaction){
-        return randomGenerator.nextInt(compaction/PREDATOR_RATIO);
+        return randomGenerator.nextInt((int)Math.ceil(compaction*PREDATOR_RATIO));
     }
 
     private Integer generatePreyAmount(Integer compaction){
-        return randomGenerator.nextInt(compaction);
+        return randomGenerator.nextInt((int)Math.ceil(compaction*PREY_RATIO));
     }
 
     private Integer generatePlantAmount(Integer compaction){
-        return randomGenerator.nextInt(compaction*PLANT_RATIO);
+        return randomGenerator.nextInt((int)Math.ceil(compaction*PLANT_RATIO));
     }
 }

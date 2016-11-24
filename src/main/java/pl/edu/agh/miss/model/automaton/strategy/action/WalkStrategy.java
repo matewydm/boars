@@ -5,7 +5,6 @@ import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 
-import java.util.List;
 import java.util.Set;
 
 /**

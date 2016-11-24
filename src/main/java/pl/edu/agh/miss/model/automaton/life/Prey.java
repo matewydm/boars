@@ -8,6 +8,7 @@ import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.animal.PreyStrategy;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -18,6 +19,7 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CUTOFF = 40;
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
+    public static final Integer OLD_AGE = 10;
 
 
     public Prey(Gender gender) {
@@ -69,4 +71,31 @@ public class Prey extends Animal implements Foodable {
     public static AnimalMoves getAnimalMoves() {
         return animalMoves;
     }
+
+    @Override
+    public void updateMortality() {
+        Double mortality = getMortality();
+        if (getAge() > OLD_AGE) {
+            mortality += 10.0;
+        }
+
+        if (getHunger() > HUNGER_CRITIC) {
+            mortality += 10.0;
+        }
+
+        if (getHunger() > HUNGER_CUTOFF) {
+            mortality += 3.0;
+        }
+
+        if (getHunger() < -HUNGER_CRITIC) {
+            mortality -= 5.0;
+        }
+
+        if (mortality < 0.0)
+            mortality = 0.0;
+
+        setMortality(mortality);
+    }
+
+
 }

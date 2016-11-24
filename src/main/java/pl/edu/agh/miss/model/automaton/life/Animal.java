@@ -5,6 +5,7 @@ import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
 
+import java.util.Random;
 import java.util.Set;
 
 
@@ -80,28 +81,40 @@ public abstract class Animal {
     public Integer getAge() {
         return age;
     }
-
     public Integer getHunger() {
         return hunger;
     }
-
     public Double getMortality() {
         return mortality;
     }
     public Pregnant getPregnant() {
         return pregnant;
     }
-
     public Gender getGender() {
         return gender;
     }
-
     public Byte getMovement() {return defaultMovement;}
 
     public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
 
     public Position performAction(Set<Cell> cells, Position position) {
-        return getActionStrategy().performAction(cells,position,this);
+        return getActionStrategy().performAction(cells, position,this);
+    }
+
+    public void setMortality(Double mortality) {
+        this.mortality = mortality;
+    }
+
+    public abstract void updateMortality();
+
+    public void throwDice() {
+        updateMortality();
+        Random random = new Random();
+        Boolean die = (random.nextDouble()*100 < getMortality()) ? true : false;
+
+        if (die)
+            status = LifeStatus.DEAD;
+
     }
 
 }
