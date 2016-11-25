@@ -3,9 +3,9 @@ package pl.edu.agh.miss.model.automaton.life;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
-import pl.edu.agh.miss.model.automaton.strategy.action.BornStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
 
 
 public class Prey extends Animal implements Foodable {
@@ -58,15 +58,15 @@ public class Prey extends Animal implements Foodable {
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
         if (pregnant != null && isReadyForReproduce())
-            this.actionStrategy = new BornStrategy();
+            this.actionStrategy = new ReproduceStrategy();
         else if (isCriticalHungry)
             this.actionStrategy = new EatStrategy();
         else if (isCriticalEager)
-            this.actionStrategy = new ReproduceStrategy();
+            this.actionStrategy = new InseminateStrategy();
         else if (isLittleHungry)
             this.actionStrategy = new EatStrategy();
         else
-            this.actionStrategy = new ReproduceStrategy();
+            this.actionStrategy = new InseminateStrategy();
 
     }
 

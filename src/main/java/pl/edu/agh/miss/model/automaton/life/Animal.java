@@ -62,7 +62,7 @@ public abstract class Animal {
         hunger -=val;
     }
 
-    public List<Animal> born() {
+    public List<Animal> giveBirth() {
         Integer amount = pregnant.getAnimalsNumber();
         List<Animal> animals = new LinkedList<Animal>();
         for(int i =0; i < amount; i++){
