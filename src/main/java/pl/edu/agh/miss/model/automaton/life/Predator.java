@@ -48,4 +48,9 @@ public class Predator extends Animal {
     public void updateMortality() {
         // TODO
     }
+
+    @Override
+    public void updateHorniness() {
+
+    }
 }
