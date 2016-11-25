@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 20;
+    private final static int SIZE = 2;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 3;
 
@@ -73,8 +73,12 @@ public class Automaton {
 
 
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody
-        for (Position position: cells.keySet()) {
+        for (Position position: automaton.getCells().keySet()) {
             State currentState = automaton.getState(position);
+
+            if (automaton.getState(new Position(0,0)) == automaton.getState(new Position(1,1))) {
+                System.out.println("ŁO KURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRCZĘ");
+            }
 
             for (Plant plant: currentState.getPlants()) {
                 plant.grow();
@@ -85,7 +89,7 @@ public class Automaton {
         }
 
         // usuwanie śmierdziuchów, które gniją
-        for (Position position: cells.keySet()) {
+        for (Position position: automaton.getCells().keySet()) {
             List<Animal> preys = automaton.getPreys(position);
             List<Animal> dead = new LinkedList<>();
             for(Animal prey: preys){

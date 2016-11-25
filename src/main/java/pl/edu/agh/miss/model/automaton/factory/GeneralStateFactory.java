@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 0.1;
-    private final static Double PLANT_RATIO = 0.2;
+    private final static Double PREY_RATIO = 0.05/4;
+    private final static Double PLANT_RATIO = 0.05/4;
     private final static Double PREDATOR_RATIO = 0.05;
 
     private Random randomGenerator;

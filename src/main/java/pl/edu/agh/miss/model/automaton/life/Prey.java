@@ -16,7 +16,7 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
     public static final Integer OLD_AGE = 10;
-    public static final Integer MATURITY = 10;
+    public static final Integer MATURITY = 3;
 
 
 
@@ -67,7 +67,6 @@ public class Prey extends Animal implements Foodable {
             this.actionStrategy = new EatStrategy();
         else
             this.actionStrategy = new ReproduceStrategy();
-
     }
 
     public static AnimalMoves getAnimalMoves() {
@@ -78,15 +77,14 @@ public class Prey extends Animal implements Foodable {
     public void updateMortality() {
         Double mortality = getMortality();
         if (getAge() > OLD_AGE) {
-            mortality += 10.0;
+            mortality += 5.0;
         }
 
         if (getHunger() > HUNGER_CRITIC) {
-            mortality += 10.0;
+            mortality += 2.0;
         }
-
-        if (getHunger() > HUNGER_CUTOFF) {
-            mortality += 3.0;
+        else  if (getHunger() > HUNGER_CUTOFF) {
+            mortality += 1.0;
         }
 
         if (getHunger() < -HUNGER_CRITIC) {

@@ -40,7 +40,6 @@ public abstract class Animal {
     }
 
     public void incrementAge(){
-
         age++;
         if(isPregnant())
             pregnant.incrementDays();
@@ -139,10 +138,11 @@ public abstract class Animal {
     public void throwDice() {
         updateMortality();
         Random random = new Random();
-        Boolean die = (random.nextDouble()*80 < getMortality()) ? true : false;
+        Boolean die = (random.nextDouble()*100 < getMortality()) ? true : false;
 
-        if (die)
-           die();
+        if (die) {
+            die();
+        }
 
     }
 

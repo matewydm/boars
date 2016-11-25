@@ -41,7 +41,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, this::iterateAutomaton), new KeyFrame(Duration.millis(SPEED)));
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setCycleCount(30);
 
 
         CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(100)));
@@ -84,14 +84,19 @@ public class App extends Application {
                     java.util.List<Animal> preys = automaton.getPreys(new Position(x,y));
 
                     java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
-
-                    int plantMass = 0;
-                    for(int i = 0 ; i < plants.size(); i++)
-                        plantMass += plants.get(i).getValue();
+//
+//                    int plantMass = 0;
+//                    for(int i = 0 ; i < plants.size(); i++)
+//                        plantMass += plants.get(i).getValue();
 
                     System.out.println("Liczebności na polu (0,0):");
-                    System.out.println("\t Preys: " + preys.size());
-                    System.out.println("\t Plants mass " + plantMass);
+                    System.out.println("\t Preys number: " + preys.size());
+                    if (!preys.isEmpty()) {
+                        System.out.println("\t Prey mortality: " + preys.get(0).getMortality());
+                        System.out.println("\t Prey age: " + preys.get(0).getAge());
+                    }
+
+                    System.out.println("\t Plants number " + plants.size());
                 }
 
                 if (isPlants && isPreys) {

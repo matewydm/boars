@@ -56,6 +56,7 @@ public class MovesTest {
     public void checkNumberOfPositions() throws Exception {
         Animal prey = new Prey(Gender.FEMALE);
         Set<Position> positions = Prey.getAnimalMoves().calculate(new Position(0,0),prey);
+        System.out.println(positions.size());
         assertTrue(positions.size()==16);
     }
 
