@@ -51,7 +51,11 @@ public abstract class Animal {
 
     public void incrementHorniness(Integer val) { horniness += val; }
 
-    public void decrementHorniness(Integer val) { horniness -= val; }
+    public void decrementHorniness(Integer val) {
+        horniness -= val;
+        if (horniness < 0)
+            horniness = 0;
+    }
 
     public void incrementHunger(Integer val) {
         hunger += val;

@@ -21,6 +21,7 @@ public class Prey extends Animal implements Foodable {
     public static final Integer KCAL = 80;
     public static final Integer OLD_AGE = 10;
     public static final Integer HORNINESS_CUTOFF = 10;
+    public static final Integer MATURITY = 10;
 
 
 
@@ -92,6 +93,20 @@ public class Prey extends Animal implements Foodable {
 
     @Override
     public void updateHorniness() {
+        Integer hunger = getHunger();
+        Integer age = getAge();
 
+        if (age > MATURITY) {
+            if (hunger < -HUNGER_CRITIC)
+                incrementHorniness(2);
+            else if (hunger < -HUNGER_CUTOFF) {
+                incrementHorniness(1);
+            }
+            if (hunger > 0)
+                decrementHorniness(1);
+            else if (hunger > HUNGER_CUTOFF)
+                decrementHorniness(10);
+        }
     }
+
 }
