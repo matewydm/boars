@@ -14,7 +14,7 @@ public class BornStrategy {
     public void checkBornAnimals() throws Exception {
         Animal mother = new Prey(Gender.FEMALE);
         mother.impregnate();
-        List<Animal> infants = mother.born();
+        List<Animal> infants = mother.giveBirth();
         Animal newBorn = infants.get(0);
         assertTrue(newBorn instanceof Prey);
     }

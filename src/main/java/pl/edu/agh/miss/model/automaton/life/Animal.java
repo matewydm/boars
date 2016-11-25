@@ -153,7 +153,6 @@ public abstract class Animal {
             updateSexualDesire();
             incrementAge();
             throwDice();
-            incrementHunger(2);
         }
     }
 
