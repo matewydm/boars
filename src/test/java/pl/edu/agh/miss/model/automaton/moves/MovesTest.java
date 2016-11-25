@@ -28,7 +28,7 @@ public class MovesTest {
     @Test
     public void cellNotContained() throws Exception {
         Set<Cell> cells = new HashSet<>();
-        List<Prey> preys = new LinkedList<>();
+        List<Animal> preys = new LinkedList<>();
         preys.add(new Prey(Gender.FEMALE));
         cells.add(new Cell(new Position(1,2),new State(preys,null,null)));
         Cell cell = new Cell(new Position(1,2),new State(null,null,null));

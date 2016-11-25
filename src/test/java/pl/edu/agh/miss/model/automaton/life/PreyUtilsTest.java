@@ -22,7 +22,20 @@ public class PreyUtilsTest {
     public void randomGender() throws Exception {
         Gender gender = PreyUtils.randomGender();
         assertTrue(gender == Gender.FEMALE || gender == Gender.MALE);
+    }
 
+    @Test
+    public void getNewPrey() throws Exception {
+        Animal animal = new Prey(Gender.FEMALE);
+        Animal infant = animal.getNewAnimal(Gender.FEMALE);
+        assertFalse(infant instanceof Predator);
+    }
+
+    @Test
+    public void getNewPredator() throws Exception {
+        Animal animal = new Predator(Gender.FEMALE);
+        Animal infant = animal.getNewAnimal(Gender.MALE);
+        assertTrue(infant instanceof Predator);
     }
 
     @Test

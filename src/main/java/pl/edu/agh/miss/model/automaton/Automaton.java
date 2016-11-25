@@ -2,6 +2,7 @@ package pl.edu.agh.miss.model.automaton;
 
 
 import pl.edu.agh.miss.model.automaton.factory.CellsFactory;
+import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.LifeStatus;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Prey;
@@ -31,7 +32,7 @@ public class Automaton {
     //ile jest prey n a całej mapie
     public Integer getPreyNumber(){
 
-        List<Prey> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPreys().stream()).collect(Collectors.toList());
+        List<Animal> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPreys().stream()).collect(Collectors.toList());
         return a.size();
     }
     //ile jest plan na całej mapie
@@ -41,15 +42,15 @@ public class Automaton {
     public Automaton nextState(){
         Automaton automaton = getInstance();
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
-        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Prey::setActionStrategy));
+        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Animal::setActionStrategy));
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
         //Map<Position,State> newMap = automaton.getCells();
         for (Position position : cells.keySet()){
-            for (Prey prey : cells.get(position).getPreys()){
+            for (Animal prey : cells.get(position).getPreys()){
                 Set<Position> positionSet = preyMoves.calculate(position,prey);
                 Set<Cell> cellSet = getCellsArea(positionSet);
                 Position newPosition = prey.performAction(cellSet,position);
-                // zjadł roślinę, zaktualizowało się to na obecnej mapie
+                // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
                 State newState = automaton.getState(newPosition);
                 newState.getPreys().add(prey);
                 automaton.update(position,newState);
@@ -77,19 +78,16 @@ public class Automaton {
             for (Plant plant: currentState.getPlants()) {
                 plant.grow();
             }
-            for (Prey prey: currentState.getPreys()) {
-                if (prey.isAlive()) // tylko dla żyjących - wilki zjadły, zaktualizowaly status ofiar
-                    prey.incrementAge();
-                    prey.throwDice(); // uwzględnia aktualizację śmiertelności
-
+            for (Animal animal: currentState.getPreys()) { // na razie tylko ofiary
+                animal.update();
             }
         }
 
         // usuwanie śmierdziuchów, które gniją
         for (Position position: cells.keySet()) {
-            List<Prey> preys = automaton.getPreys(position);
-            List<Prey> dead = new LinkedList<>();
-            for(Prey prey: preys){
+            List<Animal> preys = automaton.getPreys(position);
+            List<Animal> dead = new LinkedList<>();
+            for(Animal prey: preys){
                 if(!prey.isAlive()){
                     dead.add(prey);
                 }
@@ -156,7 +154,7 @@ public class Automaton {
         this.cells = cells;
     }
 
-    public List<Prey> getPreys(Position position) {
+    public List<Animal> getPreys(Position position) {
        return getCells().get(position).getPreys();
     }
 

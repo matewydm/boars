@@ -1,6 +1,7 @@
 package pl.edu.agh.miss.model.automaton;
 
 
+import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
@@ -10,11 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 public class State {
-    private List<Prey> preys;
-    private List<Predator> predators;
+    private List<Animal> preys;
+    private List<Animal> predators;
     private List<Plant> plants;
 
-    public State(List<Prey> preys, List<Predator> predators, List<Plant> plants) {
+    public State(List<Animal> preys, List<Animal> predators, List<Plant> plants) {
         this.preys = preys;
         this.predators = predators;
         this.plants = plants;
@@ -26,19 +27,19 @@ public class State {
         plants = new LinkedList<>();
     }
 
-    public List<Prey> getPreys() {
+    public List<Animal> getPreys() {
         return preys;
     }
 
-    public void setPreys(List<Prey> preys) {
+    public void setPreys(List<Animal> preys) {
         this.preys = preys;
     }
 
-    public List<Predator> getPredators() {
+    public List<Animal> getPredators() {
         return predators;
     }
 
-    public void setPredators(List<Predator> predators) {
+    public void setPredators(List<Animal> predators) {
         this.predators = predators;
     }
 

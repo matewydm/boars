@@ -17,6 +17,7 @@ import pl.edu.agh.miss.model.automaton.*;
 import pl.edu.agh.miss.model.automaton.factory.CellsFactory;
 import pl.edu.agh.miss.model.automaton.factory.GeneralStateFactory;
 import pl.edu.agh.miss.model.automaton.factory.SimpleCellsFactory;
+import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.LifeStatus;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Prey;
@@ -82,7 +83,7 @@ public class App extends Application {
                 boolean isPreys = !automaton.getCells().get(new Position(x,y)).getPreys().isEmpty();
 
                 if (x == 0 && y == 0) {
-                    java.util.List<Prey> preys = automaton.getPreys(new Position(x,y));
+                    java.util.List<Animal> preys = automaton.getPreys(new Position(x,y));
 
                     java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
 

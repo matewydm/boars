@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class PreyMoves extends AnimalMoves<Prey> {
+public class PreyMoves extends AnimalMoves {
 
     private final static Float PREGNANCY_CRIPPLENESS_COEF = 0.6f;
     private final static Float SUSPICIOUSNESS_COEF = 0.7f;
@@ -23,7 +23,7 @@ public class PreyMoves extends AnimalMoves<Prey> {
 
 
     @Override
-    public Set<Position> calculate(Position position, Prey animal) {
+    public Set<Position> calculate(Position position, Animal animal) {
 
 
         byte movement = evaluateMovement(animal);
@@ -56,7 +56,7 @@ public class PreyMoves extends AnimalMoves<Prey> {
         float penalty = 0;
 
         if (animal.isPregnant()) {
-            if (animal.getPregnant().getPregnantDay() > PreyUtils.PREGNANCY_LENGTH - PreyUtils.CUTOFF)
+            if (animal.getPregnant().getPregnantDay() > PreyUtils.PREGNANCY_LENGTH - PreyUtils.PREGNANCY_CRITIC)
                 penalty -= PREGNANCY_CRIPPLENESS_COEF; // disability in movement
             else {
                 penalty += SUSPICIOUSNESS_COEF; // suspiciousness

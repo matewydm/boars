@@ -18,8 +18,6 @@ public class EatStrategy implements ActionStrategy{
 
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
-        Position foodPosition = searchFood(cells);
-
         if (!currentCell.getState().getPlants().isEmpty()) {
             eatOnCurrentPosition(currentCell,animal);
         }
@@ -28,18 +26,19 @@ public class EatStrategy implements ActionStrategy{
         }
 
         return newPosition;
+
     }
 
     private Position searchFood(Set<Cell> cells) {
         Position foodPosition = null;
 
 
-        int maxQuantity = 0;
+        int maxQuantity = -1;
         int currentSize;
 
         for (Cell cell : cells) {
             currentSize = cell.getState().getPlants().size();
-            if (currentSize> maxQuantity) {
+            if (currentSize > maxQuantity) {
                 maxQuantity = currentSize;
                 foodPosition = cell.getPosition();
             }

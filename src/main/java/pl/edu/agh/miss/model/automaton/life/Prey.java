@@ -28,15 +28,6 @@ public class Prey extends Animal implements Foodable {
     }
 
     @Override
-    public Set<Animal> born() {
-        Integer amount = pregnant.getAnimalsNumber();
-        Set<Animal> animals = new HashSet<>(amount);
-        for(int i =0; i <amount; i++){
-            animals.add(getNewAnimal(PreyUtils.randomGender()));
-        }
-        return animals;
-    }
-
     protected Prey getNewAnimal(Gender gender){
         return new Prey(gender);
     }

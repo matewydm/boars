@@ -21,7 +21,7 @@ public class ReproduceStrategy implements ActionStrategy {
         Position newPosition = position;
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
         Gender oppositeGender = animal.getGender().oppositeGender();
-        List<Prey> preys = currentCell.getState().getPreys().stream().filter(oppositeGender::equals).filter(e -> !e.isPregnant()).collect(Collectors.toList());
+        List<Animal> preys = currentCell.getState().getPreys().stream().filter(oppositeGender::equals).filter(e -> !e.isPregnant()).collect(Collectors.toList());
         if(animal.getGender() == Gender.MALE) {
             newPosition = performMaleAction(cells, newPosition, oppositeGender, preys);
         }else{
@@ -32,7 +32,7 @@ public class ReproduceStrategy implements ActionStrategy {
 
     }
 
-    private Position performFemaleAction(Set<Cell> cells, Animal animal, Position newPosition, List<Prey> preys) {
+    private Position performFemaleAction(Set<Cell> cells, Animal animal, Position newPosition, List<Animal> preys) {
         if(preys.isEmpty()){
             newPosition = searchFood(cells);
         }
@@ -42,10 +42,10 @@ public class ReproduceStrategy implements ActionStrategy {
         return newPosition;
     }
 
-    private Position performMaleAction(Set<Cell> cells, Position newPosition, Gender oppositeGender, List<Prey> preys) {
+    private Position performMaleAction(Set<Cell> cells, Position newPosition, Gender oppositeGender, List<Animal> preys) {
         if(!preys.isEmpty()) {
             Collections.shuffle(preys);
-            Prey prey = preys.get(0);
+            Animal prey = preys.get(0);
             prey.impregnate();
 
         }else{
@@ -73,17 +73,16 @@ public class ReproduceStrategy implements ActionStrategy {
     private Position searchFood(Set<Cell> cells) {
         Position foodPosition = null;
 
-        int maxQuantity = 0;
+        int maxQuantity = -1;
         int currentSize;
 
         for (Cell cell : cells) {
             currentSize = cell.getState().getPlants().size();
-            if (currentSize> maxQuantity) {
+            if (currentSize > maxQuantity) {
                 maxQuantity = currentSize;
                 foodPosition = cell.getPosition();
             }
         }
-
 
         return foodPosition;
     }
