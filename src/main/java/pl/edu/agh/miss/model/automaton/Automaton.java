@@ -19,7 +19,7 @@ public class Automaton {
 
     private PreyMoves preyMoves;
 
-     private Automaton()  {
+    Automaton()  {
         cells = new HashMap<>();
         preyMoves = new PreyMoves();
     }
