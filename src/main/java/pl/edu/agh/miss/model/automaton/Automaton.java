@@ -69,6 +69,7 @@ public class Automaton {
         for (Position position: cells.keySet()) {
             automaton.addPlants(position,this.getPlants(position));
         }
+//        cells.entrySet().stream().forEach(e -> automaton.addPlants(e.getKey(),this.getPlants(e.getKey())));
 
 
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody

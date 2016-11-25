@@ -22,11 +22,6 @@ public abstract class Animal {
     // 0 - 10
     protected Integer sexualDesire;
 
-    private Integer horniness;
-
-
-
-
     protected Pregnant pregnant;
     private final Gender gender;
     private LifeStatus status;
@@ -36,7 +31,6 @@ public abstract class Animal {
         this.gender = gender;
         this.age =0;
         hunger = 0;
-        horniness = 0;
         mortality = 0.0;
         sexualDesire = 0;
     }
@@ -52,12 +46,12 @@ public abstract class Animal {
             pregnant.incrementDays();
     }
 
-    public void incrementHorniness(Integer val) { horniness += val; }
+    public void incrementSexualDesire(Integer val) { sexualDesire += val; }
 
-    public void decrementHorniness(Integer val) {
-        horniness -= val;
-        if (horniness < 0)
-            horniness = 0;
+    public void decrementSexualDesire(Integer val) {
+        sexualDesire -= val;
+        if (sexualDesire < 0)
+            sexualDesire = 0;
     }
 
     public void incrementHunger(Integer val) {
@@ -152,11 +146,11 @@ public abstract class Animal {
 
     }
 
-    public abstract void updateHorniness();
+    public abstract void updateSexualDesire();
 
     public void update() {
         if (isAlive()) {
-            updateHorniness();
+            updateSexualDesire();
             incrementAge();
             throwDice();
         }

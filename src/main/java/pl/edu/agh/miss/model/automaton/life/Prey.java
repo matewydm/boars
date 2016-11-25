@@ -1,20 +1,14 @@
 package pl.edu.agh.miss.model.automaton.life;
 
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
-import pl.edu.agh.miss.model.automaton.AnimalStrategy;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
+import pl.edu.agh.miss.model.automaton.strategy.action.BornStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.animal.PreyStrategy;
-
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
 
 
 public class Prey extends Animal implements Foodable {
-    private static final AnimalStrategy animalStrategy = new PreyStrategy();
     private static final AnimalMoves animalMoves = new PreyMoves();
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 10;
@@ -22,7 +16,6 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
     public static final Integer OLD_AGE = 10;
-    public static final Integer HORNINESS_CUTOFF = 10;
     public static final Integer MATURITY = 10;
 
 
@@ -51,7 +44,7 @@ public class Prey extends Animal implements Foodable {
 
     @Override
     public Boolean isReadyForReproduce() {
-     return PreyUtils.isReadyForReproduce(pregnant);
+            return PreyUtils.isReadyForReproduce(pregnant);
     }
 
     @Override
@@ -62,21 +55,19 @@ public class Prey extends Animal implements Foodable {
 
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
-        boolean isCritiacalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
+        boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
-        if (isCriticalHungry)
+        if (pregnant != null && isReadyForReproduce())
+            this.actionStrategy = new BornStrategy();
+        else if (isCriticalHungry)
             this.actionStrategy = new EatStrategy();
-        else if (isCritiacalEager)
+        else if (isCriticalEager)
             this.actionStrategy = new ReproduceStrategy();
         else if (isLittleHungry)
             this.actionStrategy = new EatStrategy();
         else
             this.actionStrategy = new ReproduceStrategy();
 
-    }
-
-    public static AnimalStrategy getAnimalStrategy() {
-        return animalStrategy;
     }
 
     public static AnimalMoves getAnimalMoves() {
@@ -109,20 +100,20 @@ public class Prey extends Animal implements Foodable {
     }
 
     @Override
-    public void updateHorniness() {
+    public void updateSexualDesire() {
         Integer hunger = getHunger();
         Integer age = getAge();
 
         if (age > MATURITY) {
             if (hunger < -HUNGER_CRITIC)
-                incrementHorniness(2);
+                incrementSexualDesire(2);
             else if (hunger < -HUNGER_CUTOFF) {
-                incrementHorniness(1);
+                incrementSexualDesire(1);
             }
             if (hunger > 0)
-                decrementHorniness(1);
+                decrementSexualDesire(1);
             else if (hunger > HUNGER_CUTOFF)
-                decrementHorniness(10);
+                decrementSexualDesire(10);
         }
     }
 

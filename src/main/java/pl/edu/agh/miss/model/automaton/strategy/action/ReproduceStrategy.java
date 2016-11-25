@@ -4,7 +4,6 @@ import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Gender;
-import pl.edu.agh.miss.model.automaton.life.Prey;
 
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +64,7 @@ public class ReproduceStrategy implements ActionStrategy {
 
             }
         }
-            return newPosition;
+        return newPosition;
 
     }
 
