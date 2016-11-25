@@ -42,7 +42,10 @@ public abstract class Animal {
     }
 
     public void incrementAge(){
+
         age++;
+        if(isPregnant())
+            pregnant.incrementDays();
     }
 
     public void incrementHunger(Integer val) {
@@ -110,13 +113,18 @@ public abstract class Animal {
 
     public abstract void updateMortality();
 
+    public boolean isAlive(){
+        return status == LifeStatus.ALIVE?Boolean.TRUE:Boolean.FALSE;
+    }
+
+
     public void throwDice() {
         updateMortality();
         Random random = new Random();
         Boolean die = (random.nextDouble()*100 < getMortality()) ? true : false;
 
         if (die)
-            status = LifeStatus.DEAD;
+           die();
 
     }
 

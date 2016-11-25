@@ -11,4 +11,8 @@ public enum Gender {
         return  Gender.values()[randomGenerator.nextInt(Gender.values().length)];
     }
 
+    public Gender oppositeGender(){
+        return this == FEMALE?MALE:FEMALE;
+    }
+
 }
