@@ -79,8 +79,8 @@ public abstract class Animal {
     public abstract void setActionStrategy();
 
     public void impregnate(){
-        if(this.gender.equals(Gender.MALE) || isPregnant())
-             throw new IllegalArgumentException("Animal cannot be impregnate second time");
+        if(this.gender.equals(Gender.MALE))
+             throw new IllegalArgumentException("Cannot inseminate animal with the same gender");
     }
 
     public Boolean isPregnant(){

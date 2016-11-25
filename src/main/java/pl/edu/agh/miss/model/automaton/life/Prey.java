@@ -33,7 +33,8 @@ public class Prey extends Animal implements Foodable {
     @Override
     public void impregnate() {
         super.impregnate();
-        pregnant = new Pregnant(PreyUtils.randomBrood());
+        if (!isPregnant())
+            pregnant = new Pregnant(PreyUtils.randomBrood());
     }
 
     @Override

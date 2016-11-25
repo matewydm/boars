@@ -19,7 +19,7 @@ public class InseminateStrategy implements ActionStrategy {
         Position newPosition = position;
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
         Gender oppositeGender = animal.getGender().oppositeGender();
-        List<Animal> preys = currentCell.getState().getPreys().stream().filter(oppositeGender::equals).filter(e -> !e.isPregnant()).collect(Collectors.toList());
+        List<Animal> preys = currentCell.getState().getPreys().stream().filter(e -> e.getGender() == oppositeGender).filter(e -> !e.isPregnant()).collect(Collectors.toList());
         if(animal.getGender() == Gender.MALE) {
             newPosition = performMaleAction(cells, newPosition, oppositeGender, preys);
         }else{
