@@ -28,26 +28,31 @@ public class Automaton {
         preyMoves = new PreyMoves();
 
     }
+    //ile jest prey n a całej mapie
     public Integer getPreyNumber(){
 
         List<Prey> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPreys().stream()).collect(Collectors.toList());
         return a.size();
+    }
+    //ile jest plan na całej mapie
+    public Integer getPlantNumber(){
+         return cells.entrySet().stream().flatMap(e -> e.getValue().getPlants().stream()).map(e -> e.getValue()).reduce(Integer::sum).get();
     }
     public Automaton nextState(){
         Automaton automaton = getInstance();
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
         cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Prey::setActionStrategy));
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
-        Map<Position,State> newMap = automaton.getCells();
+        //Map<Position,State> newMap = automaton.getCells();
         for (Position position : cells.keySet()){
             for (Prey prey : cells.get(position).getPreys()){
                 Set<Position> positionSet = preyMoves.calculate(position,prey);
                 Set<Cell> cellSet = getCellsArea(positionSet);
                 Position newPosition = prey.performAction(cellSet,position);
                 // zjadł roślinę, zaktualizowało się to na obecnej mapie
-                State newState = newMap.get(newPosition);
+                State newState = automaton.getState(newPosition);
                 newState.getPreys().add(prey);
-                newMap.put(position,newState);
+                automaton.update(position,newState);
                 // przenoszę zwierzę na nową mapę
             }
         }
@@ -61,19 +66,19 @@ public class Automaton {
 
         //przenoszenie roślin zaktualizowanych przez ofiary
         for (Position position: cells.keySet()) {
-            newMap.get(position).getPlants().addAll(cells.get(position).getPlants());
+            automaton.addPlants(position,this.getPlants(position));
         }
 
 
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody
         for (Position position: cells.keySet()) {
-            State currentState = newMap.get(position);
+            State currentState = automaton.getState(position);
 
             for (Plant plant: currentState.getPlants()) {
                 plant.grow();
             }
             for (Prey prey: currentState.getPreys()) {
-                if (prey.getStatus() != LifeStatus.DEAD) // tylko dla żyjących - wilki zjadły, zaktualizowaly status ofiar
+                if (prey.isAlive()) // tylko dla żyjących - wilki zjadły, zaktualizowaly status ofiar
                     prey.incrementAge();
                     prey.throwDice(); // uwzględnia aktualizację śmiertelności
 
@@ -82,10 +87,10 @@ public class Automaton {
 
         // usuwanie śmierdziuchów, które gniją
         for (Position position: cells.keySet()) {
-            List<Prey> preys = newMap.get(position).getPreys();
+            List<Prey> preys = automaton.getPreys(position);
             List<Prey> dead = new LinkedList<>();
             for(Prey prey: preys){
-                if(prey.getStatus() == LifeStatus.DEAD){
+                if(!prey.isAlive()){
                     dead.add(prey);
                 }
             }
@@ -97,6 +102,21 @@ public class Automaton {
 
 
         return automaton;
+    }
+
+    private void update(Position position, State state) {
+        cells.put(position,state);
+
+    }
+
+    private void addPlants(Position position, List<Plant> plants) {
+        getPlants(position).addAll(plants);
+    }
+
+
+
+    private State getState(Position position) {
+       return cells.get(position);
     }
 
     protected Automaton getInstance(){

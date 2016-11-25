@@ -72,6 +72,7 @@ public class App extends Application {
         System.out.println("Iteration: " + (++counter));
         automaton = automaton.nextState();
         System.out.println(automaton.getPreyNumber());
+        System.out.println(automaton.getPlantNumber());
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
                 StackPane pane = boardMap.get(new Position(x*CELL_SIZE,y*CELL_SIZE));
@@ -97,7 +98,7 @@ public class App extends Application {
                 if (isPlants && isPreys) {
                     pane.getStyleClass().add("prey_plant-cell");
                 }
-                if (isPreys && !isPlants) {
+                else if (isPreys && !isPlants) {
                     pane.getStyleClass().add("prey-cell");
                 }
                 else if (isPlants && !isPreys) {

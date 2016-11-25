@@ -107,6 +107,10 @@ public abstract class Animal {
 
     public abstract void updateMortality();
 
+    public boolean isAlive(){
+        return status == LifeStatus.ALIVE?Boolean.TRUE:Boolean.FALSE;
+    }
+
     public void throwDice() {
         updateMortality();
         Random random = new Random();
