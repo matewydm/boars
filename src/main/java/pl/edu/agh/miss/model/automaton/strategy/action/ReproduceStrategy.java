@@ -14,10 +14,11 @@ public class ReproduceStrategy implements ActionStrategy {
     public Position performAction(Set<Cell> cells, Position position, Animal animal) {
         List<Animal> infants = animal.giveBirth();
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
-
+        System.out.println(infants.size());
         if (animal instanceof Prey) {
             currentCell.getState().getPreys().addAll(infants);
         }
+
 
         if (animal instanceof Predator) {
             currentCell.getState().getPredators().addAll(infants);

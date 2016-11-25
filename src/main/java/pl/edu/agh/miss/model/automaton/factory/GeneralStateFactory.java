@@ -26,7 +26,7 @@ public class GeneralStateFactory implements StateFactory {
     private Compaction compaction;
 
     public GeneralStateFactory(Compaction compaction) {
-        this.randomGenerator = new Random(47);
+        this.randomGenerator = new Random();
         this.compaction = compaction;
     }
 

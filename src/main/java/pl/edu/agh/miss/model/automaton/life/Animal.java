@@ -78,9 +78,9 @@ public abstract class Animal {
 
     public abstract void setActionStrategy();
 
-    public void impregnate(){
-        if(this.gender.equals(Gender.MALE) || isPregnant())
-             throw new IllegalArgumentException("Animal cannot be impregnate second time");
+    public void impregnate() {
+        if (!isPregnant() && getGender() == Gender.FEMALE)
+            pregnant = new Pregnant(PreyUtils.randomBrood());
     }
 
     public Boolean isPregnant(){
@@ -153,6 +153,7 @@ public abstract class Animal {
             updateSexualDesire();
             incrementAge();
             throwDice();
+            incrementHunger(2);
         }
     }
 

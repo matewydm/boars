@@ -30,7 +30,7 @@ public class App extends Application {
 
     private static final int CELL_SIZE = 50;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 1000; // w milisekundach
+    private static final int SPEED = 500; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -80,19 +80,19 @@ public class App extends Application {
                 boolean isPlants = !automaton.getCells().get(new Position(x,y)).getPlants().isEmpty();
                 boolean isPreys = !automaton.getCells().get(new Position(x,y)).getPreys().isEmpty();
 
-                if (x == 0 && y == 0) {
-                    java.util.List<Animal> preys = automaton.getPreys(new Position(x,y));
-
-                    java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
-
-                    int plantMass = 0;
-                    for(int i = 0 ; i < plants.size(); i++)
-                        plantMass += plants.get(i).getValue();
-
-                    System.out.println("Liczebności na polu (0,0):");
-                    System.out.println("\t Preys: " + preys.size());
-                    System.out.println("\t Plants mass " + plantMass);
-                }
+//                if (x == 0 && y == 0) {
+//                    java.util.List<Animal> preys = automaton.getPreys(new Position(x,y));
+//
+//                    java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
+//
+//                    int plantMass = 0;
+//                    for(int i = 0 ; i < plants.size(); i++)
+//                        plantMass += plants.get(i).getValue();
+//
+//                    System.out.println("Liczebności na polu (0,0):");
+//                    System.out.println("\t Preys: " + preys.size());
+//                    System.out.println("\t Plants mass " + plantMass);
+//                }
 
                 if (isPlants && isPreys) {
                     pane.getStyleClass().add("prey_plant-cell");

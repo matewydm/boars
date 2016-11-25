@@ -19,12 +19,13 @@ public class InseminateStrategy implements ActionStrategy {
         Position newPosition = position;
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
         Gender oppositeGender = animal.getGender().oppositeGender();
-        List<Animal> preys = currentCell.getState().getPreys().stream().filter(oppositeGender::equals).filter(e -> !e.isPregnant()).collect(Collectors.toList());
+        List<Animal> preys = currentCell.getState().getPreys().stream().filter(e -> e.getGender()!=animal.getGender()).filter(e -> !e.isPregnant()).collect(Collectors.toList());
         if(animal.getGender() == Gender.MALE) {
             newPosition = performMaleAction(cells, newPosition, oppositeGender, preys);
         }else{
             newPosition = performFemaleAction(cells, animal, newPosition, preys);
         }
+
         return newPosition;
 
 
@@ -32,10 +33,11 @@ public class InseminateStrategy implements ActionStrategy {
 
     private Position performFemaleAction(Set<Cell> cells, Animal animal, Position newPosition, List<Animal> preys) {
         if(preys.isEmpty()){
-            newPosition = searchFood(cells);
+   //         newPosition = searchFood(cells);
         }
         else {
             animal.impregnate();
+
         }
         return newPosition;
     }
@@ -45,9 +47,9 @@ public class InseminateStrategy implements ActionStrategy {
             Collections.shuffle(preys);
             Animal prey = preys.get(0);
             prey.impregnate();
-
         }else{
-          newPosition = searchToReproduce(cells,oppositeGender);
+
+            newPosition = searchToReproduce(cells,oppositeGender);
         }
         return newPosition;
     }
@@ -56,12 +58,12 @@ public class InseminateStrategy implements ActionStrategy {
     private Position searchToReproduce(Set<Cell> cells,Gender gender) {
         Position newPosition = null;
         Long maxNumberOfAnimal =-1L;
+
         for(Cell cell : cells){
              Long number = cell.getState().getPreys().stream().filter(gender::equals).count();
             if(number>maxNumberOfAnimal) {
                 maxNumberOfAnimal =number;
                 newPosition = cell.getPosition();
-
             }
         }
         return newPosition;

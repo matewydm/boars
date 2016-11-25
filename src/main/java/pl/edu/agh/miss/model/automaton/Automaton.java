@@ -45,17 +45,36 @@ public class Automaton {
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
 
         //Map<Position,State> newMap = automaton.getCells();
-        for (Position position : cells.keySet()){
-            for (Animal prey : cells.get(position).getPreys()){
+
+
+        for (Position position : cells.keySet()){ // pobiera klucze
+
+            List<Animal> preys = cells.get(position).getPreys();
+            int size = preys.size();
+
+            for (int i = 0; i < size; i++) {
+                Animal prey = preys.get(i);
+
                 Set<Position> positionSet = preyMoves.calculate(position,prey);
                 Set<Cell> cellSet = getCellsArea(positionSet);
                 Position newPosition = prey.performAction(cellSet,position);
                 // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
                 State newState = automaton.getState(newPosition);
                 newState.getPreys().add(prey);
-                // przenoszę zwierzę na nową mapę
             }
         }
+//
+//
+//            for (Animal prey : cells.get(position).getPreys()){ // iteruje po liście ofiar
+//                Set<Position> positionSet = preyMoves.calculate(position,prey);
+//                Set<Cell> cellSet = getCellsArea(positionSet);
+//                Position newPosition = prey.performAction(cellSet,position);
+//                // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
+//                State newState = automaton.getState(newPosition);
+//                newState.getPreys().add(prey);
+                // przenoszę zwierzę na nową mapę
+//            }
+//        }
 
 
 
