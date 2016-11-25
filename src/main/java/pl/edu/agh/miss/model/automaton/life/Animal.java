@@ -39,7 +39,10 @@ public abstract class Animal {
     }
 
     public void incrementAge(){
+
         age++;
+        if(isPregnant())
+            pregnant.incrementDays();
     }
 
     public void incrementHunger(Integer val) {
