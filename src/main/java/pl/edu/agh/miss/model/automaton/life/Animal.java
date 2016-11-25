@@ -113,7 +113,7 @@ public abstract class Animal {
         Boolean die = (random.nextDouble()*100 < getMortality()) ? true : false;
 
         if (die)
-            status = LifeStatus.DEAD;
+           die();
 
     }
 
