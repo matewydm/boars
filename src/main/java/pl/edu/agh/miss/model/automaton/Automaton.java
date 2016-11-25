@@ -41,7 +41,7 @@ public class Automaton {
     public Automaton nextState(){
         Automaton automaton = getInstance();
         // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
-        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().stream().forEach(Animal::setActionStrategy));
+        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().forEach(Animal::setActionStrategy));
         //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
 
         //Map<Position,State> newMap = automaton.getCells();
@@ -53,7 +53,6 @@ public class Automaton {
                 // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
                 State newState = automaton.getState(newPosition);
                 newState.getPreys().add(prey);
-                automaton.update(position,newState);
                 // przenoszę zwierzę na nową mapę
             }
         }
@@ -76,23 +75,15 @@ public class Automaton {
         for (Position position: cells.keySet()) {
             State currentState = automaton.getState(position);
 
-            for (Plant plant: currentState.getPlants()) {
-                plant.grow();
-            }
-            for (Animal animal: currentState.getPreys()) { // na razie tylko ofiary
-                animal.update();
-            }
+            currentState.getPlants().forEach(Plant::grow);
+            // na razie tylko ofiary
+            currentState.getPreys().forEach(Animal::update);
         }
 
         // usuwanie śmierdziuchów, które gniją
         for (Position position: cells.keySet()) {
             List<Animal> preys = automaton.getPreys(position);
-            List<Animal> dead = new LinkedList<>();
-            for(Animal prey: preys){
-                if(!prey.isAlive()){
-                    dead.add(prey);
-                }
-            }
+            List<Animal> dead = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
             preys.removeAll(dead);
 
         }

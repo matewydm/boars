@@ -15,7 +15,7 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CUTOFF = 40;
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
-    public static final Integer OLD_AGE = 10;
+    public static final Integer OLD_AGE = 60;
     public static final Integer MATURITY = 10;
 
 
