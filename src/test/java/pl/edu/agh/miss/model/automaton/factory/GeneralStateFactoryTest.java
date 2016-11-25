@@ -3,6 +3,7 @@ package pl.edu.agh.miss.model.automaton.factory;
 import org.junit.Test;
 import pl.edu.agh.miss.model.automaton.Compaction;
 import pl.edu.agh.miss.model.automaton.State;
+import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class GeneralStateFactoryTest {
     public void checkStatePrey() throws Exception {
         StateFactory stateFactory = new GeneralStateFactory(new Compaction(100));
         State generalState = stateFactory.generateState();
-        List<Prey> preyList = generalState.getPreys();
+        List<Animal> preyList = generalState.getPreys();
         assertTrue(!preyList.isEmpty());
     }
 }

@@ -21,8 +21,8 @@ public class Predator extends Animal {
     }
 
     @Override
-    public Set<Animal> born() {
-        return null;
+    protected Animal getNewAnimal(Gender gender) {
+        return new Predator(gender);
     }
 
     @Override
@@ -47,5 +47,10 @@ public class Predator extends Animal {
     @Override
     public void updateMortality() {
         // TODO
+    }
+
+    @Override
+    public void updateHorniness() {
+
     }
 }

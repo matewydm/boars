@@ -22,6 +22,9 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
     public static final Integer OLD_AGE = 10;
+    public static final Integer HORNINESS_CUTOFF = 10;
+    public static final Integer MATURITY = 10;
+
 
 
     public Prey(Gender gender) {
@@ -30,15 +33,6 @@ public class Prey extends Animal implements Foodable {
     }
 
     @Override
-    public Set<Animal> born() {
-        Integer amount = pregnant.getAnimalsNumber();
-        Set<Animal> animals = new HashSet<>(amount);
-        for(int i =0; i <amount; i++){
-            animals.add(getNewAnimal(PreyUtils.randomGender()));
-        }
-        return animals;
-    }
-
     protected Prey getNewAnimal(Gender gender){
         return new Prey(gender);
     }
@@ -114,5 +108,22 @@ public class Prey extends Animal implements Foodable {
         setMortality(mortality);
     }
 
+    @Override
+    public void updateHorniness() {
+        Integer hunger = getHunger();
+        Integer age = getAge();
+
+        if (age > MATURITY) {
+            if (hunger < -HUNGER_CRITIC)
+                incrementHorniness(2);
+            else if (hunger < -HUNGER_CUTOFF) {
+                incrementHorniness(1);
+            }
+            if (hunger > 0)
+                decrementHorniness(1);
+            else if (hunger > HUNGER_CUTOFF)
+                decrementHorniness(10);
+        }
+    }
 
 }

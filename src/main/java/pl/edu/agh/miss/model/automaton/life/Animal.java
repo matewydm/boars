@@ -5,8 +5,7 @@ import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
 
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 
 public abstract class Animal {
@@ -23,6 +22,10 @@ public abstract class Animal {
     // 0 - 10
     protected Integer sexualDesire;
 
+    private Integer horniness;
+
+
+
 
     protected Pregnant pregnant;
     private final Gender gender;
@@ -33,6 +36,7 @@ public abstract class Animal {
         this.gender = gender;
         this.age =0;
         hunger = 0;
+        horniness = 0;
         mortality = 0.0;
         sexualDesire = 0;
     }
@@ -48,6 +52,14 @@ public abstract class Animal {
             pregnant.incrementDays();
     }
 
+    public void incrementHorniness(Integer val) { horniness += val; }
+
+    public void decrementHorniness(Integer val) {
+        horniness -= val;
+        if (horniness < 0)
+            horniness = 0;
+    }
+
     public void incrementHunger(Integer val) {
         hunger += val;
     }
@@ -56,7 +68,17 @@ public abstract class Animal {
         hunger -=val;
     }
 
-    public abstract Set<Animal> born();
+    public List<Animal> born() {
+        Integer amount = pregnant.getAnimalsNumber();
+        List<Animal> animals = new LinkedList<Animal>();
+        for(int i =0; i < amount; i++){
+            animals.add(getNewAnimal(PreyUtils.randomGender())); // animalUtils
+        }
+        pregnant = null;
+        return animals;
+    }
+
+    protected abstract Animal getNewAnimal(Gender gender);
 
     public abstract Boolean isReadyForReproduce();
 
@@ -111,6 +133,8 @@ public abstract class Animal {
         this.mortality = mortality;
     }
 
+    public void setPregnant(Pregnant pregnant) { this.pregnant = pregnant; }
+
     public abstract void updateMortality();
 
     public boolean isAlive(){
@@ -126,6 +150,16 @@ public abstract class Animal {
         if (die)
            die();
 
+    }
+
+    public abstract void updateHorniness();
+
+    public void update() {
+        if (isAlive()) {
+            updateHorniness();
+            incrementAge();
+            throwDice();
+        }
     }
 
 }

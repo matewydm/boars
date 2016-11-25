@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AnimalMoves<T extends Animal> {
-    public abstract Set<Position> calculate(Position position, T animal);
+public abstract class AnimalMoves {
+    public abstract Set<Position> calculate(Position position, Animal animal);
     public Set<Position> positionsInRadius(Position position, Byte radius) {
         Set<Position> set = new HashSet<>();
 
