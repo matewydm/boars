@@ -33,7 +33,7 @@ public class InseminateStrategy implements ActionStrategy {
 
     private Position performFemaleAction(Set<Cell> cells, Animal animal, Position newPosition, List<Animal> preys) {
         if(preys.isEmpty()){
-   //         newPosition = searchFood(cells);
+            newPosition = searchFood(cells);
         }
         else {
             animal.impregnate();

@@ -9,7 +9,7 @@ public class PreyUtils {
     public static final Random randomGenerator = new Random();
     public static final byte PREGNANCY_LENGTH = 3;
     public static final byte PREGNANCY_CRITIC = 2;
-    public static final Integer BroodNumber = 6;
+    public static final Integer BroodNumber = 2;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 
@@ -24,7 +24,7 @@ public class PreyUtils {
     }
 
     public static Integer randomBrood(){
-        return randomGenerator.nextInt(BroodNumber)+2;
+        return randomGenerator.nextInt(BroodNumber)+1;
     }
 
 }

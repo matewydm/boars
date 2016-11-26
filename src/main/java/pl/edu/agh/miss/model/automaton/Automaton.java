@@ -61,23 +61,9 @@ public class Automaton {
                 // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
                 State newState = automaton.getState(newPosition);
                 newState.getPreys().add(prey);
+
             }
         }
-//
-//
-//            for (Animal prey : cells.get(position).getPreys()){ // iteruje po liście ofiar
-//                Set<Position> positionSet = preyMoves.calculate(position,prey);
-//                Set<Cell> cellSet = getCellsArea(positionSet);
-//                Position newPosition = prey.performAction(cellSet,position);
-//                // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
-//                State newState = automaton.getState(newPosition);
-//                newState.getPreys().add(prey);
-                // przenoszę zwierzę na nową mapę
-//            }
-//        }
-
-
-
 
         // tutaj wykonywanie ruchów przez drapieżców
 
@@ -87,16 +73,27 @@ public class Automaton {
         for (Position position: cells.keySet()) {
             automaton.addPlants(position,this.getPlants(position));
         }
-//        cells.entrySet().stream().forEach(e -> automaton.addPlants(e.getKey(),this.getPlants(e.getKey())));
-
 
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody
         for (Position position: cells.keySet()) {
             State currentState = automaton.getState(position);
 
-            currentState.getPlants().forEach(Plant::grow);
-            // na razie tylko ofiary
+  //          currentState.getPlants().forEach(Plant::grow);
             currentState.getPreys().forEach(Animal::update);
+        }
+
+        for (Position position: cells.keySet()) {
+            List<Animal> oldStatePreys = cells.get(position).getPreys();
+            List<Animal> newStatePreys = automaton.getState(position).getPreys();
+            int oldSize = oldStatePreys.size();
+            int newSize = newStatePreys.size();
+            if (oldSize > newSize) { // dodano nowe zwierzątka
+                for (int i = 0; i < oldSize; i++) {
+                    Animal animal = oldStatePreys.get(i);
+                    if (animal.getAge() == 0) // młode
+                        newStatePreys.add(animal);
+                }
+            }
         }
 
         // usuwanie śmierdziuchów, które gniją

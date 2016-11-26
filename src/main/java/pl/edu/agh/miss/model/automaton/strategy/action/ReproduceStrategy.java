@@ -6,6 +6,7 @@ import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ public class ReproduceStrategy implements ActionStrategy {
     public Position performAction(Set<Cell> cells, Position position, Animal animal) {
         List<Animal> infants = animal.giveBirth();
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
-        System.out.println(infants.size());
         if (animal instanceof Prey) {
             currentCell.getState().getPreys().addAll(infants);
         }

@@ -44,7 +44,7 @@ public class App extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(100)));
+        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(10)));
         automaton = new Automaton(cellsFactory);
 
         Pane root = new Pane();

@@ -21,7 +21,9 @@ public class AutomatonTest {
 
         s1 = s1.nextState();
         s1 = s1.nextState();
-
+        s1 = s1.nextState();
+        s1 = s1.nextState();
+        s1 = s1.nextState();
 
     }
 

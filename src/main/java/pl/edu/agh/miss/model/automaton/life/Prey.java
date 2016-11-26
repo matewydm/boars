@@ -15,8 +15,8 @@ public class Prey extends Animal implements Foodable {
     public final static Integer HUNGER_CUTOFF = 40;
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
-    public static final Integer OLD_AGE = 60;
-    public static final Integer MATURITY = 10;
+    public static final Integer OLD_AGE = 15;
+    public static final Integer MATURITY = 5;
 
 
 
@@ -51,6 +51,7 @@ public class Prey extends Animal implements Foodable {
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
+
         if (pregnant != null && isReadyForReproduce())
             this.actionStrategy = new ReproduceStrategy();
         else if (isCriticalHungry)
@@ -72,7 +73,7 @@ public class Prey extends Animal implements Foodable {
     public void updateMortality() {
         Double mortality = getMortality();
         if (getAge() > OLD_AGE) {
-            mortality += 10.0;
+            mortality += 20.0;
         }
 
         if (getHunger() > HUNGER_CRITIC) {
@@ -80,12 +81,12 @@ public class Prey extends Animal implements Foodable {
         }
 
         if (getHunger() > HUNGER_CUTOFF) {
-            mortality += 3.0;
+            mortality += 10.0;
         }
 
-        if (getHunger() < -HUNGER_CRITIC) {
-            mortality -= 5.0;
-        }
+//        if (getHunger() < -HUNGER_CRITIC) {
+//            mortality -= 5.0;
+//        }
 
         if (mortality < 0.0)
             mortality = 0.0;
