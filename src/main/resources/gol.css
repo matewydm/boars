@@ -4,19 +4,26 @@
     -fx-border-width: 0.1;}
 
 .plant-cell {
+    -fx-background-image: url("plant.png");
+    -fx-background-size: 50 50;
+
     -fx-background-color: green;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
 .prey-cell {
+    -fx-background-image: url("dzik.png");
+    -fx-background-size: 50 50;
     -fx-background-color: sandybrown;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
 .prey_plant-cell {
-    -fx-background-color: rosybrown;
+    -fx-background-image: url("dzik.png");
+    -fx-background-size: 50 50;
+    -fx-background-color: yellowgreen;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
