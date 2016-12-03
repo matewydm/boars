@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class PreyUtils {
     public static final Random randomGenerator = new Random();
-    public static final byte PREGNANCY_LENGTH = 3;
+    public static final byte PREGNANCY_LENGTH = 10;
     public static final byte PREGNANCY_CRITIC = 2;
     public static final Integer BroodNumber = 2;
 

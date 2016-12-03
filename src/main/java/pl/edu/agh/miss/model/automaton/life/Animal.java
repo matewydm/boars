@@ -46,12 +46,16 @@ public abstract class Animal {
             pregnant.incrementDays();
     }
 
-    public void incrementSexualDesire(Integer val) { sexualDesire += val; }
+    public void incrementSexualDesire(Integer val) {
+        if(canInseminate() )
+            sexualDesire += val; }
 
     public void decrementSexualDesire(Integer val) {
-        sexualDesire -= val;
-        if (sexualDesire < 0)
-            sexualDesire = 0;
+        if(canInseminate()) {
+            sexualDesire -= val;
+            if (sexualDesire < 0)
+                sexualDesire = 0;
+        }
     }
 
     public void incrementHunger(Integer val) {
@@ -139,11 +143,10 @@ public abstract class Animal {
     public void throwDice() {
         updateMortality();
         Random random = new Random();
-        Boolean die = (random.nextDouble()*80 < getMortality()) ? true : false;
+        Boolean die = (80.0 < getMortality()) ? true : false;
 
         if (die)
            die();
-
     }
 
     public abstract void updateSexualDesire();
@@ -156,5 +159,9 @@ public abstract class Animal {
             incrementHunger(5);
         }
     }
+
+    public abstract boolean canInseminate();
+    public abstract void decrementMortality(Double val);
+
 
 }

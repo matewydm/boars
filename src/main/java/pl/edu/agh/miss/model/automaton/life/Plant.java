@@ -3,19 +3,21 @@ package pl.edu.agh.miss.model.automaton.life;
 
 public class Plant implements Foodable {
 
-    private static final Integer kcal = 100;
-    private Integer value = 20;
+    private static final Integer kcal = 20;
+    private Integer value = 100;
 
     @Override
     public Integer beEaten() {
-        if (value > 0) {
-            if (value < kcal)
-                value = 0;
-            else
-                value -= kcal;
-            return kcal;
-        }
-        else return 0;
+        //TODO poprawic logike zwracnia wartosci
+//        if (value > 0) {
+//            if (value < kcal)
+//                value = 0;
+//            else
+//                value -= kcal;
+//            return kcal;
+//        }
+//        else return 0;
+        return kcal;
     }
 
     public void grow() {

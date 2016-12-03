@@ -44,4 +44,15 @@ public class Predator extends Animal {
     public void updateSexualDesire() {
 
     }
+
+    @Override
+    public boolean canInseminate() {
+        //TODO
+        return false;
+    }
+
+    @Override
+    public void decrementMortality(Double val) {
+        //TODO
+    }
 }

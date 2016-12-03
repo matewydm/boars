@@ -3,6 +3,7 @@ package pl.edu.agh.miss.model.automaton.life;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
+import pl.edu.agh.miss.model.automaton.strategy.action.DoNothingStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
@@ -12,11 +13,11 @@ public class Prey extends Animal implements Foodable {
     private static final AnimalMoves animalMoves = new PreyMoves();
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 10;
-    public final static Integer HUNGER_CUTOFF = 40;
+    public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 80;
-    public static final Integer OLD_AGE = 15;
-    public static final Integer MATURITY = 5;
+    public static final Integer OLD_AGE = 40;
+    public static final Integer MATURITY = 10;
 
 
 
@@ -38,7 +39,7 @@ public class Prey extends Animal implements Foodable {
 
     @Override
     public Boolean isReadyForReproduce() {
-            return PreyUtils.isReadyForReproduce(pregnant);
+            return pregnant != null && PreyUtils.isReadyForReproduce(pregnant);
     }
 
     @Override
@@ -52,16 +53,18 @@ public class Prey extends Animal implements Foodable {
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
 
-        if (pregnant != null && isReadyForReproduce())
+        if (isReadyForReproduce())
             this.actionStrategy = new ReproduceStrategy();
         else if (isCriticalHungry)
             this.actionStrategy = new EatStrategy();
-        else if (isCriticalEager)
+        else if (isCriticalEager && canInseminate())
             this.actionStrategy = new InseminateStrategy();
         else if (isLittleHungry)
             this.actionStrategy = new EatStrategy();
-        else
+        else if(canInseminate())
             this.actionStrategy = new InseminateStrategy();
+        else
+            this.actionStrategy = new DoNothingStrategy();
 
     }
 
@@ -81,7 +84,7 @@ public class Prey extends Animal implements Foodable {
         }
 
         if (getHunger() > HUNGER_CUTOFF) {
-            mortality += 10.0;
+            mortality += 1.0;
         }
 
 //        if (getHunger() < -HUNGER_CRITIC) {
@@ -112,4 +115,16 @@ public class Prey extends Animal implements Foodable {
         }
     }
 
+
+    @Override
+    public boolean canInseminate() {
+        Integer age = getAge();
+        return age > MATURITY && !isPregnant();
+    }
+
+    @Override
+    public void decrementMortality(Double val) {
+        if(age<= OLD_AGE && mortality - val >0)
+            mortality -=val;
+    }
 }

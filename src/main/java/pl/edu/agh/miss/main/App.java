@@ -70,8 +70,8 @@ public class App extends Application {
     private void iterateAutomaton(ActionEvent event) {
         System.out.println("Iteration: " + (++counter));
         automaton = automaton.nextState();
-        System.out.println(automaton.getPreyNumber());
-        System.out.println(automaton.getPlantNumber());
+        System.out.println("Preys "+ automaton.getPreyNumber());
+        System.out.println("Plants: "+ automaton.getPlantNumber());
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
                 StackPane pane = boardMap.get(new Position(x*CELL_SIZE,y*CELL_SIZE));
