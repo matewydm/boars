@@ -13,18 +13,20 @@ import java.util.Set;
 public class State {
     private List<Animal> preys;
     private List<Animal> predators;
-    private List<Plant> plants;
+    private Plant plant;
+    private Integer roughness;
 
-    public State(List<Animal> preys, List<Animal> predators, List<Plant> plants) {
+
+    public State(List<Animal> preys, List<Animal> predators, Plant plant, Integer roughness) {
         this.preys = preys;
         this.predators = predators;
-        this.plants = plants;
+        this.plant = plant;
+        this.roughness = roughness;
     }
 
     public State() {
         preys = new LinkedList<>();
         predators = new LinkedList<>();
-        plants = new LinkedList<>();
     }
 
     public List<Animal> getPreys() {
@@ -43,10 +45,18 @@ public class State {
         this.predators = predators;
     }
 
-    public List<Plant> getPlants() { return plants; }
+    public Plant getPlants() { return plant; }
 
-    public void setPlants(List<Plant> plants) {
-        this.plants = plants;
+    public void setPlants(Plant plant) {
+        this.plant = plant;
+    }
+
+    public Integer getRoughness() {
+        return roughness;
+    }
+
+    public void setRoughness(Integer roughness) {
+        this.roughness = roughness;
     }
 
     @Override
@@ -58,7 +68,8 @@ public class State {
 
         if (preys != null ? !preys.equals(state.preys) : state.preys != null) return false;
         if (predators != null ? !predators.equals(state.predators) : state.predators != null) return false;
-        return plants != null ? plants.equals(state.plants) : state.plants == null;
+        if (plant != null ? !plant.equals(state.plant) : state.plant != null) return false;
+        return roughness != null ? roughness.equals(state.roughness) : state.roughness == null;
 
     }
 
@@ -66,7 +77,8 @@ public class State {
     public int hashCode() {
         int result = preys != null ? preys.hashCode() : 0;
         result = 31 * result + (predators != null ? predators.hashCode() : 0);
-        result = 31 * result + (plants != null ? plants.hashCode() : 0);
+        result = 31 * result + (plant != null ? plant.hashCode() : 0);
+        result = 31 * result + (roughness != null ? roughness.hashCode() : 0);
         return result;
     }
 }

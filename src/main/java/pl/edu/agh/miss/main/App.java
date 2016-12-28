@@ -28,9 +28,9 @@ import java.util.Map;
 
 public class App extends Application {
 
-    private static final int CELL_SIZE = 50;
+    private static final int CELL_SIZE = 5;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 500; // w milisekundach
+    private static final int SPEED = 200; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -71,42 +71,42 @@ public class App extends Application {
         System.out.println("Iteration: " + (++counter));
         automaton = automaton.nextState();
         System.out.println("Preys "+ automaton.getPreyNumber());
-        System.out.println("Plants: "+ automaton.getPlantNumber());
+        repaint();
+    }
+
+    private void repaint() {
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
                 StackPane pane = boardMap.get(new Position(x*CELL_SIZE,y*CELL_SIZE));
                 pane.getStyleClass().clear();
 
-                boolean isPlants = !automaton.getCells().get(new Position(x,y)).getPlants().isEmpty();
-                boolean isPreys = !automaton.getCells().get(new Position(x,y)).getPreys().isEmpty();
+                Position position = new Position(x,y);
 
-//                if (x == 0 && y == 0) {
-//                    java.util.List<Animal> preys = automaton.getPreys(new Position(x,y));
-//
-//                    java.util.List<Plant> plants = automaton.getPlants(new Position(x,y));
-//
-//                    int plantMass = 0;
-//                    for(int i = 0 ; i < plants.size(); i++)
-//                        plantMass += plants.get(i).getValue();
-//
-//                    System.out.println("Liczebności na polu (0,0):");
-//                    System.out.println("\t Preys: " + preys.size());
-//                    System.out.println("\t Plants mass " + plantMass);
-//                }
-
-                if (isPlants && isPreys) {
+                boolean isPlants = !(automaton.getCells().get(position).getPlants().getValue() == 0);
+                boolean isPreys = !automaton.getCells().get(position).getPreys().isEmpty();
+                boolean isPredators = !automaton.getCells().get(position).getPredators().isEmpty();
+                Integer roughness = automaton.getCells().get(position).getRoughness();
+                if (isPreys) {
                     pane.getStyleClass().add("prey_plant-cell");
                 }
-                else if (isPreys && !isPlants) {
-                    pane.getStyleClass().add("prey-cell");
+                else if (isPredators) {
+                    pane.getStyleClass().add("predator-cell");
                 }
-                else if (isPlants && !isPreys) {
-                    pane.getStyleClass().add("plant-cell");
-                }
-                else {
-                    pane.getStyleClass().add("root");
+                else if (isPlants) {
+                    setTerrain(pane,roughness);
                 }
             }
+        }
+    }
+
+    private void setTerrain(StackPane pane, Integer roughness) {
+        switch (roughness.intValue()) {
+            case 1: pane.getStyleClass().add("plant-normal");
+                break;
+            case 2: pane.getStyleClass().add("plant-rough");
+                break;
+            case 3: pane.getStyleClass().add("plant-roughest");
+                break;
         }
     }
 

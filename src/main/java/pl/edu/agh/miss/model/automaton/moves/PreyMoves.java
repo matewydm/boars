@@ -20,24 +20,8 @@ public class PreyMoves extends AnimalMoves {
     private final static Float MOTIVATION_STUFFED_COEF = -0.3f;
 
 
-
-
     @Override
-    public Set<Position> calculate(Position position, Animal animal) {
-
-
-        byte movement = evaluateMovement(animal);
-
-        assert (movement > 0) : "movement less than 0"; // rare occurence
-
-        Set<Position> positions = positionsInRadius(position,movement);
-
-        return positions;
-    }
-
-
-
-    private byte evaluateMovement(Animal animal) {
+    protected byte evaluateRadius(Animal animal) {
         byte movement = animal.getMovement();
 
         float penalty = 0;

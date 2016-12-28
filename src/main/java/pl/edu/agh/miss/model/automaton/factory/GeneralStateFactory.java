@@ -18,15 +18,15 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 0.7;
-    private final static Double PLANT_RATIO = 0.3;
+    private final static Double PREY_RATIO = 0.2;
+    private final static Double PLANT_RATIO = PREY_RATIO;
     private final static Double PREDATOR_RATIO = 0.05;
 
     private Random randomGenerator;
     private Compaction compaction;
 
     public GeneralStateFactory(Compaction compaction) {
-        this.randomGenerator = new Random();
+        this.randomGenerator = new Random(47);
         this.compaction = compaction;
     }
 
@@ -39,9 +39,20 @@ public class GeneralStateFactory implements StateFactory {
         List<Animal> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Predator) e).collect(Collectors.toList());
 
-        List<Plant> plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
+        Plant plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
 
-        return new State(preys,predators,plants);
+        Integer roughness = generateRoughness();
+        return new State(preys,predators,plants,roughness);
+    }
+
+    private Integer generateRoughness() {
+        if (randomGenerator.nextInt(10)==0) {
+            return 3;
+        }
+        if (randomGenerator.nextInt(4)==0) {
+            return 2;
+        }
+        return 1;
     }
 
     private List<Animal> generateAnimals(AnimalFactory animalFactory, Integer animalAmount){
@@ -51,11 +62,8 @@ public class GeneralStateFactory implements StateFactory {
         return animalList;
     }
 
-    private List<Plant> generatePlants(Integer plantAmount){
-        List<Plant> plantList = new LinkedList<>();
-        for (int i = 0; i < plantAmount; i++)
-            plantList.add(new Plant());
-        return plantList;
+    private Plant generatePlants(Integer plantAmount){
+        return new Plant(plantAmount);
     }
 
     private Integer generatePredatorAmount(Integer compaction){

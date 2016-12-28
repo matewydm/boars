@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 20;
+    private final static int SIZE = 60;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;    
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 3;
 
@@ -27,25 +27,16 @@ public class Automaton {
         preyMoves = new PreyMoves();
 
     }
-    //ile jest prey n a całej mapie
     public Integer getPreyNumber(){
 
         List<Animal> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPreys().stream()).collect(Collectors.toList());
         return a.size();
     }
-    //ile jest plan na całej mapie
-    public Integer getPlantNumber(){
-         return cells.entrySet().stream().flatMap(e -> e.getValue().getPlants().stream()).map(e -> e.getValue()).reduce(Integer::sum).get();
-    }
 
     public Automaton nextState(){
         Automaton automaton = getInstance();
-        // generowanie strategi - odbedzie sie dzieki wartosciom w instancji Prey
+
         cells.entrySet().stream().forEach(e -> e.getValue().getPreys().forEach(Animal::setActionStrategy));
-        //tutaj bedziemy robic dzialanie na podstawie tego jaka strategia jest zawarta w obiekcie Animal
-
-        //Map<Position,State> newMap = automaton.getCells();
-
 
         for (Position position : cells.keySet()){ // pobiera klucze
 
@@ -69,18 +60,23 @@ public class Automaton {
 
 
 
-        //przenoszenie roślin zaktualizowanych przez ofiary
+        //przenoszenie roślin zaktualizowanych przez ofiary i terenu
         for (Position position: cells.keySet()) {
-            automaton.addPlants(position,this.getPlants(position));
+            automaton.getCells().get(position).setPlants(this.getPlants(position));
+            automaton.getCells().get(position).setRoughness(this.getRoughness(position));
         }
+
+        int mass = 0;
 
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody
         for (Position position: cells.keySet()) {
             State currentState = automaton.getState(position);
-
-  //          currentState.getPlants().forEach(Plant::grow);
+            currentState.getPlants().grow(currentState.getRoughness());
+            mass += currentState.getPlants().getValue();
             currentState.getPreys().forEach(Animal::update);
         }
+
+        System.out.println("Plants mass: " + mass);
 
         for (Position position: cells.keySet()) {
             List<Animal> oldStatePreys = cells.get(position).getPreys();
@@ -111,12 +107,6 @@ public class Automaton {
         cells.put(position,state);
 
     }
-
-    private void addPlants(Position position, List<Plant> plants) {
-        getPlants(position).addAll(plants);
-    }
-
-
 
     private State getState(Position position) {
        return cells.get(position);
@@ -163,7 +153,12 @@ public class Automaton {
        return getCells().get(position).getPreys();
     }
 
-    public List<Plant> getPlants(Position position) {
+    public Plant getPlants(Position position) {
         return getCells().get(position).getPlants();
     }
+
+    public Integer getRoughness(Position position) {
+        return getCells().get(position).getRoughness();
+    }
+
 }

@@ -15,9 +15,9 @@ public class Prey extends Animal implements Foodable {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 10;
     public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 80;
-    public static final Integer KCAL = 80;
-    public static final Integer OLD_AGE = 40;
-    public static final Integer MATURITY = 10;
+    public static final Integer KCAL = 50;
+    public static final Integer OLD_AGE = 10;
+    public static final Integer MATURITY = 3;
 
 
 
@@ -64,7 +64,7 @@ public class Prey extends Animal implements Foodable {
         else if(canInseminate())
             this.actionStrategy = new InseminateStrategy();
         else
-            this.actionStrategy = new DoNothingStrategy();
+            this.actionStrategy = new EatStrategy();
 
     }
 
@@ -76,7 +76,7 @@ public class Prey extends Animal implements Foodable {
     public void updateMortality() {
         Double mortality = getMortality();
         if (getAge() > OLD_AGE) {
-            mortality += 20.0;
+            mortality += 5.0;
         }
 
         if (getHunger() > HUNGER_CRITIC) {
@@ -84,12 +84,12 @@ public class Prey extends Animal implements Foodable {
         }
 
         if (getHunger() > HUNGER_CUTOFF) {
-            mortality += 1.0;
+            mortality += 5.0;
         }
 
-//        if (getHunger() < -HUNGER_CRITIC) {
-//            mortality -= 5.0;
-//        }
+        if (getHunger() < -HUNGER_CRITIC) {
+            mortality -= 5.0;
+        }
 
         if (mortality < 0.0)
             mortality = 0.0;
@@ -100,18 +100,21 @@ public class Prey extends Animal implements Foodable {
     @Override
     public void updateSexualDesire() {
         Integer hunger = getHunger();
-        Integer age = getAge();
 
         if (age > MATURITY) {
-            if (hunger < -HUNGER_CRITIC)
+            if (hunger < -HUNGER_CRITIC) {
                 incrementSexualDesire(2);
+            }
             else if (hunger < -HUNGER_CUTOFF) {
                 incrementSexualDesire(1);
             }
-            if (hunger > 0)
-                decrementSexualDesire(1);
-            else if (hunger > HUNGER_CUTOFF)
+            if (hunger > 0) {
+              //  System.out.println("dec 1");
+                decrementSexualDesire(1); //hunger zawsze większy od 0
+            }
+            else if (hunger > HUNGER_CUTOFF) {
                 decrementSexualDesire(10);
+            }
         }
     }
 

@@ -5,22 +5,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class PreyUtils {
+public class PredatorUtils {
     public static final Random randomGenerator = new Random();
-    public static final byte PREGNANCY_LENGTH = 10;
-    public static final byte PREGNANCY_CRITIC = 2;
-    public static final Integer BroodNumber = 3;
+    public static final byte PREGNANCY_LENGTH = 12;
+    public static final byte PREGNANCY_CRITIC = 5;
+    public static final Integer BroodNumber = 2;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 
     public static Boolean isReadyForReproduce(final Pregnant pregnant){
         if (pregnant.getPregnantDay() >PREGNANCY_LENGTH) return true;
         else if(pregnant.getPregnantDay() > PREGNANCY_LENGTH - PREGNANCY_CRITIC) return randomGenerator.nextBoolean();
-            else return false;
+        else return false;
     }
 
     public static Gender randomGender(){
-       return  genders.get(randomGenerator.nextInt(genders.size()));
+        return  genders.get(randomGenerator.nextInt(genders.size()));
     }
 
     public static Integer randomBrood(){

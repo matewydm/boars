@@ -7,7 +7,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AnimalMoves {
-    public abstract Set<Position> calculate(Position position, Animal animal);
+    public Set<Position> calculate(Position position, Animal animal) {
+        return positionsInRadius(position,evaluateRadius(animal));
+    }
+
+    protected abstract byte evaluateRadius(Animal animal);
+
     public Set<Position> positionsInRadius(Position position, Byte radius) {
         Set<Position> set = new HashSet<>();
 

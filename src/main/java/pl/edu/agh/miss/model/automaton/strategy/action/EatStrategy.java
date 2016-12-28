@@ -36,7 +36,7 @@ public class EatStrategy implements ActionStrategy{
         int currentSize;
 
         for (Cell cell : cells) {
-            currentSize = cell.getState().getPlants().size();
+            currentSize = cell.getState().getPlants().getValue();
             if (currentSize > maxQuantity) {
                 maxQuantity = currentSize;
                 foodPosition = cell.getPosition();
@@ -50,12 +50,12 @@ public class EatStrategy implements ActionStrategy{
     private void eatOnCurrentPosition(Cell currentCell, Animal animal) {
 
 
-        int genNumber = randomGenerator.nextInt(2)+1; // 1..2
-        int size =currentCell.getState().getPlants().size();
+        int genNumber = randomGenerator.nextInt(1)+1; // 1..2
+        int size =currentCell.getState().getPlants().getValue();
         int genIndex = 0;
         for (int i = 0; i < genNumber; i++) {
             genIndex = randomGenerator.nextInt(size);
-            animal.eat(currentCell.getState().getPlants().get(genIndex));
+            animal.eat(currentCell.getState().getPlants());
         }
 
 

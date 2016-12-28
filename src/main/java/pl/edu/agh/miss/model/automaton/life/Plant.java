@@ -2,28 +2,42 @@ package pl.edu.agh.miss.model.automaton.life;
 
 
 public class Plant implements Foodable {
+    private static final Integer MAX = 40;
+    private static final Integer GROWTH = 6;
 
     private static final Integer kcal = 20;
-    private Integer value = 100;
+    private Integer value;
+
+    public Plant(Integer value) {
+        this.value = value;
+    }
 
     @Override
     public Integer beEaten() {
-        //TODO poprawic logike zwracnia wartosci
-//        if (value > 0) {
-//            if (value < kcal)
-//                value = 0;
-//            else
-//                value -= kcal;
-//            return kcal;
-//        }
-//        else return 0;
-        return kcal;
+        Integer temp = null;
+        if (value > 0) {
+            if (value < kcal) {
+                temp = value;
+                value = 0;
+                return temp;
+            }
+            else {
+                value -= kcal;
+                return kcal;
+            }
+        }
+        else return 0;
+
     }
 
-    public void grow() {
-        if (value < 90) value += 10;
-        else if (value >= 90 && value <= 100) value = 100;
+    public void grow(Integer rougness) {
+        if (value < MAX - GROWTH/rougness) value += GROWTH/rougness;
+        else if (value >= MAX - GROWTH/rougness) value = MAX;
 
+    }
+
+    public Boolean isEmpty() {
+        return (value > 0) ? Boolean.FALSE : Boolean.TRUE;
     }
 
     public Integer getValue() {

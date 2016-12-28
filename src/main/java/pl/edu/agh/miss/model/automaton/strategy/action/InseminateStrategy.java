@@ -77,7 +77,7 @@ public class InseminateStrategy implements ActionStrategy {
         int currentSize;
 
         for (Cell cell : cells) {
-            currentSize = cell.getState().getPlants().size();
+            currentSize = cell.getState().getPlants().getValue();
             if (currentSize > maxQuantity) {
                 maxQuantity = currentSize;
                 foodPosition = cell.getPosition();

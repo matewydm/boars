@@ -8,9 +8,11 @@ import pl.edu.agh.miss.model.automaton.life.Predator;
 import java.util.Set;
 
 public class PredatorMoves extends AnimalMoves {
+
     @Override
-    public Set<Position> calculate(Position position, Animal animal) {
-        return null; // TODO implement predatorMoves
+    protected byte evaluateRadius(Animal animal) {
+        // TODO
+        return animal.getMovement();
     }
 
 }
