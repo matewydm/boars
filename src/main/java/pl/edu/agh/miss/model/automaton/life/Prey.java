@@ -15,7 +15,7 @@ public class Prey extends Animal {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 60;
-    public static final Integer KCAL = 60;
+    public static final Integer KCAL = 80;
     public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
 
@@ -74,18 +74,16 @@ public class Prey extends Animal {
     @Override
     public void updateMortality() {
         Double mortality = getMortality();
-        System.out.println("mortality = " + mortality);
         if (getAge() > OLD_AGE) {
-            mortality += 10.0;
+            mortality += 7.0;
         }
 
         if (getHunger() > HUNGER_CRITIC) {
-            mortality += 10.0;
-            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            mortality += 5.0;
         }
 
         if (getHunger() > HUNGER_CUTOFF) {
-            mortality += 5.0;
+            mortality += 3.0;
         }
 
         if (getHunger() < -HUNGER_CRITIC) {

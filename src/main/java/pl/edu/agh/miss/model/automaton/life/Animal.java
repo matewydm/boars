@@ -156,7 +156,7 @@ public abstract class Animal implements Foodable{
             updateSexualDesire();
             incrementAge();
             throwDice();
-            incrementHunger(10);
+            incrementHunger(5);
         }
     }
 

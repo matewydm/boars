@@ -14,9 +14,9 @@ public class Predator extends Animal {
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
-    public final static Integer HUNGER_CRITIC = 25;
+    public final static Integer HUNGER_CRITIC = 40;
     public static final Integer KCAL = 30;
-    public static final Integer OLD_AGE = 12;
+    public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
 
 
@@ -81,7 +81,7 @@ public class Predator extends Animal {
         Double mortality = getMortality();
 
         if (getAge() > OLD_AGE) {
-            mortality += 5.0;
+            mortality += 7.0;
 
         }
 

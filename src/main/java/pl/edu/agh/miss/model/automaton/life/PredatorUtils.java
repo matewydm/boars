@@ -9,7 +9,7 @@ public class PredatorUtils {
     public static final Random randomGenerator = new Random();
     public static final byte PREGNANCY_LENGTH = 8;
     public static final byte PREGNANCY_CRITIC = 6;
-    public static final Integer BroodNumber = 2;
+    public static final Integer BroodNumber = 3;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 
