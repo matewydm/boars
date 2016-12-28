@@ -4,27 +4,31 @@ package pl.edu.agh.miss.model.automaton;
 import pl.edu.agh.miss.model.automaton.factory.CellsFactory;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Plant;
+import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 60;
+    private final static int SIZE = 20;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;    
-    private final static byte PREDATOR_DEFAULT_MOVEMENT = 3;
+    private final static byte PREDATOR_DEFAULT_MOVEMENT = 4;
 
     private Map<Position,State> cells;
 
     private PreyMoves preyMoves;
+    private PredatorMoves predatorMoves;
 
     private Automaton () {
         cells = new HashMap<>();
         preyMoves = new PreyMoves();
+        predatorMoves = new PredatorMoves();
     }
     public Automaton(CellsFactory factory){
         this.cells = factory.cellsFactoryMethod();
         preyMoves = new PreyMoves();
+        predatorMoves = new PredatorMoves();
 
     }
     public Integer getPreyNumber(){
@@ -33,10 +37,16 @@ public class Automaton {
         return a.size();
     }
 
+    public Integer getPredatorNumber() {
+        List<Animal> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPredators().stream()).collect(Collectors.toList());
+        return a.size();
+    }
+
     public Automaton nextState(){
         Automaton automaton = getInstance();
 
         cells.entrySet().stream().forEach(e -> e.getValue().getPreys().forEach(Animal::setActionStrategy));
+        cells.entrySet().stream().forEach(e -> e.getValue().getPredators().forEach(Animal::setActionStrategy));
 
         for (Position position : cells.keySet()){ // pobiera klucze
 
@@ -56,7 +66,26 @@ public class Automaton {
             }
         }
 
+
         // tutaj wykonywanie ruchów przez drapieżców
+        for (Position position : cells.keySet()){
+
+            List<Animal> predators = cells.get(position).getPredators();
+            int size = predators.size();
+
+            for (int i = 0; i < size; i++) {
+                Animal predator = predators.get(i);
+
+                Set<Position> positionSet = predatorMoves.calculate(position,predator);
+                Set<Cell> cellSet = getCellsArea(positionSet);
+                Position newPosition = predator.performAction(cellSet,position);
+                // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
+                State newState = automaton.getState(newPosition);
+                newState.getPredators().add(predator);
+
+            }
+        }
+
 
 
 
@@ -74,16 +103,18 @@ public class Automaton {
             currentState.getPlants().grow(currentState.getRoughness());
             mass += currentState.getPlants().getValue();
             currentState.getPreys().forEach(Animal::update);
+            currentState.getPredators().forEach(Animal::update);
         }
 
         System.out.println("Plants mass: " + mass);
 
+        //nowe preysy
         for (Position position: cells.keySet()) {
             List<Animal> oldStatePreys = cells.get(position).getPreys();
             List<Animal> newStatePreys = automaton.getState(position).getPreys();
             int oldSize = oldStatePreys.size();
             int newSize = newStatePreys.size();
-            if (oldSize > newSize) { // dodano nowe zwierzątka
+            if (oldSize > newSize) { // dodano nowe zwierzątka preysow
                 for (int i = 0; i < oldSize; i++) {
                     Animal animal = oldStatePreys.get(i);
                     if (animal.getAge() == 0) // młode
@@ -92,12 +123,29 @@ public class Automaton {
             }
         }
 
+        //nowe predatorsy
+        for (Position position: cells.keySet()) {
+            List<Animal> oldStatePredators = cells.get(position).getPredators();
+            List<Animal> newStatePredators = automaton.getState(position).getPredators();
+            int oldSize = oldStatePredators.size();
+            int newSize = newStatePredators.size();
+            if (oldSize > newSize) { // dodano nowe zwierzątka predatorsow
+                for (int i = 0; i < oldSize; i++) {
+                    Animal animal = oldStatePredators.get(i);
+                    if (animal.getAge() == 0) // młode
+                        newStatePredators.add(animal);
+                }
+            }
+        }
+
         // usuwanie śmierdziuchów, które gniją
         for (Position position: cells.keySet()) {
             List<Animal> preys = automaton.getPreys(position);
-            List<Animal> dead = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
-            preys.removeAll(dead);
-
+            List<Animal> predators = automaton.getPredators(position);
+            List<Animal> deadPreys = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
+            List<Animal> deadPredators = predators.stream().filter(predator -> !predator.isAlive()).collect(Collectors.toCollection(LinkedList::new));
+            preys.removeAll(deadPreys);
+            predators.removeAll(deadPredators);
         }
 
         return automaton;
@@ -120,6 +168,7 @@ public class Automaton {
         }
 
         newAutomaton.preyMoves = preyMoves;
+        newAutomaton.predatorMoves = predatorMoves;
 
         return newAutomaton;
     }
@@ -151,6 +200,10 @@ public class Automaton {
 
     public List<Animal> getPreys(Position position) {
        return getCells().get(position).getPreys();
+    }
+
+    public List<Animal> getPredators(Position position) {
+        return getCells().get(position).getPredators();
     }
 
     public Plant getPlants(Position position) {

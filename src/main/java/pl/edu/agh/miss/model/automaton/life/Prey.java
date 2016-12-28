@@ -9,14 +9,14 @@ import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
 
 
-public class Prey extends Animal implements Foodable {
+public class Prey extends Animal {
     private static final AnimalMoves animalMoves = new PreyMoves();
 
-    public final static Integer CRITICAL_SEXUAL_DESIRE = 10;
+    public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
-    public final static Integer HUNGER_CRITIC = 80;
-    public static final Integer KCAL = 50;
-    public static final Integer OLD_AGE = 10;
+    public final static Integer HUNGER_CRITIC = 60;
+    public static final Integer KCAL = 60;
+    public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
 
 
@@ -45,8 +45,7 @@ public class Prey extends Animal implements Foodable {
     @Override
     public void setActionStrategy() {
 
-        //TODO podstawowy seter strategi: do przemyslenia jak jest w chuj glodny je,
-        // jak jest w chuj pozadliwy to rucha jak nie jest mocno glodny to tez rucha bo co ma robic :D
+        //TODO podstawowy seter strategi: do przemyslenia jak jest glodny je,
 
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
@@ -75,12 +74,14 @@ public class Prey extends Animal implements Foodable {
     @Override
     public void updateMortality() {
         Double mortality = getMortality();
+        System.out.println("mortality = " + mortality);
         if (getAge() > OLD_AGE) {
-            mortality += 5.0;
+            mortality += 10.0;
         }
 
         if (getHunger() > HUNGER_CRITIC) {
             mortality += 10.0;
+            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
         }
 
         if (getHunger() > HUNGER_CUTOFF) {
@@ -88,7 +89,7 @@ public class Prey extends Animal implements Foodable {
         }
 
         if (getHunger() < -HUNGER_CRITIC) {
-            mortality -= 5.0;
+            mortality -= 2.0;
         }
 
         if (mortality < 0.0)

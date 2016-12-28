@@ -5,7 +5,7 @@ public class Plant implements Foodable {
     private static final Integer MAX = 40;
     private static final Integer GROWTH = 6;
 
-    private static final Integer kcal = 20;
+    private static final Integer kcal = 40;
     private Integer value;
 
     public Plant(Integer value) {

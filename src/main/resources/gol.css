@@ -1,7 +1,3 @@
-.root {
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-border-width: 0.1;}
 
 .plant-normal {
     -fx-background-image: url("plant.png");
@@ -32,15 +28,14 @@
 .prey-cell {
     -fx-background-image: url("dzik.png");
     -fx-background-size: 50 50;
-    -fx-background-color: sandybrown;
+    -fx-background-color: goldenrod;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
-.prey_plant-cell {
-    -fx-background-image: url("dzik.png");
+.predator_prey-cell {
     -fx-background-size: 50 50;
-    -fx-background-color: yellowgreen;
+    -fx-background-color: darkred;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
@@ -48,7 +43,7 @@
 .predator-cell {
     -fx-background-image: url("wolf.jpg");
     -fx-background-size: 50 50;
-    -fx-background-color: yellowgreen;
+    -fx-background-color: lightcoral;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }

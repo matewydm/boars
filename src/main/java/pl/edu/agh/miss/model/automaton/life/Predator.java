@@ -6,14 +6,15 @@ import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
 import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.PredatorStrategy;
 import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
 
 public class Predator extends Animal {
     private static final AnimalMoves animalMoves = new PredatorMoves();
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
-    public final static Integer HUNGER_CUTOFF = 10;
-    public final static Integer HUNGER_CRITIC = 40;
+    public final static Integer HUNGER_CUTOFF = 20;
+    public final static Integer HUNGER_CRITIC = 25;
     public static final Integer KCAL = 30;
     public static final Integer OLD_AGE = 12;
     public static final Integer MATURITY = 4;
@@ -40,20 +41,35 @@ public class Predator extends Animal {
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
+//        System.out.println("hunger : " + getHunger());
 
 
-        if (isReadyForReproduce())
+
+        if (isReadyForReproduce()) {
             this.actionStrategy = new ReproduceStrategy();
-        else if (isCriticalHungry)
-            this.actionStrategy = new EatStrategy();
-        else if (isCriticalEager && canInseminate())
+//            System.out.println("reproduce");
+        }
+        else if (isLittleHungry) {
+            this.actionStrategy = new PredatorStrategy();
+//            System.out.println("predator");
+        }
+        else if (isCriticalEager && canInseminate()) {
             this.actionStrategy = new InseminateStrategy();
-        else if (isLittleHungry)
-            this.actionStrategy = new EatStrategy();
-        else if(canInseminate())
-            this.actionStrategy = new InseminateStrategy();
-        else
-            this.actionStrategy = new EatStrategy();
+//            System.out.println("inseminate");
+//            System.out.println("\tinseminate strategyy");
+//            System.out.println("\thunger :" + getHunger());
+//            System.out.println("\tage : " + getAge());
+//            System.out.println("\tmortality : " + getMortality());
+        }
+//        else if (isLittleHungry) {
+//            this.actionStrategy = new PredatorStrategy();
+//            System.out.println("predator");
+//        }
+//        else if(canInseminate())
+//            this.actionStrategy = new InseminateStrategy();
+        else {
+            this.actionStrategy = new PredatorStrategy();
+        }
     }
 
     public static AnimalMoves getAnimalMoves() {
@@ -62,22 +78,68 @@ public class Predator extends Animal {
 
     @Override
     public void updateMortality() {
-        // TODO
+        Double mortality = getMortality();
+
+        if (getAge() > OLD_AGE) {
+            mortality += 5.0;
+
+        }
+
+        if (getHunger() > HUNGER_CRITIC) {
+            mortality += 10.0;
+            
+        }
+
+        if (getHunger() > HUNGER_CUTOFF) {
+            mortality += 5.0;
+        }
+
+        if (getHunger() < -HUNGER_CRITIC) {
+            mortality -= 5.0;
+        }
+
+        if (mortality < 0.0)
+            mortality = 0.0;
+
+        setMortality(mortality);
     }
 
     @Override
     public void updateSexualDesire() {
+        Integer hunger = getHunger();
 
+        if (age > MATURITY) {
+            if (hunger < -HUNGER_CRITIC) {
+                incrementSexualDesire(2);
+            }
+            else if (hunger < -HUNGER_CUTOFF) {
+                incrementSexualDesire(1);
+            }
+            if (hunger > 0) {
+                //  System.out.println("dec 1");
+                decrementSexualDesire(1); //hunger zawsze większy od 0
+            }
+            else if (hunger > HUNGER_CUTOFF) {
+                decrementSexualDesire(10);
+            }
+        }
     }
+
 
     @Override
     public boolean canInseminate() {
-        //TODO
-        return false;
+        Integer age = getAge();
+        return age > MATURITY && !isPregnant();
     }
 
     @Override
     public void decrementMortality(Double val) {
-        //TODO
+        if(age<= OLD_AGE && mortality - val >0)
+            mortality -=val;
+    }
+
+    @Override
+    public Integer beEaten() {
+        return null; //TODO
     }
 }

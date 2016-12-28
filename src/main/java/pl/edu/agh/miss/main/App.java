@@ -28,9 +28,9 @@ import java.util.Map;
 
 public class App extends Application {
 
-    private static final int CELL_SIZE = 5;
+    private static final int CELL_SIZE =50;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 200; // w milisekundach
+    private static final int SPEED = 600; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -71,6 +71,8 @@ public class App extends Application {
         System.out.println("Iteration: " + (++counter));
         automaton = automaton.nextState();
         System.out.println("Preys "+ automaton.getPreyNumber());
+        System.out.println("Predators: "+ automaton.getPredatorNumber());
+
         repaint();
     }
 
@@ -86,8 +88,11 @@ public class App extends Application {
                 boolean isPreys = !automaton.getCells().get(position).getPreys().isEmpty();
                 boolean isPredators = !automaton.getCells().get(position).getPredators().isEmpty();
                 Integer roughness = automaton.getCells().get(position).getRoughness();
+                if (isPreys && isPredators) {
+                    pane.getStyleClass().add("predator_prey-cell");
+                }
                 if (isPreys) {
-                    pane.getStyleClass().add("prey_plant-cell");
+                    pane.getStyleClass().add("prey-cell");
                 }
                 else if (isPredators) {
                     pane.getStyleClass().add("predator-cell");

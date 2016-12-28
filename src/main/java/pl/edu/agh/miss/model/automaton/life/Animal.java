@@ -8,7 +8,7 @@ import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
 import java.util.*;
 
 
-public abstract class Animal {
+public abstract class Animal implements Foodable{
 
     protected ActionStrategy actionStrategy;
 
@@ -156,7 +156,7 @@ public abstract class Animal {
             updateSexualDesire();
             incrementAge();
             throwDice();
-            incrementHunger(5);
+            incrementHunger(10);
         }
     }
 
