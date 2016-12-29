@@ -15,7 +15,7 @@ public class Prey extends Animal {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 60;
-    public static final Integer KCAL = 80;
+    public static final Integer KCAL = 100;
     public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
 

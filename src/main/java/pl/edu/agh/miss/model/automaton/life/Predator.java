@@ -13,8 +13,8 @@ public class Predator extends Animal {
     private static final AnimalMoves animalMoves = new PredatorMoves();
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
-    public final static Integer HUNGER_CUTOFF = 20;
-    public final static Integer HUNGER_CRITIC = 40;
+    public final static Integer HUNGER_CUTOFF = 40;
+    public final static Integer HUNGER_CRITIC = 60;
     public static final Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
