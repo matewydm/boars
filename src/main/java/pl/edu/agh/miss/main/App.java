@@ -29,7 +29,7 @@ public class App extends Application {
 
     private static final int CELL_SIZE =5;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 1000; // w milisekundach
+    private static final int SPEED = 200; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -83,8 +83,8 @@ public class App extends Application {
 
         es.shutdown();
 
-    //    System.out.println("Preys "+ automaton.getPreyNumber());
-     //   System.out.println("Predators: "+ automaton.getPredatorNumber());
+        System.out.println("Preys "+ automaton.getPreyNumber());
+        System.out.println("Predators: "+ automaton.getPredatorNumber());
 
 
         repaint();

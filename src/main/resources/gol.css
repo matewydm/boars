@@ -28,7 +28,7 @@
 .prey-cell {
     -fx-background-image: url("dzik.png");
     -fx-background-size: 50 50;
-    -fx-background-color: goldenrod;
+    -fx-background-color: blue;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }

@@ -6,6 +6,7 @@ import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
+import pl.edu.agh.miss.model.automaton.strategy.action.RunawayStrategy;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 100;
+    private final static int SIZE = 30;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;    
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 4;
 
@@ -47,36 +48,16 @@ public class Automaton {
     public Automaton nextState(){
         Automaton automaton = getInstance();
 
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                cells.entrySet().stream().forEach(e -> {
-                    System.out.println(Thread.currentThread().getName());
-                    e.getValue().getPreys().forEach(Animal::setActionStrategy);
-                });
+        for (State state: cells.values()) {
+            if (state.getPredators().isEmpty()) {
+                state.getPreys().forEach(Animal::setActionStrategy);
+            } else {
+                state.getPreys().forEach(Animal::setRunawayStrategy);
+//                System.out.println("runaway");
             }
-        });
-
-        t1.start();
-
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("\t"+Thread.currentThread().getName());
-                cells.entrySet().stream().forEach(e -> e.getValue().getPredators().forEach(Animal::setActionStrategy));
-            }
-        });
-
-        t2.start();
-
-        try {
-            t1.join();
-            t2.join();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
 
+        cells.values().stream().forEach(e -> e.getPredators().forEach(Animal::setActionStrategy));
 
         for (Position position : cells.keySet()){
 
@@ -134,7 +115,7 @@ public class Automaton {
             currentState.getPredators().forEach(Animal::update);
         }
 
-   //     System.out.println("Plants mass: " + mass);
+        System.out.println("Plants mass: " + mass);
 
         //nowe preysy
 

@@ -24,7 +24,7 @@ public class RunawayStrategy implements ActionStrategy {
             }
         }
 
-        return position;
+        return newPosition;
 
     }
 

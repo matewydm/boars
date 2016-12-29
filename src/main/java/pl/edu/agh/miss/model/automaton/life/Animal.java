@@ -4,6 +4,7 @@ package pl.edu.agh.miss.model.automaton.life;
 import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.strategy.action.ActionStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.RunawayStrategy;
 
 import java.util.*;
 
@@ -162,6 +163,9 @@ public abstract class Animal implements Foodable{
 
     public abstract boolean canInseminate();
     public abstract void decrementMortality(Double val);
+    public void setRunawayStrategy() {
+        this.actionStrategy = new RunawayStrategy();
+    }
 
 
 }
