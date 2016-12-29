@@ -167,5 +167,7 @@ public abstract class Animal implements Foodable{
         this.actionStrategy = new RunawayStrategy();
     }
 
-
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 }
