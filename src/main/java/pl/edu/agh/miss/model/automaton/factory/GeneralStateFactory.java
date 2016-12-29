@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 0.7;
+    private final static Double PREY_RATIO = 0.7; //0.7 przy compaction 10
     private final static Double PLANT_RATIO = 2*PREY_RATIO;
-    private final static Double PREDATOR_RATIO = 0.2;
+    private final static Double PREDATOR_RATIO = PREY_RATIO/3; //0.2
 
     private Random randomGenerator;
     private Compaction compaction;
@@ -39,7 +39,7 @@ public class GeneralStateFactory implements StateFactory {
         List<Animal> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
                                 .stream().map(e -> (Predator) e).collect(Collectors.toList());
 
-        Plant plants = generatePlants(generatePlantAmount(compaction.getCompaction()));
+        Plant plants = generatePlants(generatePlantAmount(3));
 
         Integer roughness = generateRoughness();
         return new State(preys,predators,plants,roughness);

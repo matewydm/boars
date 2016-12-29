@@ -1,6 +1,6 @@
 package pl.edu.agh.miss.main;
 
-
+//-Djava.util.concurrent.ForkJoinPool.common.parallelism=7
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -23,13 +23,13 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.*;
 
 public class App extends Application {
 
     private static final int CELL_SIZE =5;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 100; // w milisekundach
+    private static final int SPEED = 1000; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -45,7 +45,7 @@ public class App extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(10)));
+        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(5)));
         automaton = new Automaton(cellsFactory);
 
         Pane root = new Pane();
@@ -70,9 +70,22 @@ public class App extends Application {
 
     private void iterateAutomaton(ActionEvent event) {
         System.out.println("Iteration: " + (++counter));
-        automaton = automaton.nextState();
-        System.out.println("Preys "+ automaton.getPreyNumber());
-        System.out.println("Predators: "+ automaton.getPredatorNumber());
+
+        ExecutorService es = Executors.newFixedThreadPool(7);
+        Callable<Automaton> callable = new MyCallable(automaton);
+        Future<Automaton> result = es.submit(callable);
+
+        try {
+            automaton = result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        es.shutdown();
+
+    //    System.out.println("Preys "+ automaton.getPreyNumber());
+     //   System.out.println("Predators: "+ automaton.getPredatorNumber());
+
 
         repaint();
     }
@@ -116,6 +129,21 @@ public class App extends Application {
             case 3: pane.getStyleClass().add("plant-roughest");
                 break;
         }
+    }
+
+    class MyCallable implements Callable<Automaton>{
+
+        private Automaton automaton;
+
+        public MyCallable(Automaton automaton) {
+            this.automaton = automaton;
+        }
+
+        @Override
+        public Automaton call() throws Exception {
+            return automaton.nextState();
+        }
+
     }
 
     public static void main(String[] args) {

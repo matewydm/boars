@@ -8,20 +8,22 @@ import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 20;
+    private final static int SIZE = 100;
     private final static byte PREY_DEFAULT_MOVEMENT = 3;    
     private final static byte PREDATOR_DEFAULT_MOVEMENT = 4;
 
-    private Map<Position,State> cells;
+    private ConcurrentMap<Position,State> cells;
 
     private PreyMoves preyMoves;
     private PredatorMoves predatorMoves;
 
     private Automaton () {
-        cells = new HashMap<>();
+        cells = new ConcurrentHashMap<>();
         preyMoves = new PreyMoves();
         predatorMoves = new PredatorMoves();
     }
@@ -45,10 +47,38 @@ public class Automaton {
     public Automaton nextState(){
         Automaton automaton = getInstance();
 
-        cells.entrySet().stream().forEach(e -> e.getValue().getPreys().forEach(Animal::setActionStrategy));
-        cells.entrySet().stream().forEach(e -> e.getValue().getPredators().forEach(Animal::setActionStrategy));
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                cells.entrySet().stream().forEach(e -> {
+                    System.out.println(Thread.currentThread().getName());
+                    e.getValue().getPreys().forEach(Animal::setActionStrategy);
+                });
+            }
+        });
 
-        for (Position position : cells.keySet()){ // pobiera klucze
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("\t"+Thread.currentThread().getName());
+                cells.entrySet().stream().forEach(e -> e.getValue().getPredators().forEach(Animal::setActionStrategy));
+            }
+        });
+
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        for (Position position : cells.keySet()){
 
             List<Animal> preys = cells.get(position).getPreys();
             int size = preys.size();
@@ -67,7 +97,8 @@ public class Automaton {
         }
 
 
-        // tutaj wykonywanie ruchów przez drapieżców
+
+
         for (Position position : cells.keySet()){
 
             List<Animal> predators = cells.get(position).getPredators();
@@ -79,14 +110,11 @@ public class Automaton {
                 Set<Position> positionSet = predatorMoves.calculate(position,predator);
                 Set<Cell> cellSet = getCellsArea(positionSet);
                 Position newPosition = predator.performAction(cellSet,position);
-                // zjadł roślinę, urodził młode, zaktualizowało się to na obecnej mapie
                 State newState = automaton.getState(newPosition);
                 newState.getPredators().add(predator);
 
             }
         }
-
-
 
 
         //przenoszenie roślin zaktualizowanych przez ofiary i terenu
@@ -106,47 +134,96 @@ public class Automaton {
             currentState.getPredators().forEach(Animal::update);
         }
 
-        System.out.println("Plants mass: " + mass);
+   //     System.out.println("Plants mass: " + mass);
 
         //nowe preysy
-        for (Position position: cells.keySet()) {
-            List<Animal> oldStatePreys = cells.get(position).getPreys();
-            List<Animal> newStatePreys = automaton.getState(position).getPreys();
-            int oldSize = oldStatePreys.size();
-            int newSize = newStatePreys.size();
-            if (oldSize > newSize) { // dodano nowe zwierzątka preysow
-                for (int i = 0; i < oldSize; i++) {
-                    Animal animal = oldStatePreys.get(i);
-                    if (animal.getAge() == 0) // młode
-                        newStatePreys.add(animal);
+
+
+        Thread newPreys = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Position position: cells.keySet()) {
+                    List<Animal> oldStatePreys = cells.get(position).getPreys();
+                    List<Animal> newStatePreys = automaton.getState(position).getPreys();
+                    int oldSize = oldStatePreys.size();
+                    int newSize = newStatePreys.size();
+                    if (oldSize > newSize) { // dodano nowe zwierzątka preysow
+                        for (int i = 0; i < oldSize; i++) {
+                            Animal animal = oldStatePreys.get(i);
+                            if (animal.getAge() == 0) // młode
+                                newStatePreys.add(animal);
+                        }
+                    }
                 }
             }
-        }
+        });
 
-        //nowe predatorsy
-        for (Position position: cells.keySet()) {
-            List<Animal> oldStatePredators = cells.get(position).getPredators();
-            List<Animal> newStatePredators = automaton.getState(position).getPredators();
-            int oldSize = oldStatePredators.size();
-            int newSize = newStatePredators.size();
-            if (oldSize > newSize) { // dodano nowe zwierzątka predatorsow
-                for (int i = 0; i < oldSize; i++) {
-                    Animal animal = oldStatePredators.get(i);
-                    if (animal.getAge() == 0) // młode
-                        newStatePredators.add(animal);
+        Thread newPredators = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //nowe predatorsy
+                for (Position position: cells.keySet()) {
+                    List<Animal> oldStatePredators = cells.get(position).getPredators();
+                    List<Animal> newStatePredators = automaton.getState(position).getPredators();
+                    int oldSize = oldStatePredators.size();
+                    int newSize = newStatePredators.size();
+                    if (oldSize > newSize) { // dodano nowe zwierzątka predatorsow
+                        for (int i = 0; i < oldSize; i++) {
+                            Animal animal = oldStatePredators.get(i);
+                            if (animal.getAge() == 0) // młode
+                                newStatePredators.add(animal);
+                        }
+                    }
                 }
             }
+        });
+
+        newPreys.start();
+        newPredators.start();
+
+        try {
+            newPreys.join();
+            newPredators.join();
+        }
+        catch (Exception e) {}
+
+        Thread deadPreys = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // usuwanie śmierdziuchów, które gniją
+                for (Position position: cells.keySet()) {
+                    List<Animal> preys = automaton.getPreys(position);
+                    List<Animal> deadPreys = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
+                    preys.removeAll(deadPreys);
+                }
+            }
+        });
+
+        Thread deadPredators = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Position position: cells.keySet()) {
+                    List<Animal> predators = automaton.getPredators(position);
+                    List<Animal> deadPredators = predators.stream().filter(predator -> !predator.isAlive()).collect(Collectors.toCollection(LinkedList::new));
+                    predators.removeAll(deadPredators);
+                }
+            }
+        });
+
+        deadPreys.start();
+        deadPredators.start();
+
+        try {
+            deadPreys.join();
+            deadPredators.join();
+        }
+        catch (Exception e) {
+
         }
 
-        // usuwanie śmierdziuchów, które gniją
-        for (Position position: cells.keySet()) {
-            List<Animal> preys = automaton.getPreys(position);
-            List<Animal> predators = automaton.getPredators(position);
-            List<Animal> deadPreys = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
-            List<Animal> deadPredators = predators.stream().filter(predator -> !predator.isAlive()).collect(Collectors.toCollection(LinkedList::new));
-            preys.removeAll(deadPreys);
-            predators.removeAll(deadPredators);
-        }
+
+
+
 
         return automaton;
     }
@@ -194,7 +271,7 @@ public class Automaton {
     }
 
 
-    public void setCells(Map<Position, State> cells) {
+    public void setCells(ConcurrentMap<Position, State> cells) {
         this.cells = cells;
     }
 

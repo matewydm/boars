@@ -6,6 +6,8 @@ import pl.edu.agh.miss.model.automaton.State;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by mucha on 20.11.16.
@@ -22,8 +24,8 @@ public class SimpleCellsFactory implements CellsFactory {
     }
 
     @Override
-    public Map<Position,State> cellsFactoryMethod() {
-        Map<Position,State> cellMap = new HashMap<>();
+    public ConcurrentMap<Position,State> cellsFactoryMethod() {
+        ConcurrentMap<Position,State> cellMap = new ConcurrentHashMap<>();
         for (int i = 0; i < dimension.getWidth(); i++)
             for (int j = 0; j < dimension.getHeight(); j++) {
                 //System.out.println(i + " " + j);
