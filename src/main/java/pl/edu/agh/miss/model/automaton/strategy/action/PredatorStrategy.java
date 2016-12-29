@@ -15,7 +15,7 @@ public class PredatorStrategy implements ActionStrategy {
         Position newPosition = position;
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
-        if (randomGenerator.nextInt(4) == 0) { // 25% szans
+        if (randomGenerator.nextInt(5) == 0) { // 20% szans
             if (!currentCell.getState().getPreys().isEmpty()) {
                 eatOnCurrentPosition(currentCell, animal);
             } else {

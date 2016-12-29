@@ -29,7 +29,7 @@ public class App extends Application {
 
     private static final int CELL_SIZE =5;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 200; // w milisekundach
+    private static final int SPEED = 100; // w milisekundach
     private static int counter = 0;
     private Automaton automaton;
 
@@ -45,7 +45,7 @@ public class App extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(5)));
+        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(10)));
         automaton = new Automaton(cellsFactory);
 
         Pane root = new Pane();

@@ -20,7 +20,7 @@ public class GeneralStateFactory implements StateFactory {
 
     private final static Double PREY_RATIO = 1.0; //0.7 przy compaction 10
     private final static Double PLANT_RATIO = 2*PREY_RATIO;
-    private final static Double PREDATOR_RATIO = PREY_RATIO/3; //0.2
+    private final static Double PREDATOR_RATIO = 0.2; //0.2
 
     private Random randomGenerator;
     private Compaction compaction;
