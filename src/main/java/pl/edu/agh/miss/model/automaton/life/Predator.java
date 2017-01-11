@@ -14,15 +14,17 @@ public class Predator extends Animal {
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 40;
-    public final static Integer HUNGER_CRITIC = 60;
+    public final static Integer HUNGER_CRITIC = 80;
     public static final Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
+    private final static byte PREDATOR_DEFAULT_MOVEMENT = 2;
+
 
 
     public Predator(Gender gender) {
         super(gender);
-        setDefaultMovement(Automaton.getPredatorDefaultMovement());
+        setDefaultMovement(PREDATOR_DEFAULT_MOVEMENT);
 
     }
 
@@ -41,32 +43,18 @@ public class Predator extends Animal {
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
-//        System.out.println("hunger : " + getHunger());
 
 
 
         if (isReadyForReproduce()) {
             this.actionStrategy = new ReproduceStrategy();
-//            System.out.println("reproduce");
         }
         else if (isLittleHungry) {
             this.actionStrategy = new PredatorStrategy();
-//            System.out.println("predator");
         }
         else if (isCriticalEager && canInseminate()) {
             this.actionStrategy = new InseminateStrategy();
-//            System.out.println("inseminate");
-//            System.out.println("\tinseminate strategyy");
-//            System.out.println("\thunger :" + getHunger());
-//            System.out.println("\tage : " + getAge());
-//            System.out.println("\tmortality : " + getMortality());
         }
-//        else if (isLittleHungry) {
-//            this.actionStrategy = new PredatorStrategy();
-//            System.out.println("predator");
-//        }
-//        else if(canInseminate())
-//            this.actionStrategy = new InseminateStrategy();
         else {
             this.actionStrategy = new PredatorStrategy();
         }
@@ -110,10 +98,10 @@ public class Predator extends Animal {
 
         if (age > MATURITY) {
             if (hunger < -HUNGER_CRITIC) {
-                incrementSexualDesire(2);
+                incrementSexualDesire(6);
             }
             else if (hunger < -HUNGER_CUTOFF) {
-                incrementSexualDesire(1);
+                incrementSexualDesire(3);
             }
             if (hunger > 0) {
                 //  System.out.println("dec 1");
@@ -123,7 +111,13 @@ public class Predator extends Animal {
                 decrementSexualDesire(10);
             }
         }
+
+        if (sexualDesire > CRITICAL_SEXUAL_DESIRE)
+            sexualDesire = CRITICAL_SEXUAL_DESIRE;
+        if (sexualDesire < 0)
+            sexualDesire = 0;
     }
+
 
 
     @Override

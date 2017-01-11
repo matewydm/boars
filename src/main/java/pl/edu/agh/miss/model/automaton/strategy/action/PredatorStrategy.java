@@ -3,6 +3,7 @@ package pl.edu.agh.miss.model.automaton.strategy.action;
 import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
+import pl.edu.agh.miss.model.automaton.life.PredatorUtils;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -15,7 +16,7 @@ public class PredatorStrategy implements ActionStrategy {
         Position newPosition = position;
         Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
-        if (randomGenerator.nextInt(6) == 0) { // 20% szans
+        if (randomGenerator.nextInt(100/ PredatorUtils.KILLING_CHANCES) == 0) {
             if (!currentCell.getState().getPreys().isEmpty()) {
                 eatOnCurrentPosition(currentCell, animal);
             } else {

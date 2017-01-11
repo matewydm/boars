@@ -1,34 +1,30 @@
 
 .plant-normal {
-    -fx-background-image: url("plant.png");
     -fx-background-size: 50 50;
 
-    -fx-background-color: green;
+    -fx-background-color: darkgreen;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
 
 .plant-rough {
-    -fx-background-image: url("plant.png");
     -fx-background-size: 50 50;
-    -fx-background-color: sandybrown;
+    -fx-background-color: green;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
 .plant-roughest {
-    -fx-background-image: url("plant.png");
     -fx-background-size: 50 50;
-    -fx-background-color: saddlebrown;
+    -fx-background-color: darkolivegreen;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
 
 .prey-cell {
-    -fx-background-image: url("dzik.png");
     -fx-background-size: 50 50;
-    -fx-background-color: blue;
+    -fx-background-color: yellow;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
@@ -41,9 +37,8 @@
 }
 
 .predator-cell {
-    -fx-background-image: url("wolf.jpg");
     -fx-background-size: 50 50;
-    -fx-background-color: lightcoral;
+    -fx-background-color: lavenderblush;
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }

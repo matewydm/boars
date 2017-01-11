@@ -18,9 +18,12 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 1.0; //0.7 przy compaction 10
+    private final static Double PREY_RATIO = 1.0;
     private final static Double PLANT_RATIO = 2*PREY_RATIO;
-    private final static Double PREDATOR_RATIO = 0.2; //0.2
+    private final static Double PREDATOR_RATIO = 0.5; //0.2
+
+    private final static Integer PREY_CHANCES = 40;
+    private final static Integer PREDATOR_CHANCES = 10;
 
     private Random randomGenerator;
     private Compaction compaction;
@@ -36,10 +39,10 @@ public class GeneralStateFactory implements StateFactory {
 
 
         List<Animal> preys = generateAnimals(new PreyFactory(),generatePreyAmount(compaction.getCompaction()))
-                                .stream().map(e -> (Prey) e).collect(Collectors.toList());
+                .stream().map(e -> (Prey) e).collect(Collectors.toList());
 
         List<Animal> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
-                                .stream().map(e -> (Predator) e).collect(Collectors.toList());
+                .stream().map(e -> (Predator) e).collect(Collectors.toList());
 
         Plant plants = generatePlants(generatePlantAmount(3));
 
@@ -69,16 +72,22 @@ public class GeneralStateFactory implements StateFactory {
     }
 
     private Integer generatePredatorAmount(Integer compaction){
-        Integer result = randomGenerator.nextInt((int)Math.ceil(compaction*PREDATOR_RATIO));
-//        System.out.println("result = " + result);
+        Integer result = 0;
+        if (randomGenerator.nextInt(100/PREDATOR_CHANCES) == 0) {
+            result = randomGenerator.nextInt((int)(compaction * PREDATOR_RATIO));
+        }
         return result;
     }
 
     private Integer generatePreyAmount(Integer compaction){
-        return randomGenerator.nextInt((int)Math.ceil(compaction*PREY_RATIO));
+        Integer result = 0;
+        if (randomGenerator.nextInt(100/PREY_CHANCES) == 0) {
+            result = randomGenerator.nextInt((int)(compaction*PREY_RATIO));
+        }
+        return result;
     }
 
     private Integer generatePlantAmount(Integer compaction){
-        return randomGenerator.nextInt((int)Math.ceil(compaction*PLANT_RATIO));
+        return randomGenerator.nextInt((int)(compaction*PLANT_RATIO));
     }
 }

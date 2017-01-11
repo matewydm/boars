@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.StackPaneBuilder;
+import javafx.scene.text.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pl.edu.agh.miss.model.automaton.*;
@@ -27,13 +29,16 @@ import java.util.concurrent.*;
 
 public class App extends Application {
 
-    private static final int CELL_SIZE =5;
+    private static final int CELL_SIZE =20;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 100; // w milisekundach
-    private static int counter = 0;
+    private static final int SPEED = 250; // w milisekundach
+    private static int COUNTER = 0;
     private Automaton automaton;
 
     private Map<Position, StackPane> boardMap = new HashMap<>();
+    private Text preys;
+    private Text predators;
+    private Text counter;
 
 
     @Override
@@ -45,7 +50,7 @@ public class App extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(10)));
+        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(4)));
         automaton = new Automaton(cellsFactory);
 
         Pane root = new Pane();
@@ -61,6 +66,20 @@ public class App extends Application {
             }
         }
 
+        Font font = Font.font("Arial",FontWeight.BOLD,30);
+
+        preys = new Text(20,30,"PREYS: 0");
+        preys.setFont(font);
+        predators = new Text(BOARD_SIZE-280,30,"PREDATORS: 0");
+        predators.setFont(font);
+        counter = new Text(BOARD_SIZE/2-30,30,"0");
+        counter.setFont(font);
+
+        root.getChildren().addAll(preys,predators,counter);
+
+
+
+
         primaryStage.setTitle("Automaton");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -69,7 +88,7 @@ public class App extends Application {
     }
 
     private void iterateAutomaton(ActionEvent event) {
-        System.out.println("Iteration: " + (++counter));
+        System.out.println("Iteration: " + (++COUNTER));
 
         ExecutorService es = Executors.newFixedThreadPool(7);
         Callable<Automaton> callable = new MyCallable(automaton);
@@ -91,6 +110,10 @@ public class App extends Application {
     }
 
     private void repaint() {
+        predators.setText("PREDATORS: " + Integer.toString(automaton.getPredatorNumber()));
+        preys.setText("PREYS: " + Integer.toString(automaton.getPreyNumber()));
+        counter.setText(Integer.toString(COUNTER));
+
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
                 StackPane pane = boardMap.get(new Position(x*CELL_SIZE,y*CELL_SIZE));

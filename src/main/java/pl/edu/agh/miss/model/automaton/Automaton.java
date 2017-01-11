@@ -14,10 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 30;
-    private final static byte PREY_DEFAULT_MOVEMENT = 3;    
-    private final static byte PREDATOR_DEFAULT_MOVEMENT = 4;
-
+    private final static int SIZE = 50;
     private ConcurrentMap<Position,State> cells;
 
     private PreyMoves preyMoves;
@@ -234,8 +231,6 @@ public class Automaton {
     public static int getSize() {
         return SIZE;
     }
-    public static byte getPreyDefaultMovement() { return PREY_DEFAULT_MOVEMENT; }
-    public static byte getPredatorDefaultMovement() { return PREDATOR_DEFAULT_MOVEMENT; }
     public Map<Position, State> getCells() {
         return cells;
     }

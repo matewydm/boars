@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class PreyUtils {
     public static final Random randomGenerator = new Random();
-    public static final byte PREGNANCY_LENGTH = 2;
-    public static final byte PREGNANCY_CRITIC = 1;
-    public static final Integer BroodNumber = 7;
+    public static final byte PREGNANCY_LENGTH = 12;
+    public static final byte PREGNANCY_CRITIC = 10;
+    public static final Integer BroodNumber = 5;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 

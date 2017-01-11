@@ -15,15 +15,16 @@ public class Prey extends Animal {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 60;
-    public static final Integer KCAL = 100;
+    public static final Integer KCAL = 140;
     public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
+    private final static byte PREY_DEFAULT_MOVEMENT = 1;
 
 
 
     public Prey(Gender gender) {
         super(gender);
-        setDefaultMovement(Automaton.getPreyDefaultMovement());
+        setDefaultMovement(PREY_DEFAULT_MOVEMENT);
     }
 
     @Override
