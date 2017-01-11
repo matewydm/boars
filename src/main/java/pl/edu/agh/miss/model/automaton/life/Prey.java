@@ -18,7 +18,7 @@ public class Prey extends Animal {
     public static final Integer KCAL = 140;
     public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
-    private final static byte PREY_DEFAULT_MOVEMENT = 1;
+    private static byte PREY_DEFAULT_MOVEMENT = 1;
 
 
 
@@ -130,4 +130,10 @@ public class Prey extends Animal {
         if(age<= OLD_AGE && mortality - val >0)
             mortality -=val;
     }
+
+    public static byte getPreyDefaultMovement() {
+        return PREY_DEFAULT_MOVEMENT;
+    }
+
+
 }

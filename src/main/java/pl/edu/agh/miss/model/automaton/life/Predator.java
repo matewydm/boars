@@ -18,14 +18,13 @@ public class Predator extends Animal {
     public static final Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
-    private final static byte PREDATOR_DEFAULT_MOVEMENT = 2;
+    private static byte PREDATOR_DEFAULT_MOVEMENT = 2;
 
 
 
     public Predator(Gender gender) {
         super(gender);
         setDefaultMovement(PREDATOR_DEFAULT_MOVEMENT);
-
     }
 
     @Override
@@ -135,5 +134,9 @@ public class Predator extends Animal {
     @Override
     public Integer beEaten() {
         return null; //TODO
+    }
+
+    public static byte getPredatorDefaultMovement() {
+        return PREDATOR_DEFAULT_MOVEMENT;
     }
 }

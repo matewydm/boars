@@ -5,10 +5,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.StackPaneBuilder;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -17,23 +20,27 @@ import pl.edu.agh.miss.model.automaton.*;
 import pl.edu.agh.miss.model.automaton.factory.CellsFactory;
 import pl.edu.agh.miss.model.automaton.factory.GeneralStateFactory;
 import pl.edu.agh.miss.model.automaton.factory.SimpleCellsFactory;
-import pl.edu.agh.miss.model.automaton.life.Animal;
-import pl.edu.agh.miss.model.automaton.life.Plant;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observer;
 import java.util.concurrent.*;
 
+
+
 public class App extends Application {
+    private Automaton automaton;
+    private Observer observer;
+
 
     private static final int CELL_SIZE =20;
     private static final int BOARD_SIZE = Automaton.getSize()*CELL_SIZE;
-    private static final int SPEED = 250; // w milisekundach
+    private static final int SPEED = 100; // w milisekundach
     private static int COUNTER = 0;
-    private Automaton automaton;
 
     private Map<Position, StackPane> boardMap = new HashMap<>();
     private Text preys;
@@ -53,15 +60,44 @@ public class App extends Application {
         CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(4)));
         automaton = new Automaton(cellsFactory);
 
-        Pane root = new Pane();
-        Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
+
+
+        BorderPane borderPane = new BorderPane();
+
+        VBox leftBar = new VBox();
+        leftBar.setPrefWidth(300);
+        leftBar.setSpacing(5);
+
+        VBox rightBar = new VBox();
+        rightBar.setPrefWidth(300);
+
+        Pane boardNode = new AnchorPane();
+        boardNode.setPrefSize(BOARD_SIZE,BOARD_SIZE);
+
+        borderPane.setCenter(boardNode);
+        borderPane.setLeft(leftBar);
+        borderPane.setRight(rightBar);
+
+        Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("gol.css");
+
+        Text preyMovementText = new Text("PREY MOVEMENT");
+        preyMovementText.setTextAlignment(TextAlignment.CENTER);
+        TextField preyMovementField = new TextField(Byte.toString(Prey.getPreyDefaultMovement()));
+        preyMovementField.setAlignment(Pos.CENTER);
+
+        HBox preyPlusMinus = new HBox();
+        Button preyPlusButton = new Button("+1");
+        Button preyMinusButton = new Button("-1");
+        preyPlusMinus.getChildren().addAll(preyMinusButton,preyPlusButton);
+
+        leftBar.getChildren().addAll(preyMovementText,preyMovementField);
 
 
         for (int x = 0; x < BOARD_SIZE; x = x + CELL_SIZE) {
             for (int y = 0; y < BOARD_SIZE; y = y + CELL_SIZE) {
                 StackPane cell = StackPaneBuilder.create().layoutX(x).layoutY(y).prefHeight(CELL_SIZE).prefWidth(CELL_SIZE).styleClass("plant-cell").build();
-                root.getChildren().add(cell);
+                boardNode.getChildren().add(cell);
                 boardMap.put(new Position(x,y), cell);
             }
         }
@@ -75,7 +111,7 @@ public class App extends Application {
         counter = new Text(BOARD_SIZE/2-30,30,"0");
         counter.setFont(font);
 
-        root.getChildren().addAll(preys,predators,counter);
+        boardNode.getChildren().addAll(preys,predators,counter);
 
 
 
@@ -152,6 +188,10 @@ public class App extends Application {
             case 3: pane.getStyleClass().add("plant-roughest");
                 break;
         }
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
     }
 
     class MyCallable implements Callable<Automaton>{

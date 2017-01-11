@@ -17,7 +17,7 @@ public abstract class Animal implements Foodable{
     // -100 : 100
     protected Integer hunger;
     // 0 : 3
-    protected Byte defaultMovement;
+    protected static Byte defaultMovement;
     // 0 - 100
     protected Double mortality;
     // 0 - 10
@@ -122,7 +122,7 @@ public abstract class Animal implements Foodable{
     }
     public Byte getMovement() {return defaultMovement;}
 
-    public void setDefaultMovement(Byte defaultMovement) { this.defaultMovement = defaultMovement; }
+    public static void setDefaultMovement(Byte newDefaultMovement) { defaultMovement = newDefaultMovement; }
 
     public Position performAction(Set<Cell> cells, Position position) {
         return actionStrategy.performAction(cells,position,this);
