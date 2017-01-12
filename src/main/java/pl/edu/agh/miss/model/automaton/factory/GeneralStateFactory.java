@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 1.0;
+    private final static Double PREY_RATIO = 0.7;
     private final static Double PLANT_RATIO = 2*PREY_RATIO;
-    private final static Double PREDATOR_RATIO = 0.5; //0.2
+    private final static Double PREDATOR_RATIO = 0.6; //0.2
 
     private final static Integer PREY_CHANCES = 40;
     private final static Integer PREDATOR_CHANCES = 10;

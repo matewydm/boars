@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Automaton {
-    private final static int SIZE = 50;
+    private final static int SIZE = 40;
     private ConcurrentMap<Position,State> cells;
 
     private PreyMoves preyMoves;

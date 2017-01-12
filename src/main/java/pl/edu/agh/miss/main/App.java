@@ -86,13 +86,6 @@ public class App extends Application {
         TextField preyMovementField = new TextField(Byte.toString(Prey.getPreyDefaultMovement()));
         preyMovementField.setAlignment(Pos.CENTER);
 
-        HBox preyPlusMinus = new HBox();
-        Button preyPlusButton = new Button("+1");
-        Button preyMinusButton = new Button("-1");
-        preyPlusMinus.getChildren().addAll(preyMinusButton,preyPlusButton);
-
-        leftBar.getChildren().addAll(preyMovementText,preyMovementField);
-
 
         for (int x = 0; x < BOARD_SIZE; x = x + CELL_SIZE) {
             for (int y = 0; y < BOARD_SIZE; y = y + CELL_SIZE) {
