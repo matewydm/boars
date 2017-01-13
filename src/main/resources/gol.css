@@ -42,3 +42,10 @@
     -fx-border-color: black;
     -fx-border-width: 0.1;
 }
+
+.supremator-cell {
+    -fx-background-size: 50 50;
+    -fx-background-color: black;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}

@@ -22,18 +22,18 @@ public class PreyMoves extends AnimalMoves {
 
     @Override
     protected byte evaluateRadius(Animal animal) {
-        byte movement = animal.getMovement();
-
-        float penalty = 0;
-
-        penalty += consideringPregnancy(animal);
-        penalty += consideringHunger(animal);
-
-        movement += Math.round(penalty);
-
-
-        return movement;
-
+//        byte movement = animal.getMovement();
+//
+//        float penalty = 0;
+//
+//        penalty += consideringPregnancy(animal);
+//        penalty += consideringHunger(animal);
+//
+//        movement += Math.round(penalty);
+//
+//
+//        return movement;
+        return animal.getMovement();
     }
 
     private float consideringPregnancy(Animal animal) {

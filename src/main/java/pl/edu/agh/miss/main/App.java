@@ -45,6 +45,7 @@ public class App extends Application {
     private Map<Position, StackPane> boardMap = new HashMap<>();
     private Text preys;
     private Text predators;
+    private Text supremators;
     private Text counter;
 
 
@@ -101,10 +102,12 @@ public class App extends Application {
         preys.setFont(font);
         predators = new Text(BOARD_SIZE-280,30,"PREDATORS: 0");
         predators.setFont(font);
+        supremators =  new Text(BOARD_SIZE-325,60,"SUPREMATORS: 0");
+        supremators.setFont(font);
         counter = new Text(BOARD_SIZE/2-30,30,"0");
         counter.setFont(font);
 
-        boardNode.getChildren().addAll(preys,predators,counter);
+        boardNode.getChildren().addAll(preys,predators,supremators,counter);
 
 
 
@@ -119,17 +122,8 @@ public class App extends Application {
     private void iterateAutomaton(ActionEvent event) {
         COUNTER++;
 
-        ExecutorService es = Executors.newFixedThreadPool(7);
-        Callable<Automaton> callable = new MyCallable(automaton);
-        Future<Automaton> result = es.submit(callable);
+        automaton = automaton.nextState();
 
-        try {
-            automaton = result.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        es.shutdown();
 
         repaint();
     }
@@ -137,6 +131,8 @@ public class App extends Application {
     private void repaint() {
         predators.setText("PREDATORS: " + Integer.toString(automaton.getPredatorNumber()));
         preys.setText("PREYS: " + Integer.toString(automaton.getPreyNumber()));
+        supremators.setText("SUPREMATORS: " + Integer.toString(automaton.getSuprematorNumber()));
+
         counter.setText(Integer.toString(COUNTER));
 
         for (int x = 0; x < Automaton.getSize(); x++) {
@@ -150,9 +146,10 @@ public class App extends Application {
                 boolean isPlants = !(state.getPlants().getValue() == 0);
                 boolean isPreys = !state.getPreys().isEmpty();
                 boolean isPredators = !state.getPredators().isEmpty();
+                boolean isSupremators = !state.getSupremators().isEmpty();
                 Integer roughness = state.getRoughness();
 
-                if (isPreys && isPredators) {
+                if (isPreys && (isPredators || isSupremators)) {
                     pane.getStyleClass().add("predator_prey-cell");
                 }
                 else if (isPreys) {
@@ -160,6 +157,9 @@ public class App extends Application {
                 }
                 else if (isPredators) {
                     pane.getStyleClass().add("predator-cell");
+                }
+                else if (isSupremators) {
+                    pane.getStyleClass().add("supremator-cell");
                 }
                 else if (isPlants) {
                     setTerrain(pane,roughness);
@@ -177,25 +177,6 @@ public class App extends Application {
             case 3: pane.getStyleClass().add("plant-roughest");
                 break;
         }
-    }
-
-    public void setObserver(Observer observer) {
-        this.observer = observer;
-    }
-
-    class MyCallable implements Callable<Automaton>{
-
-        private Automaton automaton;
-
-        public MyCallable(Automaton automaton) {
-            this.automaton = automaton;
-        }
-
-        @Override
-        public Automaton call() throws Exception {
-            return automaton.nextState();
-        }
-
     }
 
     public static void main(String[] args) {

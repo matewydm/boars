@@ -3,9 +3,9 @@ package pl.edu.agh.miss.model.automaton.life;
 
 public class Plant implements Foodable {
     private static final Integer MAX = 40;
-    private static final Integer GROWTH = 6;
+    private static final Integer GROWTH = 5;
 
-    private static final Integer kcal = 40;
+    private static final Integer kcal = 30;
     private Integer value;
 
     public Plant(Integer value) {

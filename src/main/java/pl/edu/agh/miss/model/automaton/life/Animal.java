@@ -173,7 +173,7 @@ public abstract class Animal implements Foodable{
             updateSexualDesire();
             incrementAge();
             throwDice();
-            incrementHunger(5);
+            incrementHunger(6);
         }
     }
 
@@ -186,5 +186,9 @@ public abstract class Animal implements Foodable{
     public void setAge(Integer age) {
 
         this.age = age;
+    }
+
+    public void setKCAL(Integer KCAL) {
+        this.KCAL = KCAL;
     }
 }

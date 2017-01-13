@@ -75,17 +75,26 @@ public class Automaton {
             }
         }
 
+        for (Position position : cells.keySet()){
 
-//
-//        for (State state: cells.values()) {
-//            if (state.getPredators().isEmpty()) { // getPredators uwzględnia predators i supremators
-//                state.getPreys().forEach(Animal::setActionStrategy);
-//            } else {
-//                state.getPreys().forEach(Animal::setRunawayStrategy);
-//            }
-//        }
+            State currentState = cells.get(position);
+            Cell currentCell = new Cell(position,currentState);
 
-//        cells.values().stream().forEach(e -> e.getPredators().forEach(Animal::setActionStrategy)); // dla predators i supremators
+            List<Animal> supremators = cells.get(position).getSupremators();
+            int size = supremators.size();
+
+
+            //wykonywanie ruchów drapieżników
+            for (int i = 0; i < size; i++) {
+                Animal supremator = supremators.get(i);
+
+                Set<Position> positionSet = predatorMoves.calculate(position,supremator );
+                Set<Cell> cellSet = getCellsArea(positionSet);
+
+                supremator.setActionStrategy(cellSet,currentCell,position);
+            }
+        }
+
 
         for (Position position : cells.keySet()){
 
@@ -134,11 +143,26 @@ public class Automaton {
         }
 
 
-        /*
+        for (Position position : cells.keySet()){
 
-            TUTAJ WYKONYWANIE RUCHÓW PRZEZ SUPREMATORÓW
+            List<Animal> supremators = cells.get(position).getSupremators();
+            int size = supremators.size();
 
-         */
+            State currentState = cells.get(position);
+            Cell currentCell = new Cell(position,currentState);
+
+            //wykonywanie ruchów ludzi
+            for (int i = 0; i < size; i++) {
+                Animal supremator = supremators.get(i);
+
+                Set<Position> positionSet = predatorMoves.calculate(position,supremator);
+                Set<Cell> cellSet = getCellsArea(positionSet);
+                Position newPosition = supremator.performAction(cellSet,currentCell,position);
+                State newState = automaton.getState(newPosition);
+                newState.getSupremators().add(supremator);
+
+            }
+        }
 
 
         //przenoszenie roślin zaktualizowanych przez ofiary i terenu
@@ -154,6 +178,7 @@ public class Automaton {
             currentState.getPlants().grow(currentState.getRoughness());
             currentState.getPreys().forEach(Animal::update);
             currentState.getPredators().forEach(Animal::update);
+            currentState.getSupremators().forEach(Animal::update);
         }
 
         //nowe preysy
@@ -186,6 +211,20 @@ public class Automaton {
         }
 
         for (Position position: cells.keySet()) {
+            List<Animal> oldStateSupremators = cells.get(position).getSupremators();
+            List<Animal> newStateSupremators = automaton.getState(position).getSupremators();
+            int oldSize = oldStateSupremators.size();
+            int newSize = newStateSupremators.size();
+            if (oldSize > newSize) { // dodano nowe zwierzątka predatorsow
+                for (int i = 0; i < oldSize; i++) {
+                    Animal animal = oldStateSupremators.get(i);
+                    if (animal.getAge() == 0) // młode
+                        newStateSupremators.add(animal);
+                }
+            }
+        }
+
+        for (Position position: cells.keySet()) {
             List<Animal> preys = automaton.getPreys(position);
             List<Animal> deadPreys = preys.stream().filter(prey -> !prey.isAlive()).collect(Collectors.toCollection(LinkedList::new));
             preys.removeAll(deadPreys);
@@ -196,6 +235,13 @@ public class Automaton {
             List<Animal> deadPredators = predators.stream().filter(predator -> !predator.isAlive()).collect(Collectors.toCollection(LinkedList::new));
             predators.removeAll(deadPredators);
         }
+
+        for (Position position: cells.keySet()) {
+            List<Animal> supremators = automaton.getSupremators(position);
+            List<Animal> deadSupremators = supremators.stream().filter(supremator -> !supremator.isAlive()).collect(Collectors.toCollection(LinkedList::new));
+            supremators.removeAll(deadSupremators);
+        }
+
 
         return automaton;
     }
@@ -253,6 +299,11 @@ public class Automaton {
         return getCells().get(position).getPredators();
     }
 
+    public List<Animal> getSupremators(Position position) {
+        return getCells().get(position).getSupremators();
+    }
+
+
     public Plant getPlants(Position position) {
         return getCells().get(position).getPlants();
     }
@@ -271,4 +322,10 @@ public class Automaton {
         List<Animal> a = cells.entrySet().stream().flatMap(e -> e.getValue().getPredators().stream()).collect(Collectors.toList());
         return a.size();
     }
+
+    public Integer getSuprematorNumber() {
+        List<Animal> a = cells.entrySet().stream().flatMap(e -> e.getValue().getSupremators().stream()).collect(Collectors.toList());
+        return a.size();
+    }
+
 }

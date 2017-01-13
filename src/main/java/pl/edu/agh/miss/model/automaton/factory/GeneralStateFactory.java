@@ -5,10 +5,8 @@ import pl.edu.agh.miss.model.automaton.State;
 import pl.edu.agh.miss.model.automaton.factory.Animal.AnimalFactory;
 import pl.edu.agh.miss.model.automaton.factory.Animal.PredatorFactory;
 import pl.edu.agh.miss.model.automaton.factory.Animal.PreyFactory;
-import pl.edu.agh.miss.model.automaton.life.Animal;
-import pl.edu.agh.miss.model.automaton.life.Plant;
-import pl.edu.agh.miss.model.automaton.life.Predator;
-import pl.edu.agh.miss.model.automaton.life.Prey;
+import pl.edu.agh.miss.model.automaton.factory.Animal.SuprematorFactory;
+import pl.edu.agh.miss.model.automaton.life.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,11 +16,13 @@ import java.util.stream.Collectors;
  */
 public class GeneralStateFactory implements StateFactory {
 
-    private final static Double PREY_RATIO = 2.0;
+    private final static Double PREY_RATIO = 1.0;
     private final static Double PLANT_RATIO = 2.0;
-    private final static Double PREDATOR_RATIO = 0.7;
-    private final static Integer PREY_CHANCES = 25;
+    private final static Double PREDATOR_RATIO = 0.7;//0.7;
+    private final static Double SUPREMATOR_RATIO = 0.5;
+    private final static Integer PREY_CHANCES = 50;
     private final static Integer PREDATOR_CHANCES = 25;
+    private final static Integer SUPREMATOR_CHANCES = 25;
 
     private Random randomGenerator;
     private Compaction compaction;
@@ -43,10 +43,15 @@ public class GeneralStateFactory implements StateFactory {
         List<Animal> predators = generateAnimals(new PredatorFactory(),generatePredatorAmount(compaction.getCompaction()))
                 .stream().map(e -> (Predator) e).collect(Collectors.toList());
 
+        List<Animal> supremators = generateAnimals(new SuprematorFactory(),generateSuprematorAmount(compaction.getCompaction()))
+                .stream().map(e -> (Supremator) e).collect(Collectors.toList());
+
+//        List<Animal> supremators = new LinkedList<>();
+
         Plant plants = generatePlants(generatePlantAmount(3));
 
         Integer roughness = generateRoughness();
-        return new State(preys,predators,plants,roughness);
+        return new State(preys,predators,supremators,plants,roughness);
     }
 
     private Integer generateRoughness() {
@@ -82,6 +87,14 @@ public class GeneralStateFactory implements StateFactory {
         Integer result = 0;
         if (randomGenerator.nextInt(100/PREY_CHANCES) == 0) {
             result = randomGenerator.nextInt((int)(compaction*PREY_RATIO));
+        }
+        return result;
+    }
+
+    private Integer generateSuprematorAmount(Integer compaction){
+        Integer result = 0;
+        if (randomGenerator.nextInt(100/SUPREMATOR_CHANCES) == 0) {
+            result = randomGenerator.nextInt((int)(compaction*SUPREMATOR_RATIO));
         }
         return result;
     }

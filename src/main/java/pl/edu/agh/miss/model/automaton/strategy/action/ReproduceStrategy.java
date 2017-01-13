@@ -6,6 +6,7 @@ import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
 import pl.edu.agh.miss.model.automaton.life.Predator;
 import pl.edu.agh.miss.model.automaton.life.Prey;
+import pl.edu.agh.miss.model.automaton.life.Supremator;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,9 +22,16 @@ public class ReproduceStrategy implements ActionStrategy {
             currentCell.getState().getPreys().addAll(infants);
         }
 
+        if (animal instanceof Supremator) {
+            currentCell.getState().getSupremators().addAll(infants);
+        }
+
         if (animal instanceof Predator) {
             currentCell.getState().getPredators().addAll(infants);
         }
+
+
+
 
         return position;
     }

@@ -27,7 +27,6 @@ public class PredatorStrategy implements ActionStrategy {
     }
 
     public static Position searchFood(Set<Cell> cells) {
-
         int size = cells.size();
         int choose = randomGenerator.nextInt(size);
         Cell cell = null;

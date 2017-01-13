@@ -13,13 +13,14 @@ import java.util.Set;
 public class State {
     private List<Animal> preys;
     private List<Animal> predators;
+    private List<Animal> supremators;
     private Plant plant;
     private Integer roughness;
 
-
-    public State(List<Animal> preys, List<Animal> predators, Plant plant, Integer roughness) {
+    public State(List<Animal> preys, List<Animal> predators, List<Animal> supremators, Plant plant, Integer roughness) {
         this.preys = preys;
         this.predators = predators;
+        this.supremators = supremators;
         this.plant = plant;
         this.roughness = roughness;
     }
@@ -27,22 +28,20 @@ public class State {
     public State() {
         preys = new LinkedList<>();
         predators = new LinkedList<>();
+        supremators = new LinkedList<>();
     }
 
     public List<Animal> getPreys() {
         return preys;
     }
 
-    public void setPreys(List<Animal> preys) {
-        this.preys = preys;
-    }
 
     public List<Animal> getPredators() {
         return predators;
     }
 
-    public void setPredators(List<Animal> predators) {
-        this.predators = predators;
+    public List<Animal> getSupremators() {
+        return supremators;
     }
 
     public Plant getPlants() { return plant; }
@@ -68,6 +67,7 @@ public class State {
 
         if (preys != null ? !preys.equals(state.preys) : state.preys != null) return false;
         if (predators != null ? !predators.equals(state.predators) : state.predators != null) return false;
+        if (supremators != null ? !supremators.equals(state.supremators) : state.supremators != null) return false;
         if (plant != null ? !plant.equals(state.plant) : state.plant != null) return false;
         return roughness != null ? roughness.equals(state.roughness) : state.roughness == null;
 
@@ -77,6 +77,7 @@ public class State {
     public int hashCode() {
         int result = preys != null ? preys.hashCode() : 0;
         result = 31 * result + (predators != null ? predators.hashCode() : 0);
+        result = 31 * result + (supremators != null ? supremators.hashCode() : 0);
         result = 31 * result + (plant != null ? plant.hashCode() : 0);
         result = 31 * result + (roughness != null ? roughness.hashCode() : 0);
         return result;
