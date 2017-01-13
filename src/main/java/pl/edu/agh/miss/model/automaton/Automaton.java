@@ -148,18 +148,13 @@ public class Automaton {
             state.setRoughness(this.getRoughness(position));
         }
 
-        int mass = 0;
-
         //aktualizacja atrybutów zwierząt i roślin - do osobnej metody
         for (Position position: cells.keySet()) {
             State currentState = automaton.getState(position);
             currentState.getPlants().grow(currentState.getRoughness());
-            mass += currentState.getPlants().getValue();
             currentState.getPreys().forEach(Animal::update);
             currentState.getPredators().forEach(Animal::update);
         }
-
-        System.out.println("Plants mass: " + mass);
 
         //nowe preysy
         for (Position position: cells.keySet()) {

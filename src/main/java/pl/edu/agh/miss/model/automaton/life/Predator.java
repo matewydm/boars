@@ -14,8 +14,8 @@ public class Predator extends Animal {
     private static final AnimalMoves animalMoves = new PredatorMoves();
 
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
-    public final static Integer HUNGER_CUTOFF = 40;
-    public final static Integer HUNGER_CRITIC = 80;
+    public final static Integer HUNGER_CUTOFF = 80;
+    public final static Integer HUNGER_CRITIC = 100;
     public static Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
@@ -43,6 +43,8 @@ public class Predator extends Animal {
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
+
+        System.out.println("hunger: " + this.getHunger());
 
 
         if (isHunted) { // na polu są ludzie - uciekać!

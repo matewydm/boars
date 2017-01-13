@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.model.automaton.strategy.action;
 
+import javafx.geometry.Pos;
 import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.life.Animal;
@@ -25,8 +26,8 @@ public class PredatorStrategy implements ActionStrategy {
         return newPosition;
     }
 
-
     private Position searchFood(Set<Cell> cells) {
+
         int size = cells.size();
         int choose = randomGenerator.nextInt(size);
         Cell cell = null;

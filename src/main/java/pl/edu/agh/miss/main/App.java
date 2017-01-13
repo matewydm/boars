@@ -117,7 +117,7 @@ public class App extends Application {
     }
 
     private void iterateAutomaton(ActionEvent event) {
-        System.out.println("Iteration: " + (++COUNTER));
+        COUNTER++;
 
         ExecutorService es = Executors.newFixedThreadPool(7);
         Callable<Automaton> callable = new MyCallable(automaton);
@@ -130,10 +130,6 @@ public class App extends Application {
         }
 
         es.shutdown();
-
-        System.out.println("Preys "+ automaton.getPreyNumber());
-        System.out.println("Predators: "+ automaton.getPredatorNumber());
-
 
         repaint();
     }
