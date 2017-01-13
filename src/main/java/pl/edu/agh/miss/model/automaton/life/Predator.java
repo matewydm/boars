@@ -4,10 +4,7 @@ package pl.edu.agh.miss.model.automaton.life;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
-import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.PredatorStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.*;
 
 public class Predator extends Animal {
     private static final AnimalMoves animalMoves = new PredatorMoves();
@@ -15,7 +12,7 @@ public class Predator extends Animal {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 40;
     public final static Integer HUNGER_CRITIC = 80;
-    public static final Integer KCAL = 30;
+    public static Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
     private static byte PREDATOR_DEFAULT_MOVEMENT = 2;
@@ -44,8 +41,11 @@ public class Predator extends Animal {
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
 
-
-        if (isReadyForReproduce()) {
+        if (isHunted) {
+            this.actionStrategy = new RunawayStrategy();
+            this.setHunted(Boolean.FALSE);
+        }
+        else if (isReadyForReproduce()) {
             this.actionStrategy = new ReproduceStrategy();
         }
         else if (isLittleHungry) {
@@ -129,11 +129,6 @@ public class Predator extends Animal {
     public void decrementMortality(Double val) {
         if(age<= OLD_AGE && mortality - val >0)
             mortality -=val;
-    }
-
-    @Override
-    public Integer beEaten() {
-        return null; //TODO
     }
 
     public static byte getPredatorDefaultMovement() {

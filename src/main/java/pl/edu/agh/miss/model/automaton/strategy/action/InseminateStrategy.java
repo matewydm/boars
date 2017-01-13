@@ -15,9 +15,8 @@ import java.util.stream.Collectors;
  */
 public class InseminateStrategy implements ActionStrategy {
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell,Position position, Animal animal) {
         Position newPosition = position;
-        Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
         Gender oppositeGender = animal.getGender().oppositeGender();
         List<Animal> preys = currentCell.getState().getPreys().stream().filter(e -> e.getGender()!=animal.getGender()).filter(e -> e.canInseminate()).collect(Collectors.toList());
         if(animal.getGender() == Gender.MALE) {

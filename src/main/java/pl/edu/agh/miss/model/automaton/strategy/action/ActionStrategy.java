@@ -11,5 +11,5 @@ import java.util.Set;
  */
 public interface ActionStrategy {
 
-    Position performAction(Set<Cell> cells, Position position, Animal animal);
+    Position performAction(Set<Cell> cells, Cell currentCell,Position position, Animal animal);
 }

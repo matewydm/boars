@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class ReproduceStrategy implements ActionStrategy {
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell, Position position, Animal animal) {
         List<Animal> infants = animal.giveBirth();
         infants.forEach(e -> e.incrementHunger(5));
-        Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
+
         if (animal instanceof Prey) {
             currentCell.getState().getPreys().addAll(infants);
         }

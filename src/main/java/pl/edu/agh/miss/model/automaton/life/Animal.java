@@ -24,6 +24,11 @@ public abstract class Animal implements Foodable{
     protected Integer sexualDesire;
 
     protected Pregnant pregnant;
+
+    protected Integer KCAL;
+
+    protected Boolean isHunted;
+
     private final Gender gender;
     private LifeStatus status;
 
@@ -34,6 +39,8 @@ public abstract class Animal implements Foodable{
         hunger = 0;
         mortality = 0.0;
         sexualDesire = 0;
+        KCAL = 100;
+        isHunted = Boolean.FALSE;
     }
 
     public ActionStrategy getActionStrategy(){
@@ -57,6 +64,11 @@ public abstract class Animal implements Foodable{
             if (sexualDesire < 0)
                 sexualDesire = 0;
         }
+    }
+
+    public Integer beEaten() {
+        die();
+        return KCAL;
     }
 
     public void incrementHunger(Integer val) {
@@ -124,12 +136,16 @@ public abstract class Animal implements Foodable{
 
     public static void setDefaultMovement(Byte newDefaultMovement) { defaultMovement = newDefaultMovement; }
 
-    public Position performAction(Set<Cell> cells, Position position) {
-        return actionStrategy.performAction(cells,position,this);
+    public Position performAction(Set<Cell> cells,Cell currentCell ,Position position) {
+        return actionStrategy.performAction(cells,currentCell,position,this);
     }
 
     public void setMortality(Double mortality) {
         this.mortality = mortality;
+    }
+
+    public void setHunted(Boolean hunted) {
+        isHunted = hunted;
     }
 
     public void setPregnant(Pregnant pregnant) { this.pregnant = pregnant; }

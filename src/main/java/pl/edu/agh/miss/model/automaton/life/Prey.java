@@ -3,10 +3,7 @@ package pl.edu.agh.miss.model.automaton.life;
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Automaton;
 import pl.edu.agh.miss.model.automaton.moves.PreyMoves;
-import pl.edu.agh.miss.model.automaton.strategy.action.DoNothingStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.EatStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.*;
 
 
 public class Prey extends Animal {
@@ -33,12 +30,6 @@ public class Prey extends Animal {
     }
 
     @Override
-    public Integer beEaten() {
-        die();
-        return KCAL;
-    }
-
-    @Override
     public Boolean isReadyForReproduce() {
             return pregnant != null && PreyUtils.isReadyForReproduce(pregnant);
     }
@@ -52,8 +43,11 @@ public class Prey extends Animal {
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
-
-        if (isReadyForReproduce())
+        if (isHunted) {
+            this.actionStrategy = new RunawayStrategy();
+            this.setHunted(Boolean.FALSE);
+        }
+        else if (isReadyForReproduce())
             this.actionStrategy = new ReproduceStrategy();
         else if (isCriticalHungry)
             this.actionStrategy = new EatStrategy();

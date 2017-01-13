@@ -12,16 +12,14 @@ import static pl.edu.agh.miss.model.automaton.life.PredatorUtils.randomGenerator
 
 public class PredatorStrategy implements ActionStrategy {
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell, Position position, Animal animal) {
         Position newPosition = position;
-        Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
-        if (randomGenerator.nextInt(100/ PredatorUtils.KILLING_CHANCES) == 0) {
-            if (!currentCell.getState().getPreys().isEmpty()) {
-                eatOnCurrentPosition(currentCell, animal);
-            } else {
-                newPosition = searchFood(cells);
-            }
+        if(!currentCell.getState().getPreys().isEmpty()) {
+            hunt(currentCell,animal);
+        }
+        else {
+            newPosition = searchFood(cells);
         }
 
         return newPosition;
@@ -29,20 +27,32 @@ public class PredatorStrategy implements ActionStrategy {
 
 
     private Position searchFood(Set<Cell> cells) {
-        Iterator<Cell> it = cells.iterator();
+        int size = cells.size();
+        int choose = randomGenerator.nextInt(size);
         Cell cell = null;
-
-        for (; it.hasNext(); ) {
+        Iterator<Cell> it = cells.iterator();
+        while(choose-- >= 0) {
             cell = it.next();
-            if (randomGenerator.nextInt(2) == 0)
-                break;
         }
-
         return cell.getPosition();
     }
 
-    private void eatOnCurrentPosition(Cell currentCell, Animal animal) {
-        animal.eat(currentCell.getState().getPreys().get(0));
+    private void hunt(Cell currentCell, Animal animal) {
+        Animal prey = currentCell.getState().getPreys().get(0);
+        if (randomGenerator.nextInt(100/ PredatorUtils.KILLING_CHANCES) == 0) {
+            eat(currentCell, animal,prey);
+        }
+        else {
+            fiasco(prey);
+        }
+    }
+
+    private void eat(Cell currentCell, Animal animal, Animal prey) {
+        animal.eat(prey);
+    }
+
+    private void fiasco(Animal prey) {
+        prey.setHunted(Boolean.TRUE);
     }
 
 }

@@ -10,7 +10,7 @@ import static pl.edu.agh.miss.model.automaton.life.PredatorUtils.randomGenerator
 public class RunawayStrategy implements ActionStrategy {
 
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell, Position position, Animal animal) {
 
         Position newPosition = position;
 
@@ -19,7 +19,7 @@ public class RunawayStrategy implements ActionStrategy {
                 newPosition = cell.getPosition();
                 break;
             }
-            else if (cell.getState().getPredators().size() == 0) {
+            else if (cell.getState().getPredators().size() == 0) { // wybiera ale woli stado
                 newPosition = cell.getPosition();
             }
         }

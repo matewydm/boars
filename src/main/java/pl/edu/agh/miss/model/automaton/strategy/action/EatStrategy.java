@@ -13,9 +13,8 @@ import static pl.edu.agh.miss.model.automaton.life.PreyUtils.randomGenerator;
  */
 public class EatStrategy implements ActionStrategy{
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell,Position position, Animal animal) {
         Position newPosition = position;
-        Cell currentCell = cells.stream().filter(e -> e.getPosition().equals(position)).findAny().get();
 
         if (!currentCell.getState().getPlants().isEmpty()) {
             eatOnCurrentPosition(currentCell,animal);

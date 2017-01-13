@@ -10,7 +10,7 @@ public class DoNothingStrategy implements ActionStrategy {
     private static final Integer SEXUAL_DESIRE = 1;
     private static final Double REST_VALUE =5.0;
     @Override
-    public Position performAction(Set<Cell> cells, Position position, Animal animal) {
+    public Position performAction(Set<Cell> cells, Cell currentCell,Position position, Animal animal) {
         animal.decrementSexualDesire(SEXUAL_DESIRE);
         animal.decrementMortality(REST_VALUE);
         return position;
