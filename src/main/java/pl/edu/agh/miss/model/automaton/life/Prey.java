@@ -16,7 +16,7 @@ public class Prey extends Animal {
     public final static Integer CRITICAL_SEXUAL_DESIRE = 6;
     public final static Integer HUNGER_CUTOFF = 20;
     public final static Integer HUNGER_CRITIC = 60;
-    public static final Integer KCAL = 100;
+    public static final Integer KCAL = 50;
     public static final Integer OLD_AGE = 11;
     public static final Integer MATURITY = 3;
     private static byte PREY_DEFAULT_MOVEMENT = 1;
@@ -45,9 +45,13 @@ public class Prey extends Animal {
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
-        if (isHunted/*PreyUtils.predatorNearby(cells)*/) { // do wyboru aktualne pole albo cała okolica! WYBRANE: AKT. POLE
+        System.out.println("prey hunger: " + this.getHunger());
+
+
+        if (isHunted || PreyUtils.predatorNearby(cells)) { // do wyboru aktualne pole albo cała okolica! WYBRANE: AKT. POLE
             this.actionStrategy = new RunawayStrategy();
             setHunted(Boolean.FALSE);
+            System.out.println("hejo");
         }
         else if (isReadyForReproduce())
             this.actionStrategy = new ReproduceStrategy();

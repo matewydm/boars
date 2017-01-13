@@ -44,7 +44,7 @@ public class Predator extends Animal {
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
-        System.out.println("hunger: " + this.getHunger());
+        System.out.println("predator hunger: " + this.getHunger());
 
 
         if (isHunted) { // na polu są ludzie - uciekać!

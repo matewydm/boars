@@ -27,7 +27,7 @@ public class EatStrategy implements ActionStrategy{
 
     }
 
-    private Position searchFood(Set<Cell> cells) {
+    public static Position searchFood(Set<Cell> cells) {
         Position foodPosition = null;
 
 
