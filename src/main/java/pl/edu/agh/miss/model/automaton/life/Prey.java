@@ -48,7 +48,7 @@ public class Prey extends Animal {
         System.out.println("prey hunger: " + this.getHunger());
 
 
-        if (isHunted || PreyUtils.predatorNearby(cells)) { // do wyboru aktualne pole albo cała okolica! WYBRANE: AKT. POLE
+        if (isHunted /*|| PreyUtils.predatorNearby(cells)*/) { // do wyboru aktualne pole albo cała okolica! WYBRANE: AKT. POLE
             this.actionStrategy = new RunawayStrategy();
             setHunted(Boolean.FALSE);
             System.out.println("hejo");

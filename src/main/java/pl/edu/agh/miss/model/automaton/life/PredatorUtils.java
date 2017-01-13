@@ -10,7 +10,7 @@ public class PredatorUtils {
     public static final byte PREGNANCY_LENGTH = 8;
     public static final byte PREGNANCY_CRITIC = 6;
     public static final Integer BroodNumber = 4;
-    public static final Integer KILLING_CHANCES = 10;
+    public static final Integer KILLING_CHANCES = 20;
 
     private static final List<Gender> genders = Collections.unmodifiableList(Arrays.asList(Gender.values()));
 
