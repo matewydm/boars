@@ -17,7 +17,7 @@ public class Supremator extends Animal {
     public final static Integer HUNGER_CRITIC = 100;
     public final static Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
-    public static final Integer MATURITY = 4;
+    public static final Integer MATURITY = 8;
     private static byte SUPREMATOR_DEFAULT_MOVEMENT = 1;
 
 
@@ -35,7 +35,7 @@ public class Supremator extends Animal {
 
     @Override
     public Boolean isReadyForReproduce() {
-        return pregnant != null && PredatorUtils.isReadyForReproduce(pregnant);
+        return pregnant != null && SuprematorUtils.isReadyForReproduce(pregnant);
     }
 
     @Override
@@ -55,10 +55,6 @@ public class Supremator extends Animal {
         else {
             this.actionStrategy = new SuprematorStrategy();
         }
-    }
-
-    public static AnimalMoves getAnimalMoves() {
-        return animalMoves;
     }
 
     @Override

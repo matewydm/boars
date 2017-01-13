@@ -57,7 +57,6 @@ public class SuprematorStrategy implements ActionStrategy {
             case PREDATOR: {
                 chances = PREDATOR_KILLING_CHANCES;
                 suprematorsPrey = currentCell.getState().getPredators().get(0);
-                System.out.println("KILLING PREDATOR");
                 break;
             }
         }
