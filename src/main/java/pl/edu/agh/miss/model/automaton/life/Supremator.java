@@ -4,10 +4,7 @@ import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Cell;
 import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
-import pl.edu.agh.miss.model.automaton.strategy.action.InseminateStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.PredatorStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.ReproduceStrategy;
-import pl.edu.agh.miss.model.automaton.strategy.action.RunawayStrategy;
+import pl.edu.agh.miss.model.automaton.strategy.action.*;
 
 import java.util.Set;
 
@@ -50,13 +47,13 @@ public class Supremator extends Animal {
             this.actionStrategy = new ReproduceStrategy();
         }
         else if (isLittleHungry) {
-            this.actionStrategy = new PredatorStrategy();
+            this.actionStrategy = new SuprematorStrategy();
         }
         else if (isCriticalEager && canInseminate()) {
             this.actionStrategy = new InseminateStrategy();
         }
         else {
-            this.actionStrategy = new PredatorStrategy();
+            this.actionStrategy = new SuprematorStrategy();
         }
     }
 
