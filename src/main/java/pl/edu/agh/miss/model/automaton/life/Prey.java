@@ -45,7 +45,7 @@ public class Prey extends Animal {
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
-        if (isHunted || !currentCell.getState().getPredators().isEmpty()) { // na polu są drapieżniki - uciekać!
+        if (isHunted || PreyUtils.preyNearby(currentCell)) { // do wyboru aktualne pole albo cała okolica! WYBRANE: AKT. POLE
             this.actionStrategy = new RunawayStrategy();
             setHunted(Boolean.FALSE);
         }

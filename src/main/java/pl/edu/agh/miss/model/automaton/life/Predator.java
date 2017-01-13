@@ -19,7 +19,7 @@ public class Predator extends Animal {
     public static Integer KCAL = 30;
     public static final Integer OLD_AGE = 15;
     public static final Integer MATURITY = 4;
-    private static byte PREDATOR_DEFAULT_MOVEMENT = 2;
+    private static byte PREDATOR_DEFAULT_MOVEMENT = 1;
 
 
 

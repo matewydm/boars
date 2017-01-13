@@ -1,9 +1,8 @@
 package pl.edu.agh.miss.model.automaton.life;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import pl.edu.agh.miss.model.automaton.Cell;
+
+import java.util.*;
 
 public class PreyUtils {
     public static final Random randomGenerator = new Random();
@@ -25,6 +24,22 @@ public class PreyUtils {
 
     public static Integer randomBrood(){
         return randomGenerator.nextInt(BroodNumber)+1;
+    }
+
+    public static Boolean preyNearby(Set<Cell> cells) {
+        Iterator<Cell> it = cells.iterator();
+
+        for(; it.hasNext();) {
+            if (!it.next().getState().getPredators().isEmpty()) {
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
+
+    public static Boolean preyNearby(Cell currentCell) {
+        return (currentCell.getState().getPredators().isEmpty()) ? Boolean.FALSE : Boolean.TRUE;
     }
 
 }
