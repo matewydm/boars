@@ -3,8 +3,12 @@ package pl.edu.agh.miss.model.automaton.life;
 
 import pl.edu.agh.miss.model.automaton.AnimalMoves;
 import pl.edu.agh.miss.model.automaton.Automaton;
+import pl.edu.agh.miss.model.automaton.Cell;
+import pl.edu.agh.miss.model.automaton.Position;
 import pl.edu.agh.miss.model.automaton.moves.PredatorMoves;
 import pl.edu.agh.miss.model.automaton.strategy.action.*;
+
+import java.util.Set;
 
 public class Predator extends Animal {
     private static final AnimalMoves animalMoves = new PredatorMoves();
@@ -35,15 +39,15 @@ public class Predator extends Animal {
     }
 
     @Override
-    public void setActionStrategy() {
+    public void setActionStrategy(Set<Cell> cells, Cell currentCell, Position position) {
         boolean isCriticalHungry = this.hunger >= HUNGER_CRITIC;
         boolean isLittleHungry = this.hunger > HUNGER_CUTOFF;
         boolean isCriticalEager = this.sexualDesire >= CRITICAL_SEXUAL_DESIRE;
 
 
-        if (isHunted) {
+        if (isHunted) { // na polu są ludzie - uciekać!
             this.actionStrategy = new RunawayStrategy();
-            this.setHunted(Boolean.FALSE);
+            setHunted(Boolean.FALSE);
         }
         else if (isReadyForReproduce()) {
             this.actionStrategy = new ReproduceStrategy();

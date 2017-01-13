@@ -93,7 +93,7 @@ public abstract class Animal implements Foodable{
 
     public abstract Boolean isReadyForReproduce();
 
-    public abstract void setActionStrategy();
+    public abstract void setActionStrategy(Set<Cell> cells, Cell currentCell, Position position);
 
     public void impregnate() {
         if (!isPregnant() && getGender() == Gender.FEMALE)

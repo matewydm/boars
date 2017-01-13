@@ -36,15 +36,56 @@ public class Automaton {
     public Automaton nextState(){
         Automaton automaton = getInstance();
 
-        for (State state: cells.values()) {
-            if (state.getPredators().isEmpty()) { // getPredators uwzględnia predators i supremators
-                state.getPreys().forEach(Animal::setActionStrategy);
-            } else {
-                state.getPreys().forEach(Animal::setRunawayStrategy);
+        for (Position position : cells.keySet()){
+
+            State currentState = cells.get(position);
+            Cell currentCell = new Cell(position,currentState);
+
+            List<Animal> preys = cells.get(position).getPreys();
+            int size = preys.size();
+
+            for (int i = 0; i < size; i++) {
+                Animal prey = preys.get(i);
+
+                Set<Position> positionSet = preyMoves.calculate(position,prey);
+                Set<Cell> cellSet = getCellsArea(positionSet);
+
+                prey.setActionStrategy(cellSet,currentCell,position);
             }
         }
 
-        cells.values().stream().forEach(e -> e.getPredators().forEach(Animal::setActionStrategy)); // dla predators i supremators
+
+        for (Position position : cells.keySet()){
+
+            State currentState = cells.get(position);
+            Cell currentCell = new Cell(position,currentState);
+
+            List<Animal> predators = cells.get(position).getPredators();
+            int size = predators.size();
+
+
+            //wykonywanie ruchów drapieżników
+            for (int i = 0; i < size; i++) {
+                Animal predator = predators.get(i);
+
+                Set<Position> positionSet = predatorMoves.calculate(position,predator);
+                Set<Cell> cellSet = getCellsArea(positionSet);
+
+                predator.setActionStrategy(cellSet,currentCell,position);
+            }
+        }
+
+
+//
+//        for (State state: cells.values()) {
+//            if (state.getPredators().isEmpty()) { // getPredators uwzględnia predators i supremators
+//                state.getPreys().forEach(Animal::setActionStrategy);
+//            } else {
+//                state.getPreys().forEach(Animal::setRunawayStrategy);
+//            }
+//        }
+
+//        cells.values().stream().forEach(e -> e.getPredators().forEach(Animal::setActionStrategy)); // dla predators i supremators
 
         for (Position position : cells.keySet()){
 
