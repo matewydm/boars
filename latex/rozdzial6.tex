@@ -1,0 +1,95 @@
+\chapter{Proponowany model zjawiska}
+
+\section{Cele modelu}
+Celem modelu jest zasymulowanie rozwoju populacji zwierząt. Stworzony przez nas program pozwala na zasymulowanie populacji modelu drapieżnik-ofiara w postaci jednego gatunku ofiary i  jednego gatunku drapieżnika oraz jednego gatunku ofiary dwóch gatunków drapieżników. Zwierzęta mogą poruszać się po zadanym obszarze nie opuszczając go. 
+
+Gdy osoba rozpocznie symulacje może na bieżąco wyświetlać informacje na temat liczby iteracji, ilości populacji każdego z gatunków. Dodatkowo przedstawiony jest widok mapy migracji zwierząt.
+
+\section{Działanie algorytmu} 
+W pierwszym etapie działania programu generowanie są populacje zadanych gatunków. Stworzone populacje są rozmieszczane losowo na mapie w ilości uzależnionej od zadanych przez nas współczynników. Następnie na każdym z pól tworzona jest ilość pożywienia dla ofiar, czyli rośliny. 
+
+Po inicjalizacji modelu rozpoczyna się główna część symulacji. W każdej iteracji każde zwierzę obejmuje jakąś strategię działania.
+\begin{enumerate}
+\item Wspólne na wszystkich zwierząt
+	\begin{itemize}
+		\item Kopulacja
+		\item Wydawanie na świat potomstwa
+	\end{itemize}
+\item Dla ofiar
+	\begin{itemize}
+		\item Poszukiwanie i spożywanie roślin
+		\item Ucieczka przed drapieżnikami
+		\item Odpoczynek
+	\end{itemize}
+\item Dla drapieżników
+	\begin{itemize}
+		\item Polowanie na ofiary
+		\item Ucieczka przed naddrapieżnikami
+	\end{itemize}
+\item Dla naddrapieżników(michała)
+	\begin{itemize}
+		\item Polowanie na ofiary i drapieżników
+	\end{itemize}
+\end{enumerate}
+
+Poszczególne zachowania uzależnione są od aktualnego stanu danego zwierzęcia oraz jego otoczenia.
+
+\begin{itemize}
+\item Wspólne strategie zwierząt
+	\begin{itemize}
+		\item Jeżeli samica jest w kluczowym stadium ciąży musi wydać na świat potomstwo.
+		\item Jeżeli zwierzę jest zagrożone stara się uciec.
+		\item Jeżeli współczynnik głodu jest krytyczny ofiara usiłuje zdobyć pokarm.
+		\item Jeżeli współczynnik pożądania seksualnego jest krytyczny i osobnik jest wystarczająco dojrzały rozmnaża się z drugim przedstawicielem swojego gatunku przeciwnej płci na danym polu lub szuka partnera w swojej okolicy.
+		\item Jeżeli zwierze ma wszystkie współczynniki w normie, odpoczywa.
+	\end{itemize}
+	
+\item Szczególne dla ofiary
+	\begin{itemize}
+		\item Jeżeli na polu jest drapieżnik, który poluje na ofiarę stara się uciec z danego pola
+		\item Jeżeli współczynnik głodu jest krytyczny ofiara żywi się pokarmem na aktualnym polu lub jeśli pole jest pozbawione roślin ofiara szuka ich w swoim najbliższym otoczeniu.
+	\end{itemize}
+	
+\item Dla drapieżnika
+	\begin{itemize}
+		\item Jeżeli na jego polu jest drapieżnik drugiego stopnia, drapieżnik stara się przemieścić w dogodniejsze dla siebie miejsce
+		\item Jeżeli współczynnik głodu jest krytyczny drapieżnik poluje na ofiarę znajdującą się na jego polu lub szuka jej w swoim najbliższym otoczeniu.
+	\end{itemize}
+	
+\item Dla drapieżnika drugiego poziomu
+	\begin{itemize}
+		\item Jeżeli współczynnik głodu jest krytyczny drapieżnik drugiego stopnia w pierwszej kolejności stara się upolować drapieżnika, który jest preferowanym gatunkiem. W razie jego braku poluje na przedstawiciela gatunku reprezentowanego przez ofiarę.
+	\end{itemize}
+\end{itemize}
+
+!!!!!
+predator moze rozmnazac sie tylko w warunkach sprzyjajacych
+czyli w polach na ktorych moze znalezc pozywienie
+w innym wypadku jest eksplozja
+i zaganianie preyow do rogow
+
+\section{Symulacja zjawiska}
+
+\subsection{Narzędzi}
+Na potrzeby symulacji została stworzona aplikacja okienkowa, która wizualizuje efekty działania aplikacji.
+Do zaimplementowania programu posłużyliśmy się językiem Java, a do wyświetlenia danych użyliśmy biblioteki graficznej JavaFX.
+
+\subsection{Wyniki}
+
+Wyniki kilku symulacji zapisaliśmy do pliku tekstowego, a następnie stworzyliśmy na tej podstawie odpowiednie wykresy. W celu późniejszej możliwości walidacji przyjętego przez nas modelu.
+
+\subsubsection{Wyniki dla 2 gatunków- ofiara, drapieżnik}
+
+
+\subsubsection{Wyniki dla 3 gatunków- ofiara, drapieżnik i drapieżnik drugiego stopnia}
+
+
+
+
+\section{Wnioski}
+
+Podstawowym wnioskiem jaki zauważyliśmy podczas tworzenia projektu jest ogromny wpływ zwięszkania się współcznyika głodu dla poszc9zególnych 
+
+ruchy zwiększenie głodu po iteracji sznasa zabicia
+
+
