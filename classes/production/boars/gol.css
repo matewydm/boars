@@ -1,0 +1,51 @@
+
+.plant-normal {
+    -fx-background-size: 50 50;
+
+    -fx-background-color: darkgreen;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+
+.plant-rough {
+    -fx-background-size: 50 50;
+    -fx-background-color: green;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.plant-roughest {
+    -fx-background-size: 50 50;
+    -fx-background-color: darkolivegreen;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.prey-cell {
+    -fx-background-size: 50 50;
+    -fx-background-color: yellow;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.predator_prey-cell {
+    -fx-background-size: 50 50;
+    -fx-background-color: darkred;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.predator-cell {
+    -fx-background-size: 50 50;
+    -fx-background-color: lavenderblush;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}
+
+.supremator-cell {
+    -fx-background-size: 50 50;
+    -fx-background-color: black;
+    -fx-border-color: black;
+    -fx-border-width: 0.1;
+}

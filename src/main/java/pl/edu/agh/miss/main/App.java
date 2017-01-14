@@ -111,6 +111,7 @@ public class App extends Application {
         boardNode.getChildren().addAll(preys,predators,supremators,counter);
 
         Text legend = new Text(10,30,"LEGEND:");
+
         legend.setFont(font);
 
         HBox redBox = createBox(Color.RED,"PREY AND PREDATOR OR SUPREMATOR");
