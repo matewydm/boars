@@ -1,17 +1,53 @@
-[0] Config.pm:340> INFO - This is Biber 2.4
-[0] Config.pm:343> INFO - Logfile is 'praca.blg'
-[33] biber:287> INFO - === pią gru  9, 2016, 00:05:14
-[114] Biber.pm:348> INFO - Reading 'praca.bcf'
-[239] Biber.pm:739> INFO - Using all citekeys in bib section 0
-[244] Biber.pm:3151> INFO - Processing section 0
-[269] Biber.pm:3308> INFO - Looking for bibtex format file 'bibliografia.bib' for section 0
-[276] bibtex.pm:1113> INFO - Decoding LaTeX character macros into UTF-8
-[280] bibtex.pm:974> INFO - Found BibTeX data source 'bibliografia.bib'
-[334] Utils.pm:147> WARN - Datamodel: Entry 'Ubc' (bibliografia.bib): Invalid format '2016-12-8' of date field 'urldate' - ignoring
-[418] UCollate.pm:65> INFO - Overriding locale 'de_DE' defaults 'variable = shifted' with 'variable = non-ignorable'
-[419] UCollate.pm:65> INFO - Overriding locale 'de_DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[419] Biber.pm:3028> INFO - Sorting list 'nyt/global' of type 'entry' with scheme 'nyt' and locale 'de_DE'
-[419] Biber.pm:3032> INFO - No sort tailoring available for locale 'de_DE'
-[432] bbl.pm:519> INFO - Writing 'praca.bbl' with encoding 'UTF-8'
-[454] bbl.pm:615> INFO - Output to praca.bbl
-[455] Biber.pm:109> INFO - WARNINGS: 1
+This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: praca.aux
+A level-1 auxiliary file: rozdzial1.aux
+A level-1 auxiliary file: rozdzial2.aux
+A level-1 auxiliary file: rozdzial4.aux
+A level-1 auxiliary file: rozdzial5.aux
+A level-1 auxiliary file: rozdzial6.aux
+I found no \citation commands---while reading file praca.aux
+I found no \bibdata command---while reading file praca.aux
+I found no \bibstyle command---while reading file praca.aux
+You've used 0 entries,
+            0 wiz_defined-function locations,
+            88 strings with 549 characters,
+and the built_in function-call counts, 0 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 0
+:= -- 0
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 0
+format.name$ -- 0
+if$ -- 0
+int.to.chr$ -- 0
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 0
+num.names$ -- 0
+pop$ -- 0
+preamble$ -- 0
+purify$ -- 0
+quote$ -- 0
+skip$ -- 0
+stack$ -- 0
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 0
+width$ -- 0
+write$ -- 0
+(There were 3 error messages)
