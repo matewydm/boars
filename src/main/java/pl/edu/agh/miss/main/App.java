@@ -69,8 +69,11 @@ public class App extends Application {
         BorderPane borderPane = new BorderPane();
 
         VBox rightBar = new VBox();
-        
         rightBar.setSpacing(10);
+
+        VBox leftBar = new VBox();
+        leftBar.setSpacing(10);
+        leftBar.setPrefWidth(320);
 
 
         Pane boardNode = new AnchorPane();
@@ -79,6 +82,7 @@ public class App extends Application {
         borderPane.setCenter(boardNode);
 
         borderPane.setRight(rightBar);
+        borderPane.setLeft(leftBar);
 
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("gol.css");
@@ -99,16 +103,18 @@ public class App extends Application {
 
         Font font = Font.font("Arial",FontWeight.BOLD,30);
 
-        preys = new Text(20,30,"PREYS: 0");
+        preys = new Text("PREYS: 0");
         preys.setFont(font);
-        predators = new Text(BOARD_SIZE-280,30,"PREDATORS: 0");
+        predators = new Text("PREDATORS: 0");
         predators.setFont(font);
-        supremators =  new Text(BOARD_SIZE-325,60,"SUPREMATORS: 0");
+        supremators =  new Text("SUPREMATORS: 0");
         supremators.setFont(font);
-        counter = new Text(BOARD_SIZE/2-30,30,"0");
+        counter = new Text("ITERATIONS: 0");
         counter.setFont(font);
 
-        boardNode.getChildren().addAll(preys,predators,supremators,counter);
+        leftBar.getChildren().addAll(counter,preys,predators,supremators);
+
+//        boardNode.getChildren().addAll(preys,predators,supremators,counter);
 
         Text legend = new Text(10,30,"LEGEND:");
         legend.setFont(font);
@@ -146,7 +152,7 @@ public class App extends Application {
         preys.setText("PREYS: " + Integer.toString(automaton.getPreyNumber()));
         supremators.setText("SUPREMATORS: " + Integer.toString(automaton.getSuprematorNumber()));
 
-        counter.setText(Integer.toString(COUNTER));
+        counter.setText("ITERATIONS: " + Integer.toString(COUNTER));
 
         for (int x = 0; x < Automaton.getSize(); x++) {
             for (int y = 0; y < Automaton.getSize(); y++) {
