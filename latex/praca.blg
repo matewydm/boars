@@ -1,0 +1,17 @@
+[0] Config.pm:340> INFO - This is Biber 2.4
+[0] Config.pm:343> INFO - Logfile is 'praca.blg'
+[33] biber:287> INFO - === pią gru  9, 2016, 00:05:14
+[114] Biber.pm:348> INFO - Reading 'praca.bcf'
+[239] Biber.pm:739> INFO - Using all citekeys in bib section 0
+[244] Biber.pm:3151> INFO - Processing section 0
+[269] Biber.pm:3308> INFO - Looking for bibtex format file 'bibliografia.bib' for section 0
+[276] bibtex.pm:1113> INFO - Decoding LaTeX character macros into UTF-8
+[280] bibtex.pm:974> INFO - Found BibTeX data source 'bibliografia.bib'
+[334] Utils.pm:147> WARN - Datamodel: Entry 'Ubc' (bibliografia.bib): Invalid format '2016-12-8' of date field 'urldate' - ignoring
+[418] UCollate.pm:65> INFO - Overriding locale 'de_DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[419] UCollate.pm:65> INFO - Overriding locale 'de_DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[419] Biber.pm:3028> INFO - Sorting list 'nyt/global' of type 'entry' with scheme 'nyt' and locale 'de_DE'
+[419] Biber.pm:3032> INFO - No sort tailoring available for locale 'de_DE'
+[432] bbl.pm:519> INFO - Writing 'praca.bbl' with encoding 'UTF-8'
+[454] bbl.pm:615> INFO - Output to praca.bbl
+[455] Biber.pm:109> INFO - WARNINGS: 1
