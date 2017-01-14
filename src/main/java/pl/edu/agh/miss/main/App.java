@@ -1,17 +1,20 @@
 package pl.edu.agh.miss.main;
 
 //-Djava.util.concurrent.ForkJoinPool.common.parallelism=7
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -23,7 +26,7 @@ import pl.edu.agh.miss.model.automaton.factory.SimpleCellsFactory;
 import pl.edu.agh.miss.model.automaton.life.Prey;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,25 +61,23 @@ public class App extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        CellsFactory cellsFactory = new SimpleCellsFactory(new Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(4)));
+        CellsFactory cellsFactory = new SimpleCellsFactory(new java.awt.Dimension(Automaton.getSize(),Automaton.getSize()), new GeneralStateFactory(new Compaction(4)));
         automaton = new Automaton(cellsFactory);
 
 
 
         BorderPane borderPane = new BorderPane();
 
-        VBox leftBar = new VBox();
-        leftBar.setPrefWidth(300);
-        leftBar.setSpacing(5);
-
         VBox rightBar = new VBox();
-        rightBar.setPrefWidth(300);
+        
+        rightBar.setSpacing(10);
+
 
         Pane boardNode = new AnchorPane();
         boardNode.setPrefSize(BOARD_SIZE,BOARD_SIZE);
 
         borderPane.setCenter(boardNode);
-        borderPane.setLeft(leftBar);
+
         borderPane.setRight(rightBar);
 
         Scene scene = new Scene(borderPane);
@@ -109,7 +110,19 @@ public class App extends Application {
 
         boardNode.getChildren().addAll(preys,predators,supremators,counter);
 
+        Text legend = new Text(10,30,"LEGEND:");
+        legend.setFont(font);
 
+        HBox redBox = createBox(Color.RED,"PREY AND PREDATOR OR SUPREMATOR");
+        HBox yellowBox = createBox(Color.YELLOW, "PREY");
+        HBox predatorBox = createBox(Color.LAVENDERBLUSH, "PREDATOR");
+        HBox blackBox = createBox(Color.BLACK, "SUPREMATOR");
+        HBox darkGreenBox = createBox(Color.DARKGREEN, "PLANT ON FERTILE TERRAIN");
+        HBox greenBox = createBox(Color.GREEN,"PLANT ON ROUGH TERRAIN");
+        HBox darkolivegreenBox = createBox(Color.DARKOLIVEGREEN, "PLANT ON VERY ROUGH TERRAIN");
+
+
+        rightBar.getChildren().addAll(legend,redBox,yellowBox,predatorBox,blackBox,darkGreenBox,greenBox,darkolivegreenBox);
 
 
         primaryStage.setTitle("Automaton");
@@ -179,7 +192,26 @@ public class App extends Application {
         }
     }
 
+    private HBox createBox(Color color, String text) {
+        HBox redBox = new HBox();
+        javafx.scene.shape.Rectangle red = new javafx.scene.shape.Rectangle(20, 20);
+        red.setFill(color);
+        red.setStroke(Color.BLACK);
+        red.setStrokeWidth(3);
+
+        Font fontLegend = Font.font("Arial",FontWeight.BOLD,14);
+        Text redLegend = new Text(text);
+        redLegend.setFont(fontLegend);
+
+
+        redBox.getChildren().addAll(red,redLegend);
+
+        return redBox;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }
