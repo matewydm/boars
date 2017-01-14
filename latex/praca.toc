@@ -1,0 +1,15 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\select@language {polish}
+\contentsline {chapter}{\numberline {1}Wprowadzenie}{3}
+\contentsline {chapter}{\numberline {2}Analiza modelu z zachowaniem stadnym}{7}
+\contentsline {section}{\numberline {2.1}Model matematyczny}{7}
+\contentsline {section}{\numberline {2.2}Stabilno\IeC {\'s}\IeC {\'c}}{7}
+\contentsline {section}{\numberline {2.3}Bifurkacje}{8}
+\contentsline {section}{\numberline {2.4}Symulacje}{9}
+\contentsline {chapter}{\numberline {3}Automaty kom\IeC {\'o}rkowe}{11}
+\contentsline {section}{\numberline {3.1}Zagadnienie automat\IeC {\'o}w}{11}
+\contentsline {section}{\numberline {3.2}Implementacja automatu}{12}
+\contentsline {chapter}{\numberline {4}R\IeC {\'o}wnania Lotki-Volterry dla konkurencji}{13}
+\contentsline {section}{\numberline {4.1}Model matematyczny}{13}
+\contentsline {section}{\numberline {4.2}W\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci modelu}{14}
+\contentsline {section}{\numberline {4.3}Symulacje dla dodatnich wsp\IeC {\'o}\IeC {\l }czynnik\IeC {\'o}w}{15}
