@@ -176,7 +176,8 @@ gradle-app.setting
 *.brf
 *.run.xml
 
-## Build tool auxiliary files:
+## 
+ tool auxiliary files:
 *.fdb_latexmk
 *.synctex
 *.synctex(busy)
